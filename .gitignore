@@ -1,0 +1,28 @@
+# Dependencies
+/node_modules
+
+# Next.js build outputs
+/.next/
+/out/
+/build
+/export
+
+# Optional artifact directories
+/.vercel/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env*.local
+.env
+
+# Credentials / Tokens (Ensure these are present!
+
+credentials.json 
+
+# Operating System Files
+.DS_Store
+Thumbs.db

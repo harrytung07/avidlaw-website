@@ -1,0 +1,678 @@
+/* static/css/chatbot.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap'); /* Import Roboto */
+
+:root {
+  /* === Dark Theme Colors (Gemini Inspired) === */
+  --primary-bg: #202124;       /* Main dark background */
+  --secondary-bg: #303134;     /* Typing area, button backgrounds */
+  --user-bubble-bg: #3c4043;  /* User chat bubble background */
+  --bot-bubble-bg: transparent;/* Bot chat bubble background */
+  --text-primary: #e8eaed;     /* Primary text (white-ish) */
+  --text-secondary: #bdc1c6;   /* Secondary text (placeholders, subtle info) */
+  --border-color-subtle: rgba(232, 234, 237, 0.08); /* Subtle borders */
+  --border-color-medium: rgba(232, 234, 237, 0.15); /* Slightly more visible */
+  --accent-color: #5f6368;      /* Grey for interactive elements */
+  --accent-hover-color: #757b81;/* Lighter grey for hover */
+  --danger-color: #e57373;      /* Lighter red for dark theme */
+  --danger-border-color: rgba(229, 115, 115, 0.3); /* More subtle border */
+  --danger-hover-bg: rgba(229, 115, 115, 0.1);
+  --link-color: #8ab4f8;        /* Google Blue accent for links */
+  --link-hover-color: #aecbfa;   /* Lighter blue */
+  --paid-status-bg: rgba(102, 187, 106, 0.2);  /* Lighter green bg */
+  --paid-status-text: #a5d6a7;              /* Lighter green text */
+  --unpaid-status-bg: rgba(229, 115, 115, 0.2);/* Lighter red bg */
+  --unpaid-status-text: #ef9a9a;             /* Lighter red text */
+  --warn-notice-bg: rgba(251, 192, 45, 0.1);   /* Yellowish bg */
+  --warn-notice-border: #fbc02d;             /* Yellow border */
+  --warn-notice-text: #fff59d;                /* Yellowish text */
+  --warn-notice-strong: #fffde7;
+
+  /* === Renamed/Reused Variables (for compatibility/clarity) === */
+  --bg-color: var(--primary-bg);      /* Main background */
+  --text-color: var(--text-primary);  /* Default text color */
+  --text-light: var(--text-primary);  /* Alias for light text */
+  --border-color: var(--border-color-subtle); /* Default border color */
+  --primary-color: var(--accent-color); /* Re-using for general accents */
+  --secondary-color: var(--user-bubble-bg); /* Re-using for user bubbles */
+
+  /* Font */
+  --font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  /* Other */
+  --bubble-radius: 18px;
+  --transition-speed: 0.2s;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* --- Chatbot Panel Structure --- */
+#chatbotPanel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 33.33%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    border-radius: 0;
+    border-left: 1px solid var(--border-color);
+    box-shadow: -5px 0 15px var(--shadow-color);
+    display: none; /* Controlled by JS */
+    z-index: 1001;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family);
+    color: var(--text-color);
+}
+
+.chatbot-header {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.chatbot-title {
+    font-weight: 500;
+    margin: 0;
+    font-size: 1.1em;
+}
+
+#closeChatbot {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    padding: 0 5px;
+    opacity: 0.8;
+    transition: color var(--transition-speed), opacity var(--transition-speed);
+}
+
+#closeChatbot:hover {
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+#chatbotContent {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Add this rule to make the SVG ignore clicks */
+#chatbotIcon svg {
+  pointer-events: none;
+}
+
+/* --- Chatbot Icon --- */
+#chatbotIcon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px; /* Container size */
+  height: 60px; /* Container size */
+  background-color: transparent; /* Ensure background is transparent */
+  /* border-radius: 50%; */ /* Remove if you don't want a circular container */
+  display: flex; /* Keep flex for centering */
+  justify-content: center; /* Keep flex for centering */
+  align-items: center; /* Keep flex for centering */
+  cursor: pointer;
+  /* box-shadow: none; */ /* Remove shadow if not needed */
+  z-index: 1000;
+  transition: transform var(--transition-speed) ease;
+}
+
+#chatbotIcon:hover {
+  transform: scale(1.08); /* Keep or remove hover effect */
+}
+
+
+
+/* --- Chat Container & Messages --- */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 1rem 1.2rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Message bubble styles */
+.chat-bubble {
+  display: flex;
+  align-items: flex-start; /* Align top for potentially multi-line */
+  margin-bottom: 1rem;
+  max-width: 85%;
+  opacity: 0;
+  animation: fadeSlideIn 0.4s ease-out forwards;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.chat-bubble.bot {
+  align-self: flex-start;
+}
+
+/* Animation */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Message content styles */
+.chat-message {
+  padding: 10px 15px;
+  border-radius: var(--bubble-radius);
+  position: relative;
+  line-height: 1.6;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.user .chat-message {
+  background-color: var(--user-bubble-bg);
+  color: var(--text-light);
+  border-bottom-right-radius: 5px;
+}
+
+.bot .chat-message {
+  background-color: var(--bot-bubble-bg);
+  color: var(--text-light);
+  border: 3.5px solid var(--border-color-subtle); /* Bot border */
+  padding-left: 15px;
+  padding-right: 15px;
+  border-bottom-left-radius: 5px; /* Bot tail */
+}
+
+/* Remove margin adjustments */
+.chat-bubble.user + .chat-bubble.user,
+.chat-bubble.bot + .chat-bubble.bot {
+    margin-top: 0;
+}
+
+
+/* Input area styles */
+.chat-input-area {
+  display: flex;
+  padding: 10px 15px 15px 15px;
+  border-top: none; /* No separator line */
+  background-color: var(--bg-color);
+  flex-shrink: 0;
+}
+
+.chat-input-container {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--secondary-bg);
+  border-radius: 24px;
+  padding: 4px;
+}
+
+.chat-input {
+  /* For Firefox */
+  scrollbar-width: none;
+  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;
+}
+
+/* For Chrome, Safari, and newer Edge (Webkit-based) */
+.chat-input::-webkit-scrollbar {
+  /* You can use display: none; OR set width/height to 0 */
+  display: none;
+  /* OR */
+  /* width: 0; */
+  /* height: 0; */
+}
+
+.chat-input {
+  width: 100%;
+  padding: 10px 45px 10px 15px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1em;
+  font-family: inherit; /* Ensure font consistency */
+  line-height: 1.4;
+  max-height: 100px;
+  overflow-y: auto;
+  background-color: transparent;
+  color: var(--text-light);
+  transition: box-shadow var(--transition-speed);
+}
+
+.chat-input:focus {
+   box-shadow: none;
+}
+
+.chat-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+/* Send Button */
+.chat-send-button {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background-color: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: color var(--transition-speed), background-color var(--transition-speed);
+}
+
+.chat-send-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.chat-send-button:hover {
+  color: var(--text-primary);
+  background-color: rgba(232, 234, 237, 0.1);
+}
+
+.chat-send-button:disabled {
+  color: rgba(232, 234, 237, 0.3);
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.typing-indicator.visible {
+    opacity: 1;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: typing-animation 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-animation {
+  0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  30% { transform: translateY(-4px) scale(1.1); opacity: 1; }
+}
+
+/* Options buttons (Base Style) */
+.chat-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  margin-bottom: 5px;
+  padding-left: 0; /* Align with bot message */
+}
+
+.chat-option-button {
+  padding: 8px 14px;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: inherit;
+  transition: all var(--transition-speed);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-grow: 0;
+  flex-shrink: 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.chat-option-button:hover {
+  background-color: var(--user-bubble-bg);
+  border-color: var(--accent-color);
+}
+
+/* Selected state */
+.chat-option-button.selected {
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border-color: var(--accent-color);
+  font-weight: 500;
+}
+
+/* === Back Button Base Style (used for Change/End buttons) === */
+.back-button { /* This is the base red button style now */
+  background-color: transparent !important;
+  color: var(--danger-color) !important;
+  border: 1px solid var(--danger-border-color) !important;
+  padding: 8px 14px !important;
+  border-radius: 18px !important;
+  cursor: pointer;
+  font-size: 0.9em !important;
+  transition: all var(--transition-speed);
+  line-height: 1.4 !important; /* Match other buttons */
+  text-align: center;
+}
+.back-button:hover {
+  background-color: var(--danger-hover-bg) !important;
+  border-color: var(--danger-color) !important;
+  color: var(--danger-color) !important;
+}
+
+/* === Date/Time Action Buttons Specific Styling === */
+.datetime-container .action-buttons-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: space-between; /* Distribute space */
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  gap: 10px; /* Add gap between elements */
+}
+
+/* Style for the "Change Lawyer" button in DateTime step */
+.datetime-container .action-buttons-container .back-button {
+    /* Inherits .back-button style (red) */
+    margin-top: 0; /* Override any default margin */
+    /* Removed margin-right: auto; */
+     flex-basis: calc(50% - 5px); /* Adjust basis if needed */
+     min-width: 120px;
+}
+
+/* Wrapper for the confirm button to potentially help with layout */
+.datetime-container .confirm-button-wrapper {
+    width: 100%; /* Make wrapper full width to force confirm below */
+    display: flex;
+    justify-content: center; /* Center confirm button */
+    margin-top: 0px; /* No extra margin needed if wrapper forces new line */
+     flex-basis: 100%; /* Ensure it takes full width */
+     order: 3; /* Force it to be the last item visually */
+}
+
+/* Style for the "Confirm Date & Time" button */
+.datetime-container .confirm-button {
+    /* Use chat-option-button as base and add confirm styling */
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-light);
+    font-weight: 500;
+    padding: 8px 14px; /* Ensure padding matches */
+    border-radius: 18px; /* Ensure radius matches */
+    min-width: 150px; /* Give it good width */
+    text-align: center;
+    line-height: 1.4; /* Match other buttons */
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+.datetime-container .confirm-button:hover {
+    background-color: var(--accent-hover-color);
+    border-color: var(--accent-hover-color);
+}
+.datetime-container .confirm-button:disabled {
+    background-color: var(--secondary-bg) !important;
+    border-color: var(--secondary-bg) !important;
+    color: var(--text-secondary) !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+
+/* Confirmation Area Styling */
+.confirmation-actions {
+    gap: 10px;
+}
+
+/* Style for the "Change..." buttons using .back-button class */
+.confirmation-actions .back-button {
+    background-color: transparent;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-border-color);
+    padding: 8px 14px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 0;
+    transition: all var(--transition-speed);
+    flex-grow: 1;
+    min-width: 100px;
+    text-align: center;
+    line-height: 1.4; /* Match other buttons */
+}
+.confirmation-actions .back-button:hover {
+    background-color: var(--danger-hover-bg);
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+/* Wrapper for the confirm button */
+.confirm-button-wrapper {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style for the Confirm button */
+.confirmation-actions .confirm-button {
+    padding: 8px 14px;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-light);
+    font-weight: 500;
+    min-width: 150px;
+    text-align: center;
+}
+.confirmation-actions .confirm-button:hover {
+    background-color: var(--accent-hover-color);
+    border-color: var(--accent-hover-color);
+}
+
+/* End Chat Button Styling */
+/* === End Chat Button Styling (Keep using .back-button base) === */
+.end-chat-button {
+  /* This class now inherits red style from .back-button */
+  /* Add any specific overrides if needed */
+   margin-top: 10px; /* Add some margin if desired */
+}
+/* Disabled Button Style (General) */
+.chat-option-button:disabled {
+    background-color: var(--secondary-bg) !important;
+    border-color: var(--secondary-bg) !important;
+    color: var(--text-secondary) !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+
+/* Input fields within messages */
+.phone-input-container,
+.code-input-container,
+.name-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  width: 100%;
+  padding-left: 0; /* Align with bot message */
+}
+
+.input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.phone-input-group {
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid var(--border-color);
+  border-radius: var(--bubble-radius);
+  overflow: hidden;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  background-color: var(--secondary-bg);
+}
+.phone-input-group:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: none;
+}
+
+.area-code-prefix {
+  background-color: var(--user-bubble-bg);
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 10px 12px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-input,
+.code-input,
+.name-input {
+  flex-grow: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--bubble-radius);
+  font-size: 1em;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  background-color: var(--secondary-bg);
+  color: var(--text-primary);
+}
+
+.phone-input {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.code-input {
+  letter-spacing: 3px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 180px;
+}
+
+.phone-input:focus,
+.code-input:focus,
+.name-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: none;
+}
+
+/* Button alongside input */
+.input-group .chat-option-button {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* Summary & Lists */
+.appointment-summary,
+.appointments-list .appointment-item {
+  background-color: var(--secondary-bg);
+  border-left: 4px solid var(--accent-color);
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: var(--text-primary);
+}
+.appointment-summary p,
+.appointment-item p {
+    margin: 5px 0;
+    color: inherit;
+}
+.appointment-summary strong,
+.appointment-item strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Appointments list specific */
+.appointments-list { width: 100%; margin: 10px 0; padding-left: 0;}
+.appointment-item { margin-bottom: 10px; }
+.appointment-item.unpaid { border-left-color: var(--danger-color); }
+
+.payment-status {
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  display: inline-block;
+}
+.payment-status.paid { background-color: var(--paid-status-bg); color: var(--paid-status-text); }
+.payment-status.unpaid { background-color: var(--unpaid-status-bg); color: var(--unpaid-status-text); }
+
+/* Notices */
+.calendar-notice,
+.payment-instructions {
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: var(--text-primary);
+}
+.calendar-notice { background-color: var(--warn-notice-bg); border-left: 4px solid var(--warn-notice-border); color: var(--warn-notice-text);}
+.calendar-notice strong { color: var(--warn-notice-strong); }
+
+.payment-instructions { background-color: var(--secondary-bg); border-left: 4px solid var(--accent-color); }
+.payment-instructions ul { padding-left: 20px; margin: 8px 0; }
+.payment-instructions li { margin-bottom: 5px; }
+.payment-instructions a { color: var(--link-color); text-decoration: none; font-weight: 500; }
+.payment-instructions a:hover { text-decoration: underline; color: var(--link-hover-color); }
+
+/* Links within messages */
+.chat-message a {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+.chat-message a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Scrollbar styling (Dark Theme) */
+.chat-messages::-webkit-scrollbar { width: 8px; }
+.chat-messages::-webkit-scrollbar-track { background: var(--secondary-bg); border-radius: 10px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
+.chat-messages::-webkit-scrollbar-thumb:hover { background: var(--accent-hover-color); }
