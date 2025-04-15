@@ -40,9 +40,7 @@ class ChatbotConversation {
           {name: "Olivia", languages: ["English"]},
           {name: "Freja Li", languages: ["Mandarin", "English"]},
           {name: "Howard Qu", languages: ["Mandarin", "English"]},
-          {name: "Rachel", languages: ["Mandarin", "English", "Cantonese"]},
-          {name: "Dummy", languages: ["English"]},
-          {name: "Richard", languages: ["Mandarin", "English"]}
+          {name: "Rachel", languages: ["Mandarin", "English", "Cantonese"]}
       ];
       this.availableSlots = {}; // Fetched during booking flow
       // --- End Existing Data Initialization ---
@@ -167,7 +165,7 @@ class ChatbotConversation {
     this.showTyping();
     if (this.sendButton) this.sendButton.disabled = true; // Disable send button visually
 
-    fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/chat', {
+    fetch('https://testapi.avid-law.com/api/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -373,7 +371,7 @@ class ChatbotConversation {
           this.showTyping(); // Show typing while waiting for backend
           this.sendButton.disabled = true; // Disable send button during request
 
-          fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/chat', {
+          fetch('https://testapi.avid-law.com/api/chat', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -595,7 +593,7 @@ class ChatbotConversation {
           this.addBotMessage("Sending verification code...", 500);
 
           // Call API
-          fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/send-verification', {
+          fetch('https://testapi.avid-law.com/api/send-verification', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ phone: phoneNumber }), // Send 10 digits
@@ -667,7 +665,7 @@ class ChatbotConversation {
           this.addBotMessage("Verifying code...", 500);
 
           // Call API
-          fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/verify-code', {
+          fetch('https://testapi.avid-law.com/api/verify-code', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -713,7 +711,7 @@ class ChatbotConversation {
       this.currentStep = 'checking_appointments';
       this.addBotMessage("Checking your appointment history...", 800);
 
-      fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/check-appointments', {
+      fetch('https://testapi.avid-law.com/api/check-appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone: phoneNumber }),
@@ -997,7 +995,7 @@ class ChatbotConversation {
       console.log("Fetching slots for:", lawyerName);
       this.addBotMessage(`Checking availability for ${lawyerName}...`, 800);
 
-      fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/available-slots', {
+      fetch('https://testapi.avid-law.com/api/available-slots', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ lawyer_name: lawyerName }),
@@ -1404,7 +1402,7 @@ class ChatbotConversation {
        console.log("Sending appointment data to backend:", appointmentData);
 
        // 1. Save to Google Sheet
-       fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/save-appointment', {
+       fetch('https://testapi.avid-law.com/api/save-appointment', {
            method: 'POST',
            headers: { 'Content-Type': 'application/json' },
            body: JSON.stringify(appointmentData),
@@ -1414,7 +1412,7 @@ class ChatbotConversation {
            if (data.success) {
                console.log('Appointment saved to Google Sheet successfully.');
                // 2. Add to Calendar (only after sheet save succeeds)
-               return fetch('http://avidlawbot1.us-west-2.elasticbeanstalk.com/api/add-to-calendar', { // Chaining the fetch
+               return fetch('https://testapi.avid-law.com/api/add-to-calendar', { // Chaining the fetch
                    method: 'POST',
                    headers: { 'Content-Type': 'application/json' },
                    body: JSON.stringify(appointmentData), // Send same data
