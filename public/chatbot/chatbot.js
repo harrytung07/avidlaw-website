@@ -40,7 +40,8 @@ class ChatbotConversation {
           {name: "Olivia", languages: ["English"]},
           {name: "Freja Li", languages: ["Mandarin", "English"]},
           {name: "Howard Qu", languages: ["Mandarin", "English"]},
-          {name: "Rachel", languages: ["Mandarin", "English", "Cantonese"]}
+          {name: "Rachel", languages: ["Mandarin", "English", "Cantonese"]},
+          {name: "Richard", languages: ["Mandarin", "English", "Cantonese"]}
       ];
       this.availableSlots = {}; // Fetched during booking flow
       // --- End Existing Data Initialization ---
@@ -1195,63 +1196,70 @@ class ChatbotConversation {
   }
 
   // Render Step 4: Confirmation (Unchanged Logic)
-  renderStep4() { /* ... */
-       this.currentStep = 'confirmation';
-       console.log("Rendering Step 4: Confirmation");
+  renderStep4() {
+    this.currentStep = 'confirmation';
+    console.log("Rendering Step 4: Confirmation");
 
-       // Generate Appointment ID (ensure required fields exist)
-       const datePart = this.appointment.date?.replace(/-/g, "") || "NODATE";
-       const timePart = this.appointment.time ? this.convertTimeTo24(this.appointment.time) : "NOTIME";
-       const lawyerPart = this.appointment.lawyer?.replace(/\s+/g, "").toUpperCase() || "NOLAWYER";
-       // Add random element for uniqueness in case of same slot/lawyer
-       const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
-       this.appointment.id = `${datePart}-${timePart}-${lawyerPart}-${randomSuffix}`;
+    // Generate Appointment ID
+    const datePart = this.appointment.date?.replace(/-/g, "") || "NODATE";
+    const timePart = this.appointment.time ? this.convertTimeTo24(this.appointment.time) : "NOTIME";
+    const lawyerPart = this.appointment.lawyer?.replace(/\s+/g, "").toUpperCase() || "NOLAWYER";
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    this.appointment.id = `${datePart}-${timePart}-${lawyerPart}-${randomSuffix}`;
 
+    // Add the "Please review" message immediately
+    this.addBotMessage("Please review your appointment details:", 800);
 
-       this.addBotMessage("Please review your appointment details:", 800);
+    // Show the summary after a delay
+    setTimeout(() => {
+        const summaryHTML = `
+            <div class="appointment-summary">
+                <p><strong>Topic:</strong> ${this.appointment.area || 'N/A'} → ${this.appointment.sub_area || 'N/A'}</p>
+                <p><strong>Method:</strong> ${this.appointment.connection_method || 'N/A'}${this.appointment.office_location ? ` at ${this.appointment.office_location}` : ''}</p>
+                <p><strong>Language:</strong> ${this.appointment.language || 'N/A'}</p>
+                <p><strong>Lawyer:</strong> ${this.appointment.lawyer || 'N/A'}</p>
+                <p><strong>Date & Time:</strong> ${this.appointment.date || 'N/A'} at ${this.appointment.time || 'N/A'}</p>
+                <p><strong>Appointment ID:</strong> ${this.appointment.id}</p>
+            </div>`;
+        this.addBotMessage(summaryHTML, 0); // Show summary immediately (relative to this timeout)
 
-       setTimeout(() => {
-           const summaryHTML = `
-               <div class="appointment-summary">
-                   <p><strong>Topic:</strong> ${this.appointment.area || 'N/A'} → ${this.appointment.sub_area || 'N/A'}</p>
-                   <p><strong>Method:</strong> ${this.appointment.connection_method || 'N/A'}${this.appointment.office_location ? ` at ${this.appointment.office_location}` : ''}</p>
-                   <p><strong>Language:</strong> ${this.appointment.language || 'N/A'}</p>
-                   <p><strong>Lawyer:</strong> ${this.appointment.lawyer || 'N/A'}</p>
-                   <p><strong>Date & Time:</strong> ${this.appointment.date || 'N/A'} at ${this.appointment.time || 'N/A'}</p>
-                   <p><strong>Appointment ID:</strong> ${this.appointment.id}</p>
-               </div>`;
-           this.addBotMessage(summaryHTML, 500);
+        // Show the prompt and buttons *after* the summary has appeared
+        setTimeout(() => {
+            this.addBotMessage("Confirm this appointment or go back to change details?", 800); // Show prompt
 
-           setTimeout(() => {
-               this.addBotMessage("Confirm this appointment or go back to change details?", 800);
+            // Create and append buttons *after* the prompt message
+            setTimeout(() => {
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'chat-options confirmation-actions';
 
-               const optionsContainer = document.createElement('div');
-               optionsContainer.className = 'chat-options confirmation-actions'; // Add specific class if needed
+                const step1Btn = this.createBackButton("Change Topic", () => this.renderStep1());
+                const step2Btn = this.createBackButton("Change Method", () => this.renderStep2());
+                const step3Btn = this.createBackButton("Change Lawyer/Time", () => this.renderStep3Lawyer());
 
-               // Use smaller buttons for modification steps
-               const step1Btn = this.createBackButton("Change Topic", () => this.renderStep1());
-               const step2Btn = this.createBackButton("Change Method", () => this.renderStep2());
-               const step3Btn = this.createBackButton("Change Lawyer/Time", () => this.renderStep3Lawyer()); // Go back to lawyer selection if time needs change
+                const confirmBtn = document.createElement('button');
+                confirmBtn.className = 'chat-option-button confirm-button';
+                confirmBtn.style.backgroundColor = '#4CAF50';
+                confirmBtn.style.color = 'white';
+                confirmBtn.textContent = "Confirm Appointment";
+                confirmBtn.addEventListener('click', () => this.confirmAppointment());
 
-               // Confirm button (more prominent)
-               const confirmBtn = document.createElement('button');
-               confirmBtn.className = 'chat-option-button confirm-button'; // Add specific class
-               confirmBtn.style.backgroundColor = '#4CAF50';
-               confirmBtn.style.color = 'white';
-               confirmBtn.textContent = "Confirm Appointment";
-               confirmBtn.addEventListener('click', () => this.confirmAppointment());
+                optionsContainer.appendChild(step1Btn);
+                optionsContainer.appendChild(step2Btn);
+                optionsContainer.appendChild(step3Btn);
+                optionsContainer.appendChild(confirmBtn);
 
+                // Append buttons to the *last* bot message (which is the prompt message)
+                this.appendToLastBotMessage(optionsContainer);
 
-               optionsContainer.appendChild(step1Btn);
-               optionsContainer.appendChild(step2Btn);
-               optionsContainer.appendChild(step3Btn);
-               optionsContainer.appendChild(confirmBtn); // Add confirm last
+            }, 900); // Delay buttons slightly after the prompt text
 
-               this.appendToLastBotMessage(optionsContainer);
-           }, 1400);
-       }, 900);
-       this.saveState();
-   }
+        }, 600); // Delay prompt slightly after summary
+
+    }, 900); // Delay summary after "Please review"
+
+    this.saveState();
+}
+// --- END MODIFIED ---
 
   // Confirm the appointment (Unchanged Logic)
   confirmAppointment() { /* ... */
@@ -1308,78 +1316,82 @@ class ChatbotConversation {
    }
 
   // Finalize the appointment (Unchanged Logic - sends data to backend)
-  finalizeAppointment() { /* ... */
-      this.currentStep = 'finalized';
-      console.log("Finalizing appointment:", this.appointment);
-      this.addBotMessage("✅ Your appointment is booked!", 800);
+  finalizeAppointment() {
+    this.currentStep = 'finalized';
+    console.log("Finalizing appointment:", this.appointment);
+    this.addBotMessage("✅ Your appointment is booked!", 800);
 
-       setTimeout(() => {
-           const summaryHTML = `
-               <div class="appointment-summary confirmed">
-                    <p><strong>Client:</strong> ${this.appointment.clientName || 'N/A'}</p>
-                    <p><strong>Topic:</strong> ${this.appointment.area || 'N/A'} → ${this.appointment.sub_area || 'N/A'}</p>
-                    <p><strong>Method:</strong> ${this.appointment.connection_method || 'N/A'}${this.appointment.office_location ? ` at ${this.appointment.office_location}` : ''}</p>
-                    <p><strong>Language:</strong> ${this.appointment.language || 'N/A'}</p>
-                    <p><strong>Lawyer:</strong> ${this.appointment.lawyer || 'N/A'}</p>
-                    <p><strong>Date & Time:</strong> ${this.appointment.date || 'N/A'} at ${this.appointment.time || 'N/A'}</p>
-                    <p><strong>Appointment ID:</strong> ${this.appointment.id}</p>
-               </div>
-               <p>It has been added to ${this.appointment.lawyer}'s calendar. Please note this initial consultation is unpaid.</p>
-               <p>If you need to reschedule or cancel, please call us at (604) 273-7565.</p>`;
-           this.addBotMessage(summaryHTML, 800);
+    setTimeout(() => {
+        const summaryHTML = `
+            <div class="appointment-summary confirmed">
+                <p><strong>Client:</strong> ${this.appointment.clientName || 'N/A'}</p>
+                <p><strong>Topic:</strong> ${this.appointment.area || 'N/A'} → ${this.appointment.sub_area || 'N/A'}</p>
+                <p><strong>Method:</strong> ${this.appointment.connection_method || 'N/A'}${this.appointment.office_location ? ` at ${this.appointment.office_location}` : ''}</p>
+                <p><strong>Language:</strong> ${this.appointment.language || 'N/A'}</p>
+                <p><strong>Lawyer:</strong> ${this.appointment.lawyer || 'N/A'}</p>
+                <p><strong>Date & Time:</strong> ${this.appointment.date || 'N/A'} at ${this.appointment.time || 'N/A'}</p>
+                <p><strong>Appointment ID:</strong> ${this.appointment.id}</p>
+            </div>
+            <p>It has been added to ${this.appointment.lawyer}'s calendar. Please note this initial consultation is unpaid.</p>
+            <p>If you need to reschedule or cancel, please call us at (604) 273-7565.</p>`;
+        this.addBotMessage(summaryHTML, 800); // Show summary
 
-           // Save to Sheet and Calendar
-           this.saveAppointmentToSheetAndCalendar(); // Combine backend calls
+        // Save to Sheet and Calendar
+        this.saveAppointmentToSheetAndCalendar();
 
-           // Add payment instructions and end chat option
+        // Show payment instructions after summary
+        setTimeout(() => {
+            const paymentMessage = `
+                <p>To confirm this consultation, please complete the payment ($268 CAD tax included) via e-transfer:</p>
+                <div class="payment-instructions">
+                    <p><strong>E-transfer Details:</strong></p>
+                    <ul>
+                        <li><strong>Recipient Email:</strong> accounting@avid-law.com</li>
+                        <li><strong>Password:</strong> 123456</li>
+                        <li><strong>Message/Memo:</strong> Your Full Name & Appointment ID (${this.appointment.id})</li>
+                    </ul>
+                    <p><strong>Important:</strong> Please also email a screenshot of the transaction to info@avid-law.com.</p>
+                </div>
+                <p>Thank you for booking with Avid Law!</p>`;
+            this.addBotMessage(paymentMessage, 1200); // Show payment info
+
+            // Add End Chat button and disable previous interactions AFTER payment info is shown
             setTimeout(() => {
-               const paymentMessage = `
-                  <p>To confirm this consultation, please complete the payment ($268 CAD tax included) via e-transfer:</p>
-                  <div class="payment-instructions">
-                      <p><strong>E-transfer Details:</strong></p>
-                      <ul>
-                          <li><strong>Recipient Email:</strong> accounting@avid-law.com</li>
-                          <li><strong>Password:</strong> 123456</li>
-                          <li><strong>Message/Memo:</strong> Your Full Name & Appointment ID (${this.appointment.id})</li>
-                      </ul>
-                      <p><strong>Important:</strong> Please also email a screenshot of the transaction to info@avid-law.com.</p>
-                  </div>
-                  <p>Thank you for booking with Avid Law!</p>`;
-               this.addBotMessage(paymentMessage, 1200);
-
-               setTimeout(() => {
                 const endChatBtn = this.createEndChatButton("End Chat & Close");
                 this.appendToLastBotMessage(endChatBtn);
 
-                // --- ADD CODE HERE to disable past interactions ---
+                // --- IMPLEMENTED CODE to disable past interactions ---
                 console.log("Disabling interactions in previous messages...");
                 if (this.messagesContainer) {
                     const allBubbles = this.messagesContainer.querySelectorAll('.chat-bubble');
-                    // Loop through all bubbles except maybe the last few containing final summary/payment/end button
-                    // Adjust '3' if you have more/fewer final messages you want to keep active.
-                    const bubblesToDisable = Array.from(allBubbles).slice(0, -3);
+                    // Determine how many bubbles at the end to KEEP active
+                    // (e.g., booked msg, summary, payment msg, end button msg = 4)
+                    const keepActiveCount = 4;
+                    const bubblesToDisable = Array.from(allBubbles).slice(0, -keepActiveCount);
 
                     bubblesToDisable.forEach(bubble => {
-                        // Find all buttons, inputs, and textareas within the bubble
+                        // Find all interactive elements within the bubble
                         const interactiveElements = bubble.querySelectorAll('button, input, textarea');
                         interactiveElements.forEach(element => {
                             element.disabled = true;
-                            // Optionally add a class for visual styling (e.g., faded out)
+                            // Add a class for visual styling (e.g., faded out)
+                            // Make sure .interaction-disabled is defined in your chatbot.css
                             element.classList.add('interaction-disabled');
                         });
                     });
                     console.log(`Disabled interactions in ${bubblesToDisable.length} bubbles.`);
                 }
-                // --- END ADDED CODE ---
+                // --- END IMPLEMENTED CODE ---
 
-            }, 1400);
+            }, 1400); // Delay End Chat button and disabling
 
-           }, 1000);
-       }, 900);
-       this.saveState();
-       // Maybe set isInBookingFlow back to false now? Or leave it true until chat closed?
-       // this.isInBookingFlow = false; // Allow conversation again after booking? Let's keep it true for now.
-   }
+        }, 1000); // Delay payment message after summary
+
+    }, 900); // Delay summary after "Booked!" message
+
+    this.saveState();
+  }
+  // --- END MODIFIED ---
 
    // Combine save operations
   saveAppointmentToSheetAndCalendar() {
@@ -1475,100 +1487,75 @@ class ChatbotConversation {
 } // End of ChatbotConversation class
 
 // --- Global Instance & Initialization (Unchanged) ---
-let chatbotInstance = null;
+window.chatbotInstance = null; // Use window scope explicitly if needed
 
-// --- REMOVE 'DOMContentLoaded' listener ---
-// document.addEventListener('DOMContentLoaded', function() { // <-- REMOVE THIS LINE
+console.log('chatbot.js: DOM likely interactive, attempting init.');
 
-console.log('chatbot.js: DOM likely interactive, attempting init.'); // <-- Add log
-
-// Find the elements provided by layout.tsx
 const chatbotIcon = document.getElementById('chatbotIcon');
 const chatbotPanel = document.getElementById('chatbotPanel');
-const chatbotContent = document.getElementById('chatbotContent'); // The container for the instance
+const chatbotContent = document.getElementById('chatbotContent');
 const closeButton = document.getElementById('closeChatbot');
 
-// --- Add Check: Ensure all essential elements exist before proceeding ---
 if (!chatbotIcon || !chatbotPanel || !chatbotContent || !closeButton) {
-     console.error("chatbot.js: ERROR - One or more essential UI elements (#chatbotIcon, #chatbotPanel, #chatbotContent, #closeChatbot) not found in the DOM. Aborting initialization.");
-     // Optionally, hide the icon if it exists but others don't
-     if (chatbotIcon) chatbotIcon.style.display = 'none';
+    console.error("chatbot.js: ERROR - One or more essential UI elements not found. Aborting initialization.");
+    if (chatbotIcon) chatbotIcon.style.display = 'none';
 } else {
-    console.log('chatbot.js: All required UI elements found.'); // <-- Add log
+    console.log('chatbot.js: All required UI elements found.');
 
-    // --- Initialize Chatbot Instance ---
-    // Make instance global ONLY if other parts of the script need it, otherwise keep it local
-    // let chatbotInstance = null; // Use 'let' if chatbotInstance is only used here
-     // Use global 'window.chatbotInstance' if saveState/restore relies on it (be cautious)
-    window.chatbotInstance = null; // Explicitly declare global for clarity if needed
+    // Avoid re-creating instance if it already exists (e.g., due to Next.js navigation)
+    if (!window.chatbotInstance) {
+        try {
+            window.chatbotInstance = new ChatbotConversation('chatbotContent');
+            console.log('chatbot.js: ChatbotConversation instance CREATED.');
 
-    try {
-      // Pass the ID of the content container to the constructor
-      // The constructor now finds this element itself
-      window.chatbotInstance = new ChatbotConversation('chatbotContent');
-      console.log('chatbot.js: ChatbotConversation instance created.'); // <-- Add log
+            // --- Setup Event Listeners (Only if instance was just created) ---
+            chatbotIcon.addEventListener('click', function() { /* ... Icon Click Logic ... */
+                console.log("chatbot.js: Icon click listener fired.");
+                chatbotPanel.style.display = 'flex';
+                chatbotIcon.style.display = 'none';
+                window.chatbotInstance?.scrollToBottom(true);
+            });
 
-      // --- Setup Event Listeners (Icon/Close) ---
-      // Note: These might conflict if the <Script> tag re-runs on navigation
-      // Consider adding checks to prevent duplicate listeners
+            closeButton.addEventListener('click', function() { /* ... Close Button Logic ... */
+                console.log("chatbot.js: Close button listener fired.");
+                chatbotPanel.style.display = 'none';
+                chatbotIcon.style.display = 'flex';
+            });
 
-      // Show panel on icon click
-      chatbotIcon.addEventListener('click', function() {
-          console.log("chatbot.js: Icon click listener fired.");
-          chatbotPanel.style.display = 'flex';
-          chatbotIcon.style.display = 'none';
-          //window.chatbotInstance?.focusInput(); // Use optional chaining
-          window.chatbotInstance?.scrollToBottom(true); // Use optional chaining
-      });
+            // --- Outside Click Listener (Add only once) ---
+            // Check if listener already exists using a flag or by removing before adding
+            if (!document.body.hasAttribute('data-chatbot-outside-click')) {
+                document.body.setAttribute('data-chatbot-outside-click', 'true');
+                document.addEventListener('click', function(event) { /* ... Outside Click Logic ... */
+                     if (!chatbotPanel || !chatbotIcon) return;
+                     const isPanelVisible = chatbotPanel.style.display === 'flex';
+                     if (window.ignoreNextOutsideClick) {
+                         window.ignoreNextOutsideClick = false;
+                         console.log("chatbot.js: Ignoring this outside click.");
+                         return;
+                     }
+                     if (isPanelVisible && !chatbotPanel.contains(event.target) && event.target !== chatbotIcon && !chatbotIcon.contains(event.target)) {
+                         console.log("chatbot.js: Outside click listener fired.");
+                         if(closeButton) closeButton.click();
+                     }
+                 });
+                 chatbotPanel.addEventListener('click', function(event) { event.stopPropagation(); }); // Prevent closing on panel click
+             }
+             // --- End Outside Click ---
 
-      // Hide panel on close button click
-      closeButton.addEventListener('click', function() {
-          console.log("chatbot.js: Close button listener fired.");
-          chatbotPanel.style.display = 'none';
-          chatbotIcon.style.display = 'flex';
-          //window.chatbotInstance?.pauseSounds(); // Use optional chaining
-      });
-
-      // --- Outside Click Listener (Modified) ---
-      document.addEventListener('click', function(event) {
-        // Check if panel and icon exist (safety check)
-        if (!chatbotPanel || !chatbotIcon) return;
-
-        const isPanelVisible = chatbotPanel.style.display === 'flex';
-
-        // --- Add this check FIRST ---
-        // Check the global flag set by the React component
-        if (window.ignoreNextOutsideClick) {
-            window.ignoreNextOutsideClick = false; // Reset the flag immediately
-            console.log("chatbot.js: Ignoring this outside click (likely from button).");
-            return; // Stop processing this specific click event
+        } catch (error) {
+            console.error("chatbot.js: Failed to initialize ChatbotConversation:", error);
+            chatbotIcon.style.display = 'none';
         }
-        // --- End added check ---
-
-        // Original logic: If panel is visible and click is outside panel/icon
-        if (isPanelVisible && !chatbotPanel.contains(event.target) && event.target !== chatbotIcon && !chatbotIcon.contains(event.target)) { // Added check for icon container too
-            console.log("chatbot.js: Outside click listener fired.");
-            if(closeButton) closeButton.click(); // Trigger close button's logic only if button exists
-        }
-    });
-    // Prevent clicks inside panel closing it
-    chatbotPanel.addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-    // --- End Outside Click ---
-
-
-      // Set initial visibility (Important!)
-      chatbotPanel.style.display = 'none';
-      chatbotIcon.style.display = 'flex'; // Use flex as per CSS
-      console.log('chatbot.js: Initial visibility set (Icon visible, Panel hidden).'); // <-- Add log
-
-    } catch (error) {
-      console.error("chatbot.js: Failed to initialize ChatbotConversation:", error);
-      // Hide icon if initialization fails
-      chatbotIcon.style.display = 'none';
+    } else {
+         console.log('chatbot.js: ChatbotConversation instance already exists. Skipping recreation.');
+         // Ensure visibility is correct even if instance existed
     }
+
+    // Set initial visibility regardless of instance creation
+    chatbotPanel.style.display = 'none';
+    chatbotIcon.style.display = 'flex';
+    console.log('chatbot.js: Initial visibility set (Icon visible, Panel hidden).');
 }
 
-// }); // <-- REMOVE THIS LINE
-console.log('chatbot.js: Script end'); // <-- Add log
+console.log('chatbot.js: Script end');
