@@ -108,7 +108,7 @@ export default function NavBar() {
               : "bg-black/70 backdrop-blur-md shadow-md py-2" 
             : "bg-transparent py-6"
         }`}
-        style={{ animationDelay: '1.5s' }}
+        style={{ animationDelay: '0.5s' }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between relative">
           {/* Logo - always in top left */}
