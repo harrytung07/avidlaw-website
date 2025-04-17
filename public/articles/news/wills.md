@@ -1,3 +1,10 @@
+---
+title: 'Staying Ahead: Key Developments in BC Wills, Trusts, and Estates Law (2024-2025)'
+date: '2025-04-17'
+author: 'Richard Zhu'
+preview: 'Navigating the legal landscape of Wills, Trusts, and Estates in British Columbia requires staying informed about ongoing developments. While major legislative overhauls like the introduction of the *Wills, Estates and Succession Act* (WESA) are infrequent, the law continuously evolves through court interpretations, regulatory updates, and societal shifts. For individuals planning their estates, beneficiaries, executors, and trustees, understanding these changes is crucial for ensuring intentions are met, disputes are minimized, and administration proceeds smoothly.'
+---
+
 # **Staying Ahead: Key Developments in BC Wills, Trusts, and Estates Law (2024-2025)**
 
 **Introduction**
