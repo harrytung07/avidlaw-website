@@ -3,6 +3,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/react';
 // Remove the Image import if no longer needed elsewhere in this file
 // import Image from 'next/image';
 
@@ -57,6 +58,7 @@ export default function RootLayout({
           src="/chatbot/chatbot.js"
           strategy="afterInteractive"
         />
+        <Analytics />
       </body>
     </html>
   );
