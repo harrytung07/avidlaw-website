@@ -21,14 +21,14 @@ export default function TeamPage() {
   const teamMembers: TeamMember[] = [
     { id: 1, name: "Adele Sun", image: "/members/1. Adele Sun.jpg", title: "Barrister & Solicitor", description: "Adele Sun graduated from the University of British Columbia with a Juris Doctor (JD). Adele worked for TD Bank Canada as a Senior Financial Analyst for four years before she moved to Vancouver to pursue her legal education. She received a MBA from the Richard Ivey School of Business of University of Western Ontario in 2001. Prior to her immigrating to Canada, Adele had worked in areas including education, marketing, and management in China after she graduated with distinction from Harbin Teachers University of China." },
     { id: 2, name: "David Chen", image: "/members/2. David Chen.jpg", title: "Barrister & Solicitor", description: "David is a shareholder of Avid Law. His practice consists of almost exclusively civil litigation and family litigation and he loves it. Like many others in the same era, he immigrated to Canada with his family when he was at a young age. Grew up in Richmond, he attended UBC for his Bachelor of Science with distinction. He went on to work for Health Canada in Ottawa where his interest in law was sparked.\nDavid worked at the Office of Legislative and Regulatory Modernization in Health Canada where he was reading existing and proposed legislations daily. The work was fascinating and he was set on delving deeper into the legal profession. Fast tracking a few years, David started his law school at the University of Victoria and later completed his Juris Doctor degree with the University of Ottawa. He articled with a prominent mid-size boutique firm in Ottawa and was called to the Ontario bar before returning to his home province to practice. \nDavid is tremendously proud to be serving the communities in the Lower Mainland and Okanagan. During his spare time, if any at all, he can be found hiking and camping at different parks and lakes in the province." },
-    { id: 3, name: "Brent Desruisseaux", image: "/members/3. Brent Desruisseaux.jpg", title: "Barrister & Solicitor", description: "Brent Desruisseaux received his law degree from the University of Alberta in 2014. As a student, he volunteered his time with student legal services and the Edmonton Community Legal Centre providing pro bono legal services. Brent has maintained a general litigation practice following his admission to the Law Society of British Columbia in 2015 – he has successfully represented clients on a variety of civil, family, and criminal law matters. Brent understands that court can be an intimidating prospect for many clients and seeks to put them at ease by carefully explaining their rights and the range of possible outcomes. He finds immense personal and professional satisfaction protecting his clients’ interests and helping them navigate the justice system. Although he believes his clients are usually best served by negotiating a fair settlement, there are times when it is necessary to forcefully advocate in the courtroom. In his free time, Brent enjoys gardening and exploring the great outdoors with his family." },
+    { id: 3, name: "Brent Desruisseaux", image: "/members/3. Brent Desruisseaux.jpg", title: "Barrister & Solicitor", description: "Brent Desruisseaux received his law degree from the University of Alberta in 2014. As a student, he volunteered his time with student legal services and the Edmonton Community Legal Centre providing pro bono legal services. Brent has maintained a general litigation practice following his admission to the Law Society of British Columbia in 2015 – he has successfully represented clients on a variety of civil, family, and criminal law matters. Brent understands that court can be an intimidating prospect for many clients and seeks to put them at ease by carefully explaining their rights and the range of possible outcomes. He finds immense personal and professional satisfaction protecting his clients' interests and helping them navigate the justice system. Although he believes his clients are usually best served by negotiating a fair settlement, there are times when it is necessary to forcefully advocate in the courtroom. In his free time, Brent enjoys gardening and exploring the great outdoors with his family." },
     { id: 4, name: "Abiel Kwok", image: "/members/ava.jpg", title: "Barrister & Solicitor", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-    { id: 5, name: "Corey Poon", image: "/members/4. Corey Poon.jpg", title: "Barrister & Solicitor", description: "Corey earned his Bachelor of Arts in Philosophy at the University of British Columbia. In 2021, Corey completed his Juris Doctor (Law) at Thompson Rivers University where he was a founding member of the Criminal Law Club. In his spare time, Corey enjoys busking and volunteering in the community. Corey has served as a summer clinician at the Law Students’ Legal Advice Program representing low-income clients as well as volunteering at George Pearson Centre for the elderly." },
+    { id: 5, name: "Corey Poon", image: "/members/4. Corey Poon.jpg", title: "Barrister & Solicitor", description: "Corey earned his Bachelor of Arts in Philosophy at the University of British Columbia. In 2021, Corey completed his Juris Doctor (Law) at Thompson Rivers University where he was a founding member of the Criminal Law Club. In his spare time, Corey enjoys busking and volunteering in the community. Corey has served as a summer clinician at the Law Students' Legal Advice Program representing low-income clients as well as volunteering at George Pearson Centre for the elderly." },
     { id: 6, name: "Howard Qu", image: "/members/5. Howard Qu.jpg", title: "Barrister & Solicitor", description: "Howard advised clients on a broad range of matters related to multiple levels of courts and tribunals. He engaged in contract, corporate, tenancy, estate, family, property, tort, and other areas of law. Howard graduated from the University of Windsor with a Juris Doctor Degree. Howard is fluent in English and Mandarin." },
     { id: 7, name: "Freja Li", image: "/members/6. Freja Li.jpg", title: "Barrister & Solicitor", description: "Prior to joining the Avid Law, Freja was an officer of a private equity management corporation in Vancouver. Freja completed her Master Degree of Laws at McGill University in 2020. Before that, she obtained a Bachelor Degree of Laws in China and interned as a legal assistant of the Executive Director of All China Lawyers Association. The previous educational and work experience enabled her to develop a good understanding of the laws of those two countries and expanded her ability to prioritize and manage multiple tasks under pressure." },
     { id: 8, name: "Nicole Tam", image: "/members/ava.jpg", title: "Barrister & Solicitor", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
     { id: 9, name: "Olivia Nicolaides", image: "/members/ava.jpg", title: "Barrister & Solicitor", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-    { id: 10, name: "Rachel Li", image: "/members/7. Rachel Li.jpg", title: "Barrister & Solicitor", description: "Rachel was born and raised in mainland China. After graduating from one of the top journalism schools in China, she pursued a master’s degree in international journalism studies in Hong Kong. Her career started in Hong Kong as a journalist and editor for the national leading news agency in its Asian pacific bureau. Prior to attending law school, Rachel worked as a policy researcher in the Hong Kong legislator’s office where she has accumulated extensive experience in public policy and legislation’s scrutiny. Rachel is proficient in Mandarin, English, and Cantonese." },
+    { id: 10, name: "Rachel Li", image: "/members/7. Rachel Li.jpg", title: "Barrister & Solicitor", description: "Rachel was born and raised in mainland China. After graduating from one of the top journalism schools in China, she pursued a master's degree in international journalism studies in Hong Kong. Her career started in Hong Kong as a journalist and editor for the national leading news agency in its Asian pacific bureau. Prior to attending law school, Rachel worked as a policy researcher in the Hong Kong legislator's office where she has accumulated extensive experience in public policy and legislation's scrutiny. Rachel is proficient in Mandarin, English, and Cantonese." },
     { id: 11, name: "Farrah Yang", image: "/members/8. Farrah Yang.jpg", title: "Paralegal", description: "Farrah has a Paralegal Certificate with a focus on Family Law and 10 years of experience as an legal assistant in the areas of family law, corporate law, civil litigation and conveyance." },
     { id: 12, name: "Ashley Wong", image: "/members/11. Ashley Wong.jpg", title: "Legal Assistant", description: "Ashley graduated from Birmingham City University in Business Administration, she also has a Diploma in Legal Studies (Professional Stream) from Hong Kong University School of Professional and Continuing Education, she speaks Cantonese, Mandarin and English." },
     { id: 13, name: "Jeannie Lee", image: "/members/10. Jeannie Lee.jpg", title: "Legal Assistant", description: "Jeannie is mainly responsible for the real estate conveyance; she speaks both English and Korean." },
@@ -142,8 +142,55 @@ export default function TeamPage() {
         </div>
         
         <div className="container relative z-10 mx-auto px-6">
+          {/* Barristers & Solicitors */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {teamMembers.map((member) => (
+            {teamMembers.slice(0, 10).map((member) => (
+              <div
+                key={member.id}
+                className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={260}
+                    height={260}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3 text-center">
+                  <h3 className="font-semibold text-gray-900 text-base">{member.name}</h3>
+                  <p className="text-xs text-gray-600">{member.title}</p>
+                </div>
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <button
+                    onClick={() => handleMemberClick(member)}
+                    className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-5 py-2 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none text-sm"
+                  >
+                    View Profile
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Separator */}
+          <div className="my-16">
+            <div className="h-[2px] w-full bg-[#FFC107]"></div>
+          </div>
+          
+          {/* Support Staff */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {teamMembers.slice(10).map((member) => (
               <div
                 key={member.id}
                 className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
