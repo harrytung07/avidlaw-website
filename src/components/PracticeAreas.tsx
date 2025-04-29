@@ -230,7 +230,7 @@ export default function PracticeAreas() {
       <Toaster />
       
       {/* Hero Section */}
-      <section className="relative h-[100vh] flex items-center justify-center">
+      <section className="relative h-[80vh] flex items-center justify-center">
         {/* Background with overlay */}
         <div className="absolute inset-0 z-0">
           <Image 
@@ -252,32 +252,7 @@ export default function PracticeAreas() {
             Explore the legal expertise we bring to support every stage of your personal or business journey.
           </p>
           
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              const section = document.getElementById('family');
-              if (section) {
-                const sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
-                const offset = 100;
-                window.scrollTo({
-                  top: sectionTop - offset,
-                  behavior: 'smooth'
-                });
-              }
-            }}
-            className="group relative mt-8 inline-flex items-center gap-2 rounded-md bg-transparent px-8 py-3 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none"
-          >
-            EXPLORE
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+
         </div>
       </section>
       

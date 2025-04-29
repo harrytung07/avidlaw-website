@@ -482,7 +482,7 @@ export default function Articles() {
       {showNavbar && <NavBar />}
       
       {/* Hero section with background */}
-      <div className="relative h-screen flex items-center">
+      <div className="relative h-[80vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/bigBG.png" 
@@ -507,34 +507,7 @@ export default function Articles() {
               Stay informed with our in-depth analyses, practical guides, and insightful perspectives.
             </p>
             
-            {/* EXPLORE button */}
-            <a 
-              href="#articles-section"
-              className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] hover:text-black focus:outline-none"
-              onClick={(e) => {
-                e.preventDefault();
-                const articlesSection = document.getElementById('articles-section');
-                if (articlesSection) {
-                  const navbarHeight = 15; // Approximate navbar height
-                  const topPosition = articlesSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 20;
-                  window.scrollTo({
-                    top: topPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-            >
-              EXPLORE
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
+            
           </div>
         </div>
       </div>

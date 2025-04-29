@@ -81,7 +81,7 @@ export default function TeamPage() {
       <NavBar />
       
       {/* Hero Section */}
-      <section className="relative h-[100vh] flex items-center justify-center">
+      <section className="relative h-[80vh] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/bigBG.png" 
@@ -102,31 +102,7 @@ export default function TeamPage() {
             Meet the dedicated professionals who make our firm exceptional
           </p>
           
-          <button
-            onClick={() => {
-              const teamSection = document.getElementById('team-grid');
-              if (teamSection) {
-                const yOffset = -100; // Offset for navbar height
-                const y = teamSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({
-                  top: y,
-                  behavior: 'smooth'
-                });
-              }
-            }}
-            className="group relative mt-8 inline-flex items-center gap-2 rounded-md bg-transparent px-8 py-3 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none"
-          >
-            EXPLORE
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+          
         </div>
       </section>
 
