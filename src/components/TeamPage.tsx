@@ -185,7 +185,7 @@ export default function TeamPage() {
           
           {/* Separator */}
           <div className="my-16">
-            <div className="h-[2px] w-full bg-[#FFC107]"></div>
+            <div className="h-[2px] w-full bg-gray-500"></div>
           </div>
           
           {/* Support Staff */}
