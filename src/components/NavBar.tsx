@@ -26,7 +26,7 @@ export default function NavBar() {
   };
   
   const pathWithoutLocale = getPathWithoutLocale(pathname || '');
-  const isAboutPage = pathWithoutLocale === "/about" || pathWithoutLocale === "/";
+  const isAboutPage = pathWithoutLocale === "/about";
   const isHomePage = pathWithoutLocale === "/";
   
   // Helper to create locale-aware paths
