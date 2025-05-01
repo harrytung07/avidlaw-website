@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavBar from './NavBar';
+import { useTranslation } from '@/context/TranslationContext';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -12,6 +13,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default function About() {
+  const { t } = useTranslation();
   const sectionRefs = useRef<HTMLDivElement[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<HTMLDivElement[]>([]);
@@ -469,34 +471,34 @@ export default function About() {
         
             <div className="relative z-10 max-w-4xl mx-auto px-8 text-center pt-20">
               <h1 className="text-5xl font-bold uppercase text-white mb-8 mt-12">
-            About Avid Law
-            <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mt-8"></div>
-          </h1>
+                {t('about.sectionTitle')}
+                <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mt-8"></div>
+              </h1>
               <p className="text-l text-gray-300 max-w-3xl mx-auto mb-12">
-                Avid Law is the largest law firm in the Greater Vancouver area founded by Sino-Canadian lawyer. Located in Richmond, we proudly offer legal services in Mandarin, Cantonese, and English.
-          </p>
+                {t('about.sectionText')}
+              </p>
           
-          <button
+              <button
                 onClick={() => {
                   // Scroll to next panel using GSAP
                   const currentPanelIndex = 0; // First panel
                   navigateToPanel(currentPanelIndex + 1);
                 }}
                 className="group relative mt-6 inline-flex items-center gap-2 rounded-md bg-transparent px-8 py-3 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none"
-          >
-            EXPLORE
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
+              >
+                {t('exploreButton.explore')}
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
             </div>
+          </div>
       
           {/* Section 2: Our History */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
@@ -516,7 +518,7 @@ export default function About() {
                 <div className="relative h-[450px] w-full">
                     <Image 
                       src="/about1.jpg"
-                    alt="Avid Law History" 
+                    alt={t('about.historyTag')} 
                     fill 
                     className="object-cover object-top brightness-9" 
                   />
@@ -532,9 +534,9 @@ export default function About() {
               
               {/* Text content */}
               <div className="w-full md:w-1/2 text-left md:pl-6">
-                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12 ">Our History</h2>
+                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12 ">{t('about.historyTag')}</h2>
                 <p className="section-content text-l text-white leading-relaxed">
-                  Established over 14 years ago, Avid Law has earned a reputation for excellence, reliability, and professional integrity. Originally founded as CNS Law Corporation, our firm merged with Redman Law in June 2021, significantly expanding our capabilities through the synergy of our combined teams.
+                  {t('about.historyText')}
                 </p>
               </div>
             </div>
@@ -555,9 +557,9 @@ export default function About() {
             <div className="relative z-10 max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center gap-16">
               {/* Text content - Left */}
               <div className="w-full md:w-1/2 text-left">
-                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">Our Expertise</h2>
+                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">{t('about.expertiseTag')}</h2>
                 <p className="section-content text-l text-white leading-relaxed">
-                  Our firm provides comprehensive legal solutions in family law, real estate transactions, and business law, assisting various companies with their commercial needs. We have nearly 4,000 square feet of modern office space centrally located in downtown Richmond, allowing us to serve our clients effectively and efficiently.
+                  {t('about.expertiseText')}
                 </p>
         </div>
         
@@ -566,7 +568,7 @@ export default function About() {
                 <div className="relative h-[450px] w-full">
                     <Image 
                       src="/about2.jpg"
-                    alt="Avid Law Expertise" 
+                    alt={t('about.expertiseTag')} 
                       fill
                       className="object-cover"
                   />
@@ -597,12 +599,12 @@ export default function About() {
             <div className="relative z-10 max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center gap-24">
               {/* Text content - Left */}
               <div className="w-full md:w-1/2 text-left">
-                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">Litigation Services</h2>
+                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">{t('about.serviceTag')}</h2>
                 <p className="section-content text-l text-white leading-relaxed mb-8">
-                  Our experienced litigation lawyers passionately advocate for our clients at all levels of court, including Small Claims Court, the Provincial Court of British Columbia, the Supreme Court of British Columbia, and the Court of Appeal. We also represent clients before various tribunals, such as the Residential Tenancy Branch, the Employment Standards Branch, and the Federal Court.
+                  {t('about.serviceText1')}
                 </p>
                 <p className="section-content text-l text-white leading-relaxed">
-                  We are dedicated to aggressively protecting our clients' interests, thoroughly investigating each case, and ensuring no stone is left unturned. Beyond the courtroom, our team actively seeks alternative dispute resolutions, aiming for efficient and favorable outcomes.
+                  {t('about.serviceText2')}
                 </p>
               </div>
               
@@ -611,7 +613,7 @@ export default function About() {
                 <div className="relative h-[800px] w-full">
                   <Image 
                     src="/about3.png" 
-                    alt="Avid Law Litigation" 
+                    alt={t('about.serviceTag')} 
                     fill 
                     className="object-cover" 
                   />
@@ -645,7 +647,7 @@ export default function About() {
                 <div className="relative h-[450px] w-full">
                   <Image 
                     src="/about4.png" 
-                    alt="Avid Law Solicitor Services" 
+                    alt={t('about.solicitorTag')} 
                     fill 
                     className="object-cover" 
                   />
@@ -661,12 +663,12 @@ export default function About() {
               
               {/* Text content - Right */}
               <div className="w-full md:w-1/2 text-left md:pl-6">
-                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">Solicitor Services</h2>
+                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-12">{t('about.solicitorTag')}</h2>
                 <p className="section-content text-l text-white leading-relaxed mb-8">
-                  Our solicitors proactively identify and address potential legal issues through careful planning and tailored agreements. Whether preparing a prenuptial agreement, drafting employment contracts, or handling business purchase and sale transactions, we prioritize strategic legal advice to protect our clients' future interests.
+                  {t('about.solicitorText1')}
                 </p>
                 <p className="section-content text-l text-white leading-relaxed">
-                  We firmly believe that investing in preventive legal measures significantly reduces future litigation costs and risks, and we consistently advocate this approach to safeguard our clients' well-being.
+                  {t('about.solicitorText2')}
                 </p>
               </div>
             </div>
@@ -685,15 +687,15 @@ export default function About() {
             </div>
             
             <div className="relative z-10 max-w-4xl mx-auto px-8 text-center">
-              <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-8">Want to Dive Deeper?</h2>
+              <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-8">{t('about.eveTitle')}</h2>
               <div className="divider h-[3px] w-[120px] bg-[#FFC107] mx-auto mb-12"></div>
               <p className="section-content text-xl text-white leading-relaxed mb-16 max-w-2xl mx-auto">
-                Whether you're curious about the people behind Avid Law or want quick answers about our firm, we've got you covered.
+                {t('about.eveText')}
               </p>
               
               <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
                 <a href="/team" className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none">
-                  Meet Our Team
+                  {t('about.eveButton')}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
@@ -706,22 +708,20 @@ export default function About() {
                 </a>
                 
                 <a
-                  // href="/chat" // REMOVE href
-                  onClick={openChatbot} // ADD onClick
-                  role="button" // ADD role for accessibility
-                  className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none cursor-pointer" // ADD cursor-pointer
+                  onClick={openChatbot}
+                  role="button"
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none cursor-pointer"
                 >
-                  Chat with Eve
-                  {/* ... svg ... */}
-                   <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
+                  {t('eve.chatButton')}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
                 </a>
               </div>
             </div>
