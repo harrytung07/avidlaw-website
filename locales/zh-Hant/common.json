@@ -74,6 +74,81 @@
     "about.eveTitle": "想深入了解？",
     "about.eveText": "無論您想認識安勝 · 弘人律師行背後的團隊，還是希望快速了解本所資訊，我們都能滿足您的需求。",
     "about.eveButton": "認識我們的團隊",
+
+    "team.sectionTitle": "我們的團隊",
+  "team.sectionDescription": "認識成就我們律所卓越的專業人士",
+  "team.viewProfile": "查看簡介",
+  "team.needHelpQuestion": "不確定哪位律師最適合您？",
+  "team.eveDescription": "讓我們的 AI 助手 Eve 根據您的具體法律需求與情況，為您匹配最合適的律師。",
+
+  "team.name.AdeleSun": "孫紫涵",
+  "team.title.AdeleSun": "出庭律師兼事務律師",
+  "team.bio.AdeleSun": "孫紫涵畢業於英屬哥倫比亞大學，取得法學博士（JD）學位。在移居溫哥華攻讀法律之前，她曾在加拿大道明銀行擔任高級財務分析師四年。2001 年，她獲得西安大略大學毅偉商學院工商管理碩士（MBA）學位。移民加拿大之前，孫紫涵以優異成績畢業於中國哈爾濱師範大學，並在教育、市場營銷與管理等領域累積了豐富的工作經驗。",
+
+  "team.name.DavidChen": "陳以翔",
+  "team.title.DavidChen": "出庭律師兼事務律師",
+  "team.bio.DavidChen": "陳以翔是安勝·弘人律師行的股東，執業幾乎專注於民事訴訟及家事訴訟，並對此充滿熱忱。與同年代的許多人一樣，他年幼時隨家人移民加拿大，在列治文長大，並以優異成績取得英屬哥倫比亞大學理學學士學位。隨後，他在渥太華的加拿大衛生部工作，由此激發了他對法律的興趣。\n在衛生部立法與規管現代化辦公室任職期間，他每天研讀現行與擬議法規，對法律工作產生了濃厚興趣，並決心深入法律專業。幾年後，他進入維多利亞大學開始法律學習，隨後在渥太華大學完成法學博士（JD）學位。在渥太華一家知名中型精品律所完成實習後，他獲准安省執業，隨後回到家鄉不列顛哥倫比亞省執業。\n陳以翔非常自豪能為低陸平原及歐肯那根社區提供法律服務。業餘時間，他常在省內各公園和湖泊健行、露營。",
+
+  "team.name.BrentDesruisseaux": "布蘭特 · 德魯索",
+  "team.title.BrentDesruisseaux": "出庭律師兼事務律師",
+  "team.bio.BrentDesruisseaux": "布蘭特·德魯索於 2014 年畢業於阿爾伯塔大學法學院。在校期間，他曾在學生法律服務及埃德蒙頓社區法律中心提供公益法律服務。2015 年獲准加入不列顛哥倫比亞省律師協會後，他一直維持廣泛的訴訟業務，成功代理多項民事、家事及刑事案件。布蘭特深知出庭對許多當事人而言可能令人忐忑，他透過仔細解釋當事人的權利和可能結果來幫助他們安心。他在保護客戶利益、協助他們導航司法系統的過程中獲得巨大成就感。雖然他認為透過協商達成公平和解通常最符合客戶利益，但在必要時也會在法庭上堅決為客戶辯護。閒暇時，他喜歡與家人一起園藝及探索戶外。",
+
+  "team.name.CoreyPoon": "潘震邦",
+  "team.title.CoreyPoon": "出庭律師兼事務律師",
+  "team.bio.CoreyPoon": "潘震邦在英屬哥倫比亞大學獲得哲學學士學位。2021 年，他於湯普森河大學完成法學博士（JD）學位，並成為刑事法律俱樂部的創始成員。閒暇時間，潘震邦喜歡街頭表演並積極參與社區志願服務。他曾在法律學生法律援助計畫擔任暑期法律顧問，為低收入客戶提供代理，並在喬治·皮爾遜老人中心擔任志願者。",
+
+  "team.name.HowardQu": "曲浩源",
+  "team.title.HowardQu": "出庭律師兼事務律師",
+  "team.bio.HowardQu": "曲浩源為客戶就各級法院及多類行政法庭的相關事務提供廣泛法律意見，涉及合同、公司、租賃、遺產、家事、物業、侵權等領域。曲浩源畢業於溫莎大學，取得法學博士學位，精通英語及普通話。",
+
+  "team.name.FrejaLi": "李孟茗",
+  "team.title.FrejaLi": "出庭律師兼事務律師",
+  "team.bio.FrejaLi": "加入安勝·弘人律師行之前，李孟茗曾在溫哥華一家私募股權管理公司擔任管理人員。2020 年，她於麥吉爾大學取得法學碩士學位。在此之前，她在中國獲得法學學士學位，並曾在中華全國律師協會執行主任處實習擔任法律助理。豐富的教育和工作經歷使她對中加兩國法律擁有良好理解，並提升了她在壓力下統籌及處理多項任務的能力。",
+
+  "team.name.RachelLi": "李秋嬋",
+  "team.title.RachelLi": "出庭律師兼事務律師",
+  "team.bio.RachelLi": "李秋嬋出生並成長於中國大陸。自中國頂尖新聞學院畢業後，她在香港攻讀國際新聞學碩士學位。她的職業生涯始於香港，曾在國家領先通訊社亞太分社擔任記者及編輯。入讀法學院之前，李秋嬋在香港立法會議員辦公室擔任政策研究員，期間累積了豐富的公共政策及立法審查經驗。她精通普通話、英語及粵語。",
+
+  "team.name.AbielKwok": "Abiel 郭",
+  "team.title.AbielKwok": "出庭律師兼事務律師",
+
+  "team.name.NicoleTam": "談美芬",
+  "team.title.NicoleTam": "出庭律師兼事務律師",
+
+  "team.name.OliviaNicolaides": "尼古拉德斯 · 奧莉薇亞",
+  "team.title.OliviaNicolaides": "出庭律師兼事務律師",
+
+  "team.name.FarrahYang": "Farrah Yang",
+  "team.title.FarrahYang": "律師助理",
+  "team.bio.FarrahYang": "Farrah 持有以家事法為重點的律師助理證書，並在家事法、公司法、民事訴訟及地產轉讓等領域擁有 10 年法律助理經驗。",
+
+  "team.name.AshleyWong": "Ashley Wong",
+  "team.title.AshleyWong": "法律助理",
+  "team.bio.AshleyWong": "Ashley 畢業於伯明翰城市大學工商管理專業，並持有香港大學專業進修學院法律研究（專業方向）文憑。她能流利使用粵語、普通話和英語。",
+
+  "team.name.JeannieLee": "Jeannie Lee",
+  "team.title.JeannieLee": "法律助理",
+  "team.bio.JeannieLee": "Jeannie 主要負責房地產過戶事務，能使用英語和韓語。",
+
+  "team.name.StellaLi": "Stella Li",
+  "team.title.StellaLi": "法律助理",
+  "team.bio.StellaLi": "Stella 畢業於西蒙弗雷澤大學，閒暇時喜歡旅行。",
+
+  "team.name.SunnyZhang": "Sunny Zhang",
+  "team.title.SunnyZhang": "法律助理",
+  "team.bio.SunnyZhang": "Sunny 負責接待前台。",
+
+  "team.name.SarahYan": "Sarah Yan",
+  "team.title.SarahYan": "法律助理",
+
+  "team.name.DianaGao": "Diana Gao",
+  "team.title.DianaGao": "會計",
+
+  "team.name.Lynn": "Lynn",
+  "team.title.Lynn": "主管",
+
+  "team.name.RichardZhu": "Richard Zhu",
+  "team.title.RichardZhu": "IT 助理",
   
     "hero.title": "安心樂業 · 勝券在握",
     "hero.subtitle": "值得信賴的法律專長",

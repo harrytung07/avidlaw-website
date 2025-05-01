@@ -8,15 +8,40 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "@/context/TranslationContext";
 
 export default function NavBar() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
   
-  const isAboutPage = pathname === "/about";
-  const isHomePage = pathname === "/";
+  // Get path without locale prefix for route matching
+  const getPathWithoutLocale = (path: string) => {
+    const segments = path.split('/');
+    // Check if the first segment is a locale
+    if (segments.length > 1 && ['en', 'zh-Hans', 'zh-Hant'].includes(segments[1])) {
+      return '/' + segments.slice(2).join('/');
+    }
+    return path;
+  };
+  
+  const pathWithoutLocale = getPathWithoutLocale(pathname || '');
+  const isAboutPage = pathWithoutLocale === "/about" || pathWithoutLocale === "/";
+  const isHomePage = pathWithoutLocale === "/";
+  
+  // Helper to create locale-aware paths
+  const localePath = (path: string) => {
+    // If path is already absolute with locale, return it
+    if (path.startsWith(`/${locale}`)) return path;
+    
+    // If path starts with /, add locale prefix
+    if (path.startsWith('/')) {
+      return locale === 'en' ? path : `/${locale}${path}`;
+    }
+    
+    // For relative paths, return as is
+    return path;
+  };
   
   // Add scroll event listener
   useEffect(() => {
@@ -115,7 +140,7 @@ export default function NavBar() {
       >
         <div className="container mx-auto px-6 flex items-center justify-between relative">
           {/* Logo - always in top left */}
-          <Link href="/" className="relative z-10">
+          <Link href={localePath("/")} className="relative z-10">
             <div className="transition-all duration-300">
               <Image 
                 src="/Logo.svg" 
@@ -135,19 +160,19 @@ export default function NavBar() {
             }`}
           >
             <Link
-              href="/practice-areas"
+              href={localePath("/practice-areas")}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.practiceAreas")}
             </Link>
             <Link 
-              href="/about"
+              href={localePath("/about")}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.about")}
             </Link>
             <Link 
-              href="/team"
+              href={localePath("/team")}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.ourTeam")}
@@ -181,13 +206,13 @@ export default function NavBar() {
                 onMouseLeave={handleResourcesLeave}
               >
                 <Link 
-                  href="/news"
+                  href={localePath("/news")}
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
                   {t("nav.news")}
                 </Link>
                 <Link 
-                  href="/articles"
+                  href={localePath("/articles")}
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
                   {t("nav.articles")}
@@ -196,7 +221,7 @@ export default function NavBar() {
             </div>
             
             <a 
-              href={isHomePage ? "#contact" : "/#contact"}
+              href={isHomePage ? "#contact" : localePath("/#contact")}
               onClick={handleContactClick}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
@@ -223,6 +248,84 @@ export default function NavBar() {
             </button>
           </div>
           
+          {/* Mobile Navigation Menu */}
+          {menuOpen && (
+            <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-6">
+              <button 
+                onClick={toggleMenu}
+                className="absolute top-6 right-6 w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
+              >
+                <span className="w-6 h-0.5 bg-[#FFC107] transform rotate-45 translate-y-1"></span>
+                <span className="w-6 h-0.5 bg-[#FFC107] transform -rotate-45"></span>
+              </button>
+              
+              <div className="flex flex-col space-y-6 items-center">
+                <Link
+                  href={localePath("/practice-areas")}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                  onClick={toggleMenu}
+                >
+                  {t("nav.practiceAreas")}
+                </Link>
+                <Link 
+                  href={localePath("/about")}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                  onClick={toggleMenu}
+                >
+                  {t("nav.about")}
+                </Link>
+                <Link 
+                  href={localePath("/team")}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                  onClick={toggleMenu}
+                >
+                  {t("nav.ourTeam")}
+                </Link>
+                <Link 
+                  href={localePath("/news")}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                  onClick={toggleMenu}
+                >
+                  {t("nav.news")}
+                </Link>
+                <Link 
+                  href={localePath("/articles")}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                  onClick={toggleMenu}
+                >
+                  {t("nav.articles")}
+                </Link>
+                <a 
+                  href={isHomePage ? "#contact" : localePath("/#contact")}
+                  onClick={(e) => {
+                    toggleMenu();
+                    if (isHomePage) scrollToSection(e, 'contact');
+                  }}
+                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                >
+                  {t("nav.contact")}
+                </a>
+                
+                <button
+                  className="h-[50px] w-[50px] flex items-center justify-center mt-4"
+                  onClick={() => {
+                    toggleMenu();
+                    openChatbot();
+                  }}
+                  aria-label={t("nav.chatWithEve")}
+                >
+                  <Image
+                    src="/chatbot1.png"
+                    alt={t("nav.chatWithEve")}
+                    width={50}
+                    height={50}
+                    className="object-contain"
+                  />
+                </button>
+              </div>
+            </div>
+          )}
+          
           {/* Hamburger menu - visible on mobile or when scrolled on About page */}
           <div 
             className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 ${
@@ -248,120 +351,19 @@ export default function NavBar() {
             </div>
             
             <button
-              className="h-[50px] w-[50px] flex items-center justify-center"
+              className="h-[40px] w-[40px] flex items-center justify-center"
               onClick={openChatbot}
               aria-label={t("nav.chatWithEve")}
             >
               <Image
                 src="/chatbot1.png"
                 alt={t("nav.chatWithEve")}
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 className="object-contain"
               />
             </button>
           </div>
-        </div>
-      </div>
-      
-      {/* Mobile menu overlay */}
-      <div 
-        className={`fixed inset-0 bg-black/90 z-[60] transition-opacity duration-300 ${
-          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={toggleMenu}
-      >
-        <div className="flex flex-col items-center justify-center h-full space-y-8">
-          <Link
-            href="/practice-areas"
-            className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
-          >
-            {t("nav.practiceAreas")}
-          </Link>
-          <Link 
-            href="/about"
-            className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
-          >
-            {t("nav.about")}
-          </Link>
-          <Link 
-            href="/team"
-            className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
-          >
-            {t("nav.ourTeam")}
-          </Link>
-          
-          {/* Mobile Resources item with submenu */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide flex items-center space-x-2 cursor-default">
-              <span>{t("nav.resources")}</span>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <Link
-                href="/news"
-                className="text-gray-300 hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {t("nav.news")}
-              </Link>
-              <Link
-                href="/articles"
-                className="text-gray-300 hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {t("nav.articles")}
-              </Link>
-            </div>
-          </div>
-          
-          <a 
-            href={isHomePage ? "#contact" : "/#contact"}
-            onClick={(e) => {
-              toggleMenu();
-              if (isHomePage) {
-                scrollToSection(e, 'contact');
-              }
-            }}
-            className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
-          >
-            {t("nav.contact")}
-          </a>
-          
-          {/* Language Switcher in mobile menu */}
-          <div 
-            className="flex items-center justify-center mt-4" 
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <LanguageSwitcher />
-          </div>
-          
-          <button
-              className="h-[60px] w-[60px] flex items-center justify-center mt-4"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent closing menu
-                openChatbot();      // Open chatbot
-              }}
-              aria-label={t("nav.chatWithEve")}
-            >
-              <Image
-                src="/chatbot1.png"
-                alt={t("nav.chatWithEve")}
-                width={60}
-                height={60}
-                className="object-contain"
-              />
-            </button>
         </div>
       </div>
     </>

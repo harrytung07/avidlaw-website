@@ -22,6 +22,20 @@ const localeLabels: Record<string, string> = {
   'zh-Hant': '繁體'
 };
 
+// Map between language context values and URL locales
+const languageToLocale: Record<string, string> = {
+  'ENG': 'en',
+  '简体': 'zh-Hans',
+  '繁體': 'zh-Hant'
+};
+
+// Map from URL locales to language context values
+const localeToLanguage: Record<string, string> = {
+  'en': 'ENG',
+  'zh-Hans': '简体',
+  'zh-Hant': '繁體'
+};
+
 export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
   const { locale } = useTranslation();
@@ -32,9 +46,9 @@ export default function LanguageSwitcher() {
   // Get the current path without the locale prefix
   const getPathWithoutLocale = () => {
     const segments = pathname?.split('/') || [];
+    // Check if the first segment is a locale
     if (segments.length > 1) {
-      // Check if the first segment is a locale
-      if (['zh-Hans', 'zh-Hant'].includes(segments[1])) {
+      if (['en', 'zh-Hans', 'zh-Hant'].includes(segments[1])) {
         return '/' + segments.slice(2).join('/');
       }
     }
@@ -44,10 +58,13 @@ export default function LanguageSwitcher() {
   // Build path with new locale
   const getPathWithLocale = (newLocale: string) => {
     const basePath = getPathWithoutLocale();
+    
     // If path is just "/" then don't add another slash after the locale
     if (basePath === "/") {
       return newLocale === 'en' ? '/' : `/${newLocale}`;
     }
+    
+    // For all other paths, add the locale prefix
     return newLocale === 'en' ? basePath : `/${newLocale}${basePath}`;
   };
   
@@ -59,19 +76,11 @@ export default function LanguageSwitcher() {
       return;
     }
     
-    // Update the existing context for compatibility with current code
-    if (newLocale === 'en') {
-      setLanguage('ENG');
-    } else if (newLocale === 'zh-Hans') {
-      setLanguage('简体');
-    } else if (newLocale === 'zh-Hant') {
-      setLanguage('繁體');
-    }
+    // Update the language context for compatibility with current code
+    setLanguage(localeToLanguage[newLocale] as any);
     
-    // Get the new path with locale
+    // Get the new path with locale and navigate to it
     const newPath = getPathWithLocale(newLocale);
-    
-    // Navigate to the new locale path
     router.push(newPath);
   };
 

@@ -20,7 +20,21 @@ declare global {
 }
 
 export function LawFirmLanding() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  
+  // Helper to create locale-aware paths
+  const localePath = (path: string) => {
+    // If path is already absolute with locale, return it
+    if (path.startsWith(`/${locale}`)) return path;
+    
+    // If path starts with /, add locale prefix
+    if (path.startsWith('/')) {
+      return locale === 'en' ? path : `/${locale}${path}`;
+    }
+    
+    // For relative paths, return as is
+    return path;
+  };
   
   // Team members data
   const teamMembers = [
@@ -268,7 +282,7 @@ export function LawFirmLanding() {
                 </p>
                 
                 <div className="relative inline-block group">
-                  <Link href="/about">
+                  <Link href={localePath("/about")}>
                     <button className="h-[40px] w-[160px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
                       <span className="relative z-10">{t("intro.readMore")}</span>
                       <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>
@@ -324,7 +338,7 @@ export function LawFirmLanding() {
               </div>
               
               <div className="relative inline-block group">
-                <Link href="/team">
+                <Link href={localePath("/team")}>
                   <button className="h-[40px] w-[180px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
                     <span className="relative z-10">{t("attorneys.meetTeam")}</span>
                     <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>
@@ -444,7 +458,7 @@ export function LawFirmLanding() {
                   </div>
               
               <div className="relative inline-block group">
-                <Link href="/practice-areas">
+                <Link href={localePath("/practice-areas")}>
                   <button className="h-[40px] w-[200px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
                     <span className="relative z-10">{t("practiceAreas.viewAll")}</span>
                     <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>

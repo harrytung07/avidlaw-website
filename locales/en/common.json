@@ -75,6 +75,81 @@
   "about.eveText": "Whether you're curious about the people behind Avid Law or want quick answers about our firm, we've got you covered.",
   "about.eveButton": "Meet Our Team",
 
+  "team.sectionTitle": "Our Team",
+  "team.sectionDescription": "Meet the dedicated professionals who make our firm exceptional",
+  "team.viewProfile": "View Profile",
+  "team.needHelpQuestion": "Not sure which lawyer is right for you?",
+  "team.eveDescription": "Let Eve, our AI assistant, guide you to the best-suited lawyer based on your specific legal needs and circumstances.",
+
+  "team.name.AdeleSun": "Adele Sun",
+  "team.title.AdeleSun": "Barrister & Solicitor",
+  "team.bio.AdeleSun": "Adele Sun graduated from the University of British Columbia with a Juris Doctor (JD). Adele worked for TD Bank Canada as a Senior Financial Analyst for four years before she moved to Vancouver to pursue her legal education. She received a MBA from the Richard Ivey School of Business of University of Western Ontario in 2001. Prior to her immigrating to Canada, Adele had worked in areas including education, marketing, and management in China after she graduated with distinction from Harbin Teachers University of China.",
+
+  "team.name.DavidChen": "David Chen",
+  "team.title.DavidChen": "Barrister & Solicitor",
+  "team.bio.DavidChen": "David is a shareholder of Avid Law. His practice consists of almost exclusively civil litigation and family litigation and he loves it. Like many others in the same era, he immigrated to Canada with his family when he was at a young age. Grew up in Richmond, he attended UBC for his Bachelor of Science with distinction. He went on to work for Health Canada in Ottawa where his interest in law was sparked.\nDavid worked at the Office of Legislative and Regulatory Modernization in Health Canada where he was reading existing and proposed legislations daily. The work was fascinating and he was set on delving deeper into the legal profession. Fast-tracking a few years, David started his law school at the University of Victoria and later completed his Juris Doctor degree with the University of Ottawa. He articled with a prominent mid-size boutique firm in Ottawa and was called to the Ontario bar before returning to his home province to practice.\nDavid is tremendously proud to be serving the communities in the Lower Mainland and Okanagan. During his spare time, if any at all, he can be found hiking and camping at different parks and lakes in the province.",
+
+  "team.name.BrentDesruisseaux": "Brent Desruisseaux",
+  "team.title.BrentDesruisseaux": "Barrister & Solicitor",
+  "team.bio.BrentDesruisseaux": "Brent Desruisseaux received his law degree from the University of Alberta in 2014. As a student, he volunteered his time with student legal services and the Edmonton Community Legal Centre providing pro bono legal services. Brent has maintained a general litigation practice following his admission to the Law Society of British Columbia in 2015 – he has successfully represented clients on a variety of civil, family, and criminal law matters. Brent understands that court can be an intimidating prospect for many clients and seeks to put them at ease by carefully explaining their rights and the range of possible outcomes. He finds immense personal and professional satisfaction protecting his clients' interests and helping them navigate the justice system. Although he believes his clients are usually best served by negotiating a fair settlement, there are times when it is necessary to forcefully advocate in the courtroom. In his free time, Brent enjoys gardening and exploring the great outdoors with his family.",
+
+  "team.name.CoreyPoon": "Corey Poon",
+  "team.title.CoreyPoon": "Barrister & Solicitor",
+  "team.bio.CoreyPoon": "Corey earned his Bachelor of Arts in Philosophy at the University of British Columbia. In 2021, Corey completed his Juris Doctor (Law) at Thompson Rivers University where he was a founding member of the Criminal Law Club. In his spare time, Corey enjoys busking and volunteering in the community. Corey has served as a summer clinician at the Law Students' Legal Advice Program representing low-income clients as well as volunteering at George Pearson Centre for the elderly.",
+
+  "team.name.HowardQu": "Howard Qu",
+  "team.title.HowardQu": "Barrister & Solicitor",
+  "team.bio.HowardQu": "Howard advised clients on a broad range of matters related to multiple levels of courts and tribunals. He engaged in contract, corporate, tenancy, estate, family, property, tort, and other areas of law. Howard graduated from the University of Windsor with a Juris Doctor Degree. Howard is fluent in English and Mandarin.",
+
+  "team.name.FrejaLi": "Freja Li",
+  "team.title.FrejaLi": "Barrister & Solicitor",
+  "team.bio.FrejaLi": "Prior to joining the Avid Law, Freja was an officer of a private equity management corporation in Vancouver. Freja completed her Master Degree of Laws at McGill University in 2020. Before that, she obtained a Bachelor Degree of Laws in China and interned as a legal assistant of the Executive Director of All China Lawyers Association. The previous educational and work experience enabled her to develop a good understanding of the laws of those two countries and expanded her ability to prioritize and manage multiple tasks under pressure.",
+
+  "team.name.RachelLi": "Rachel Li",
+  "team.title.RachelLi": "Barrister & Solicitor",
+  "team.bio.RachelLi": "Rachel was born and raised in mainland China. After graduating from one of the top journalism schools in China, she pursued a master's degree in international journalism studies in Hong Kong. Her career started in Hong Kong as a journalist and editor for the national leading news agency in its Asian-Pacific bureau. Prior to attending law school, Rachel worked as a policy researcher in the Hong Kong legislator's office where she accumulated extensive experience in public policy analysis and legislative scrutiny. Rachel is proficient in Mandarin, English, and Cantonese.",
+
+  "team.name.FarrahYang": "Farrah Yang",
+  "team.title.FarrahYang": "Paralegal",
+  "team.bio.FarrahYang": "Farrah has a Paralegal Certificate with a focus on Family Law and 10 years of experience as a legal assistant in the areas of family law, corporate law, civil litigation and conveyance.",
+
+  "team.name.AshleyWong": "Ashley Wong",
+  "team.title.AshleyWong": "Legal Assistant",
+  "team.bio.AshleyWong": "Ashley graduated from Birmingham City University in Business Administration; she also holds a Diploma in Legal Studies (Professional Stream) from Hong Kong University School of Professional and Continuing Education. She speaks Cantonese, Mandarin and English.",
+
+  "team.name.JeannieLee": "Jeannie Lee",
+  "team.title.JeannieLee": "Legal Assistant",
+  "team.bio.JeannieLee": "Jeannie is mainly responsible for real-estate conveyance; she speaks both English and Korean.",
+
+  "team.name.StellaLi": "Stella Li",
+  "team.title.StellaLi": "Legal Assistant",
+  "team.bio.StellaLi": "Stella graduated from Simon Fraser University; in her spare time, she likes to travel.",
+
+  "team.name.SunnyZhang": "Sunny Zhang",
+  "team.title.SunnyZhang": "Legal Assistant",
+  "team.bio.SunnyZhang": "Sunny is responsible for the front desk.",
+
+  "team.name.AbielKwok": "Abiel Kwok",
+  "team.title.AbielKwok": "Barrister & Solicitor",
+
+  "team.name.NicoleTam": "Nicole Tam",
+  "team.title.NicoleTam": "Barrister & Solicitor",
+
+  "team.name.OliviaNicolaides": "Olivia Nicolaides",
+  "team.title.OliviaNicolaides": "Barrister & Solicitor",
+
+  "team.name.SarahYan": "Sarah Yan",
+  "team.title.SarahYan": "Legal Assistant",
+
+  "team.name.DianaGao": "Diana Gao",
+  "team.title.DianaGao": "Accountant",
+
+  "team.name.Lynn": "Lynn",
+  "team.title.Lynn": "OIC",
+
+  "team.name.RichardZhu": "Richard Zhu",
+  "team.title.RichardZhu": "IT Assistant",
+
   "hero.title": "WE GET THINGS DONE",
   "hero.subtitle": "Legal expertise you can trust",
   "hero.chatButton": "Chat with Eve",

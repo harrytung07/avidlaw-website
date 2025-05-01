@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavBar from './NavBar';
 import { useTranslation } from '@/context/TranslationContext';
+import Link from 'next/link';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -13,10 +14,24 @@ if (typeof window !== 'undefined') {
 }
 
 export default function About() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const sectionRefs = useRef<HTMLDivElement[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<HTMLDivElement[]>([]);
+
+  // Helper to create locale-aware paths
+  const localePath = (path: string) => {
+    // If path is already absolute with locale, return it
+    if (path.startsWith(`/${locale}`)) return path;
+    
+    // If path starts with /, add locale prefix
+    if (path.startsWith('/')) {
+      return locale === 'en' ? path : `/${locale}${path}`;
+    }
+    
+    // For relative paths, return as is
+    return path;
+  };
 
   useEffect(() => {
     // Skip in SSR
@@ -404,20 +419,23 @@ export default function About() {
     const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPerPanel = totalScroll / (panelRefs.current.length - 1);
     
-      window.scrollTo({
+    window.scrollTo({
       top: index * scrollPerPanel,
-        behavior: 'smooth'
-      });
+      behavior: 'smooth'
+    });
   };
 
-  // Add section to refs
+  // Add ref to array helper
   const addToRefs = (el: HTMLDivElement | null) => {
     if (el && !sectionRefs.current.includes(el)) {
       sectionRefs.current.push(el);
     }
   };
-   // --- Add the function to open the chatbot (copied from LawFirmLanding) ---
-   const openChatbot = (event: MouseEvent<HTMLAnchorElement>) => { // Use HTMLAnchorElement if attaching to <a>
+
+  // Function to open the chatbot
+  const openChatbot = (event: MouseEvent<HTMLAnchorElement>) => { // Use HTMLAnchorElement if attaching to <a>
+    event.preventDefault();
+    
     const icon = document.getElementById('chatbotIcon');
     const panel = document.getElementById('chatbotPanel');
 
@@ -440,10 +458,7 @@ export default function About() {
     } else {
         console.error("Chatbot icon or panel element not found.");
     }
-    // Prevent default anchor tag navigation if needed (though we removed href)
-    event.preventDefault();
   };
-  // --- End function ---
 
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
@@ -451,24 +466,24 @@ export default function About() {
       <NavBar />
       
       {/* Horizontal scroll container */}
-      <div 
-        ref={containerRef} 
+      <div
+        ref={containerRef}
         className="horizontal-scroll-container h-screen w-screen overflow-hidden"
       >
         <div className="panels-container flex h-full">
           {/* Section 1: About Avid Law */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
-            className="object-cover" 
-            priority
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        
+                alt="Background" 
+                fill 
+                className="object-cover" 
+                priority
+              />
+              <div className="absolute inset-0 bg-black/50"></div>
+            </div>
+            
             <div className="relative z-10 max-w-4xl mx-auto px-8 text-center pt-20">
               <h1 className="text-5xl font-bold uppercase text-white mb-8 mt-12">
                 {t('about.sectionTitle')}
@@ -502,22 +517,22 @@ export default function About() {
       
           {/* Section 2: Our History */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
+                alt="Background" 
+                fill 
                 className="object-cover opacity-100" 
-          />
+              />
               <div className="absolute inset-0 bg-black/25"></div>
-        </div>
-        
+            </div>
+            
             <div className="relative z-10 max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center gap-16">
               {/* Image with reveal effect */}
               <div className="w-full md:w-4/4 relative overflow-hidden shadow-2xl rounded-xl">
                 <div className="relative h-[450px] w-full">
-                    <Image 
-                      src="/about1.jpg"
+                  <Image 
+                    src="/about1.jpg"
                     alt={t('about.historyTag')} 
                     fill 
                     className="object-cover object-top brightness-9" 
@@ -544,11 +559,11 @@ export default function About() {
       
           {/* Section 3: Our Expertise */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
+                alt="Background" 
+                fill 
                 className="object-cover opacity-70" 
               />
               <div className="absolute inset-0 bg-black/40"></div>
@@ -561,16 +576,16 @@ export default function About() {
                 <p className="section-content text-l text-white leading-relaxed">
                   {t('about.expertiseText')}
                 </p>
-        </div>
-        
+              </div>
+              
               {/* Image with reveal effect - Right */}
               <div className="w-full md:w-2/3 relative overflow-hidden shadow-2xl rounded-lg">
                 <div className="relative h-[450px] w-full">
-                    <Image 
-                      src="/about2.jpg"
+                  <Image 
+                    src="/about2.jpg"
                     alt={t('about.expertiseTag')} 
-                      fill
-                      className="object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute top-0 left-0 w-full h-full bg-black/80 image-reveal-overlay"
                        style={{ 
@@ -586,16 +601,16 @@ export default function About() {
       
           {/* Section 4: Litigation Services */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
+                alt="Background" 
+                fill 
                 className="object-cover opacity-85" 
-          />
+              />
               <div className="absolute inset-0 bg-black/35"></div>
-        </div>
-        
+            </div>
+            
             <div className="relative z-10 max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center gap-24">
               {/* Text content - Left */}
               <div className="w-full md:w-1/2 text-left">
@@ -631,16 +646,16 @@ export default function About() {
       
           {/* Section 5: Solicitor Services */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
+                alt="Background" 
+                fill 
                 className="object-cover opacity-75" 
-          />
+              />
               <div className="absolute inset-0 bg-black/35"></div>
-        </div>
-        
+            </div>
+            
             <div className="relative z-10 max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center gap-16">
               {/* Image with reveal effect - Left */}
               <div className="w-full md:w-1/2 relative overflow-hidden shadow-2xl rounded-lg">
@@ -676,11 +691,11 @@ export default function About() {
       
           {/* Section 6: Want to Dive Deeper? */}
           <div className="panel w-screen h-screen flex-shrink-0 relative flex items-center justify-center" ref={addToRefs}>
-        <div className="absolute inset-0 z-0">
-          <Image 
+            <div className="absolute inset-0 z-0">
+              <Image 
                 src="/sideBG.png" 
-            alt="Background" 
-            fill 
+                alt="Background" 
+                fill 
                 className="object-cover opacity-60" 
               />
               <div className="absolute inset-0 bg-black/40"></div>
@@ -694,7 +709,10 @@ export default function About() {
               </p>
               
               <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
-                <a href="/team" className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none">
+                <Link 
+                  href={localePath("/team")} 
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none"
+                >
                   {t('about.eveButton')}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
@@ -705,7 +723,7 @@ export default function About() {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
-                </a>
+                </Link>
                 
                 <a
                   onClick={openChatbot}

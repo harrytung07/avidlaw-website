@@ -34,6 +34,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
+  // Redirect from / to /en/ (or default locale)
+  if (pathname === '/') {
+    const url = new URL(`/${defaultLocale}`, request.url);
+    return NextResponse.redirect(url);
+  }
+  
   // Check if the pathname already has a supported locale
   const pathLocale = getLocaleFromPath(pathname);
   
@@ -53,14 +59,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(newUrl);
   }
   
-  // For default locale, no need to rewrite
-  if (pathname === '/' || pathname.startsWith('/en/')) {
-    return NextResponse.next();
-  }
-  
-  // For all other paths, add the default locale for browser display
-  // But don't redirect - just rewrite internally
-  return NextResponse.next();
+  // For paths without a locale, redirect to add the default locale
+  // This ensures all URLs in the browser include the locale
+  const url = new URL(`/${defaultLocale}${pathname}`, request.url);
+  return NextResponse.redirect(url);
 }
 
 // Match all routes except files, images, static files
