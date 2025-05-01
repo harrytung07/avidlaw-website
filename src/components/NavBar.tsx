@@ -4,6 +4,7 @@ import React, { useState, useEffect, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -199,16 +200,22 @@ export default function NavBar() {
             >
               Contact
             </a>
+            
+            {/* Language Switcher - Added here */}
+            <div className="flex items-center">
+              <LanguageSwitcher />
+            </div>
+            
             <button
               className="h-[50px] w-[50px] flex items-center justify-center ml-4"
-              onClick={openChatbot} // <--- ADD onClick
-              aria-label="Chat with Eve" // Add accessibility label
+              onClick={openChatbot}
+              aria-label="Chat with Eve"
             >
               <Image
-                src="/chatbot1.png" // Assuming this is correct PNG path now
+                src="/chatbot1.png"
                 alt="Chat with Eve"
-                width={50} // Adjust size if needed
-                height={50} // Adjust size if needed
+                width={50}
+                height={50}
                 className="object-contain"
               />
             </button>
@@ -233,16 +240,21 @@ export default function NavBar() {
               <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
             </button>
             
+            {/* Language Switcher - Added here for mobile/collapsed view */}
+            <div className="flex items-center">
+              <LanguageSwitcher />
+            </div>
+            
             <button
               className="h-[50px] w-[50px] flex items-center justify-center"
-              onClick={openChatbot} // <--- ADD onClick
-              aria-label="Chat with Eve" // Add accessibility label
+              onClick={openChatbot}
+              aria-label="Chat with Eve"
             >
               <Image
-                src="/chatbot1.png" // Assuming this is correct PNG path now
+                src="/chatbot1.png"
                 alt="Chat with Eve"
-                width={50} // Adjust size if needed
-                height={50} // Adjust size if needed
+                width={50}
+                height={50}
                 className="object-contain"
               />
             </button>
@@ -321,19 +333,30 @@ export default function NavBar() {
           >
             Contact
           </a>
+          
+          {/* Language Switcher in mobile menu */}
+          <div 
+            className="flex items-center justify-center mt-4" 
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <LanguageSwitcher />
+          </div>
+          
           <button
-              className="h-[60px] w-[60px] flex items-center justify-center mt-8"
+              className="h-[60px] w-[60px] flex items-center justify-center mt-4"
               onClick={(e) => {
                 e.stopPropagation(); // Prevent closing menu
                 openChatbot();      // Open chatbot
               }}
-              aria-label="Chat with Eve" // Add accessibility label
+              aria-label="Chat with Eve"
             >
               <Image
-                src="/chatbot1.png" // Assuming this is correct PNG path now
+                src="/chatbot1.png"
                 alt="Chat with Eve"
-                width={60} // Size might be different here
-                height={60} // Size might be different here
+                width={60}
+                height={60}
                 className="object-contain"
               />
             </button>
