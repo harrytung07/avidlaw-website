@@ -5,17 +5,20 @@ import Image from 'next/image';
 import { Toaster } from 'react-hot-toast';
 import NavBar from './NavBar';
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from '@/context/TranslationContext';
 
 // Define the type for a practice area
 interface PracticeArea {
   id: string;
-  title: string;
+  titleKey: string;
   image: string;
-  description: string;
+  descriptionKey: string;
   services: string[];
 }
 
 export default function PracticeAreas() {
+  const { t } = useTranslation();
+  
   // State for sticky nav
   const [activeSection, setActiveSection] = useState('family');
   const [isNavSticky, setIsNavSticky] = useState(false);
@@ -62,75 +65,75 @@ export default function PracticeAreas() {
   const practiceAreas: PracticeArea[] = [
     {
       id: 'family',
-      title: 'Family Law',
+      titleKey: 'practiceAreas.familyLaw',
       image: '/areas/family.png',
-      description: "Compassionate guidance through life's most personal legal challenges.",
+      descriptionKey: 'practiceAreas.familyLawDescription',
       services: [
-        'Prenuptial Agreement',
-        'Separation/Divorce Agreement',
-        'Matrimonial Properties Division',
-        'Child Support',
-        'Spouse Support',
-        'Divorce Order',
-        'Divorce Litigation'
+        'practiceAreas.prenuptialAgreement',
+        'practiceAreas.separationDivorceAgreement',
+        'practiceAreas.matrimonialPropertiesDivision',
+        'practiceAreas.childSupport',
+        'practiceAreas.spouseSupport',
+        'practiceAreas.divorceOrder',
+        'practiceAreas.divorceLitigation'
       ]
     },
     {
       id: 'corporate',
-      title: 'Corporate & Commercial Law',
+      titleKey: 'practiceAreas.corporateCommercialLaw',
       image: '/areas/corporate.png',
-      description: "Strategic legal counsel for businesses at every stage of growth.",
+      descriptionKey: 'practiceAreas.corporateCommercialLawDescription',
       services: [
-        'Incorporation and Maintenance',
-        'Commercial Contract Drafting',
-        'Employment Contract',
-        'Shareholder Agreement',
-        'Partnership Agreement',
-        'Purchase and Sale of Businesses',
-        'Commercial Lending',
-        'Corporate Restructuring',
-        'Franchise Agreement'
+        'practiceAreas.incorporationMaintenance',
+        'practiceAreas.commercialContractDrafting',
+        'practiceAreas.employmentContract',
+        'practiceAreas.shareholderAgreement',
+        'practiceAreas.partnershipAgreement',
+        'practiceAreas.purchaseSaleBusinesses',
+        'practiceAreas.commercialLending',
+        'practiceAreas.corporateRestructuring',
+        'practiceAreas.franchiseAgreement'
       ]
     },
     {
       id: 'litigation',
-      title: 'Civil Litigation',
+      titleKey: 'practiceAreas.civilLitigation',
       image: '/areas/litigation.png',
-      description: "Skilled representation to protect your interests in court.",
+      descriptionKey: 'practiceAreas.civilLitigationDescription',
       services: [
-        'Defamation',
-        'Debt Collection',
-        'Shareholder Disputes',
-        'Construction and Real Estate Disputes',
-        'Contract Disputes',
-        'Fraud Claims',
-        'Estate Litigations'
+        'practiceAreas.defamation',
+        'practiceAreas.debtCollection',
+        'practiceAreas.shareholderDisputes',
+        'practiceAreas.constructionRealEstateDisputes',
+        'practiceAreas.contractDisputes',
+        'practiceAreas.fraudClaims',
+        'practiceAreas.estateLitigations'
       ]
     },
     {
       id: 'conveyancing',
-      title: 'Conveyancing',
+      titleKey: 'practiceAreas.conveyancing',
       image: '/areas/conveyance.png',
-      description: "Seamless property transactions with careful attention to detail.",
+      descriptionKey: 'practiceAreas.conveyancingDescription',
       services: [
-        'Residential Purchase and Sale',
-        'Residential Mortgages Including Refinancing',
-        'LOTR Filing',
-        'Commercial Real Estate Purchase and Sale'
+        'practiceAreas.residentialPurchaseSale',
+        'practiceAreas.residentialMortgagesRefinancing',
+        'practiceAreas.lotrFiling',
+        'practiceAreas.commercialRealEstatePurchaseSale'
       ]
     },
     {
       id: 'wills',
-      title: 'Wills, Trust & Estates',
+      titleKey: 'practiceAreas.willsTrustEstates',
       image: '/areas/will.png',
-      description: "Comprehensive estate planning to protect your legacy and loved ones.",
+      descriptionKey: 'practiceAreas.willsTrustEstatesDescription',
       services: [
-        'Wills',
-        'Representation Agreements',
-        'Probate With and Without Will',
-        'Estate Planning',
-        'Document Authentication with Embassies',
-        'Power of Attorney'
+        'practiceAreas.wills',
+        'practiceAreas.representationAgreements',
+        'practiceAreas.probateWithWithoutWill',
+        'practiceAreas.estatePlanning',
+        'practiceAreas.documentAuthenticationEmbassies',
+        'practiceAreas.powerOfAttorney'
       ]
     }
   ];
@@ -163,7 +166,7 @@ export default function PracticeAreas() {
                   <div className="relative h-[300px] w-full">
                     <Image 
                       src={area.image}
-                      alt={area.title}
+                      alt={t(area.titleKey)}
                       fill
                       className="object-cover"
                     />
@@ -173,15 +176,15 @@ export default function PracticeAreas() {
               
               {/* Content - reduced width to fit in the 4/5 container */}
               <div className="w-full md:w-3/5">
-                <h2 className="text-3xl font-bold uppercase mb-4">{area.title}</h2>
+                <h2 className="text-3xl font-bold uppercase mb-4">{t(area.titleKey)}</h2>
                 <div className="h-[3px] w-[80px] bg-[#FFC107] mb-6"></div>
-                <p className="text-lg text-gray-700 italic mb-8">{area.description}</p>
+                <p className="text-lg text-gray-700 italic mb-8">{t(area.descriptionKey)}</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {area.services.map((service: string, i: number) => (
+                  {area.services.map((serviceKey: string, i: number) => (
                     <div key={i} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-[#FFC107] mr-2"></div>
-                      <span className="text-gray-800">{service}</span>
+                      <span className="text-gray-800">{t(serviceKey)}</span>
                     </div>
                   ))}
                 </div>
@@ -193,7 +196,7 @@ export default function PracticeAreas() {
     );
   };
 
-    // --- Add the function to open the chatbot ---
+  // --- Add the function to open the chatbot ---
   const openChatbot = () => { // No event param needed here unless preventing default on an anchor
     const icon = document.getElementById('chatbotIcon');
     const panel = document.getElementById('chatbotPanel');
@@ -245,14 +248,12 @@ export default function PracticeAreas() {
         
         <div className="container relative z-10 mx-auto px-6 text-center">
           <h1 className="text-5xl font-bold uppercase text-white mb-6 pt-16 mt-10">
-            Our Practice Areas
+            {t('practiceAreas.pageTitle')}
             <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mt-8"></div>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-            Explore the legal expertise we bring to support every stage of your personal or business journey.
+            {t('practiceAreas.heroDescription')}
           </p>
-          
-
         </div>
       </section>
       
@@ -278,7 +279,7 @@ export default function PracticeAreas() {
                       : 'text-gray-800 hover:text-gray-900 hover:bg-gray-100/50'
                   }`}
                 >
-                  <span className="whitespace-nowrap">{area.title}</span>
+                  <span className="whitespace-nowrap">{t(area.titleKey)}</span>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className="h-4 w-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" 
@@ -316,20 +317,19 @@ export default function PracticeAreas() {
         </div>
         
         <div className="container relative z-10 mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Need help with any of these areas?</h2>
+          <h2 className="text-3xl font-bold mb-8">{t('practiceAreas.eveTitle')}</h2>
           <div className="flex items-center justify-center">
             <button
-              // Add the onClick handler here
               onClick={openChatbot}
               className="group relative inline-flex items-center gap-3 rounded-md bg-transparent px-8 py-3 font-semibold text-gray-900 border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] hover:text-white focus:outline-none"
             >
               <Image
-                src="/chatbot.png" // Assuming this is the correct small icon for the button
+                src="/chatbot.png"
                 alt="Eve Bot"
                 width={50}
                 height={50}
               />
-              CHAT WITH EVE
+              {t('eve.chatButton')}
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -358,7 +358,7 @@ export default function PracticeAreas() {
         </div>
         
         <p className="relative z-10 text-gray-900 text-sm text-center">
-          © 2025 Avid Law. All rights reserved.
+          {t('footer.copyright').replace('{currentYear}', new Date().getFullYear().toString())}
         </p>
       </div>
     </div>

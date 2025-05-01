@@ -49,7 +49,15 @@
     "practiceAreas.estatePlanning": "遺產規劃",
     "practiceAreas.documentAuthenticationEmbassies": "使領館文件認證",
     "practiceAreas.powerOfAttorney": "授權書",
-    "practiceAreas.closeModal": "關閉窗口",
+    "practiceAreas.closeModal": "關閉",
+    "practiceAreas.pageTitle": "我們的服務範疇",
+    "practiceAreas.heroDescription": "探索我們於個人及企業不同階段所提供的法律專長。",
+    "practiceAreas.familyLawDescription": "於人生最私密的法律挑戰中提供貼心指引。",
+    "practiceAreas.corporateCommercialLawDescription": "為企業各發展階段提供策略性法律顧問。",
+    "practiceAreas.civilLitigationDescription": "以精湛訴訟技巧保障您的權益。",
+    "practiceAreas.conveyancingDescription": "細緻周全的物業過戶服務。",
+    "practiceAreas.willsTrustEstatesDescription": "全面遺產規劃，守護您的資產與至親。",
+    "practiceAreas.eveTitle": "以上範疇需要協助？",
   
     "hero.title": "安心樂業 · 勝券在握",
     "hero.subtitle": "值得信賴的法律專長",
@@ -59,15 +67,15 @@
     "intro.historyTag": "歷史：安勝 · 弘人律師行成立",
     "intro.year": "2009",
     "intro.sectionTitle": "全方位列治文律師事務所",
-    "intro.sectionText": "我們擁有經驗豐富的律師團隊，能為企業、政府機構、組織、專業人士及個人在本地、區域及全國層面處理各類複雜法律事務。十二年來的執業積累，使我們深厚的專業知識與成熟判斷為客戶創造真正價值。",
+    "intro.sectionText": "我們擁有經驗豐富的律師團隊，能於本地、區域及全國層面為企業、政府機構、組織、專業人士及個人處理各類複雜法律事務。十二年的執業經驗使我們深厚的專業知識及成熟判斷為客戶創造真正價值。",
     "intro.readMore": "了解更多",
   
     "attorneys.sectionTitle": "我們的法律團隊",
-    "attorneys.sectionText1": "在安勝 · 弘人律師行，我們的法律團隊多元且敬業，致力於提供高質、高效且具成本效益的法律服務。作為大溫地區規模最大的華人創辦律師事務所，我們以多元文化及多語服務自豪，可熟練使用普通話、粵語、英語、韓語及西班牙語為客戶服務。",
-    "attorneys.sectionText2": "自十二年前於列治文成立以來，安勝 · 弘人律師行已成為卑詩低陸平原華人社區最受尊敬的律師事務所之一。我們的律師及專業助理團隊在列治文市中心近 4,000 平方呎的現代化辦公室辦公，為客戶提供便捷優質服務。",
-    "attorneys.sectionText3": "2021 年 6 月，我們的前身 CNS Law Corporation 與 Redman Law 戰略合併，匯聚資源與專長，進一步提升服務能力。我們的團隊在家事法、房地產、公司商事法、民事訴訟及遺產規劃等多領域表現卓越。",
-    "attorneys.sectionText4": "我們的訴訟律師代表客戶出庭於各級法院，從小額索償法庭、省級法院、最高法院到上訴法院，並在住宅租務處、就業標準處及聯邦法院等專門法庭積極辯護，力求高效、策略且有利的結果。",
-    "attorneys.sectionText5": "我們的非訴團隊則通過起草嚴謹協議主動預防潛在糾紛。無論是婚前協議、商業交易架構或企業策略諮詢，我們堅信今日的前瞻性法律規劃可避免明日高昂訴訟成本。",
+    "attorneys.sectionText1": "在安勝 · 弘人律師行，我們的團隊多元且敬業，致力於提供高質、高效且具成本效益的法律服務。作為大溫地區規模最大的華人創辦律師事務所，我們以多元文化及多語服務自豪，可熟練使用普通話、粵語、英語、韓語及西班牙語。",
+    "attorneys.sectionText2": "自十二年前於列治文成立以來，安勝 · 弘人律師行已成為卑詩低陸平原華人社區最受尊敬的律師事務所之一。我們在列治文市中心近 4,000 平方呎的現代化辦公室辦公，為客戶提供便捷優質服務。",
+    "attorneys.sectionText3": "2021 年 6 月，我們的前身 CNS Law Corporation 與 Redman Law 戰略合併，匯聚資源與專長，進一步提升服務能力。我們的團隊於家事法、房產、公司商事法、民事訴訟及遺產規劃等多領域表現卓越。",
+    "attorneys.sectionText4": "我們的訴訟律師代表客戶出庭於各級法院，亦在住宅租務處、就業標準處及聯邦法院等專門法庭積極辯護，力求高效、策略且有利的結果。",
+    "attorneys.sectionText5": "我們的非訴團隊通過起草嚴謹協議主動預防潛在糾紛。無論是婚前協議、商業交易架構或企業策略諮詢，我們堅信今日的前瞻性法律規劃可避免明日高昂訴訟成本。",
     "attorneys.sectionText6": "在安勝 · 弘人律師行，您的利益至上。我們的卓越團隊將以清晰、勤勉與信心陪伴您應對每一次法律挑戰。",
     "attorneys.meetTeam": "了解我們的團隊",
     "attorneys.roleManagingPartner": "管理合夥人",
@@ -80,19 +88,19 @@
   
     "practiceAreas.sectionTitle": "服務範疇",
     "practiceAreas.sectionSubtitle": "全面專長 · 量身訂製",
-    "practiceAreas.sectionText1": "在安勝 · 弘人律師行，我們的服務涵蓋多個法律領域，可有效應對各行各業的複雜問題。我們綜合的服務模式，確保在家事法、公司商事、民事訴訟、房地產交易以及遺囑信託與遺產規劃等方面，為客戶提供最佳解決方案。",
-    "practiceAreas.sectionText2": "憑藉跨學科團隊的集體智慧，我們向每位客戶提供個性化、策略型且以結果為導向的方案。我們注重充分準備與主動建議，提前預見並化解潛在風險，為客戶帶來高效且具成本效益的結果。",
-    "practiceAreas.sectionText3": "多年來，安勝 · 弘人律師行憑藉專業、誠信與不懈的客戶倡導精神建立了卓越聲譽。我們將繼續傳承此優良傳統，為客戶量身打造全方位法律服務，以滿足其不斷變化的需求與目標。",
+    "practiceAreas.sectionText1": "我們的服務涵蓋多個法律範疇，可有效應對各行各業的複雜問題，包括家事法、公司商事、民事訴訟、房地產交易以及遺囑信託與遺產規劃等。",
+    "practiceAreas.sectionText2": "憑藉跨學科團隊的集體智慧，我們向每位客戶提供個人化、策略型且以結果為導向的方案，提前預見並化解潛在風險，帶來高效且具成本效益的成果。",
+    "practiceAreas.sectionText3": "多年來，安勝 · 弘人律師行憑藉專業、誠信與不懈的客戶倡導精神建立卓越聲譽，並將繼續為客戶提供全方位法律服務。",
     "practiceAreas.viewAll": "查看全部服務",
   
     "eve.sectionTitle": "不確定哪位律師最適合您？",
-    "eve.sectionText": "讓 AI 助手 Eve 為您導航，根據您的具體法律需求預約最合適的律師。",
+    "eve.sectionText": "讓 AI 助手 Eve 為您導航，根據您的法律需求配對最合適的律師。",
     "eve.chatButton": "與 Eve 聊聊",
   
     "contact.sectionTitle": "聯絡我們",
     "contact.phoneLabel": "電話：",
     "contact.emailLabel": "電郵：",
-    "contact.officeHours": "我們的團隊週一至週五 08:30–17:30 竭誠為您服務，期待協助您解決法律需求。",
+    "contact.officeHours": "我們團隊週一至週五 08:30–17:30 竭誠為您服務，期待協助您解決法律需求。",
     "contact.office1Title": "太平洋商務中心",
     "contact.office2Title": "時代坊（衛星辦公室）",
     "contact.copyButtonTooltip": "已複製到剪貼簿！",
@@ -104,4 +112,5 @@
     "contact.mapButtonTooltip": "查看地圖",
   
     "footer.copyright": "© {currentYear} 安勝 · 弘人律師行。版權所有。"
-}
+  }
+  
