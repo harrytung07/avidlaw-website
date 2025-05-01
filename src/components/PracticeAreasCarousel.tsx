@@ -4,60 +4,18 @@ import React, { useEffect, useState, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
+import { useTranslation } from '@/context/TranslationContext';
+import { useModal } from '@/context/ModalContext';
 
 interface PracticeAreasCarouselProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
 
-// Define subareas for each practice area
-const practiceAreaDetails = {
-  "Family Law": [
-    "Prenuptial Agreement",
-    "Separation/Divorce Agreement",
-    "Matrimonial Properties Division",
-    "Child Support",
-    "Spouse Support",
-    "Divorce Order",
-    "Divorce Litigation"
-  ],
-  "Corporate & Commercial Law": [
-    "Incorporation and Maintenance",
-    "Commercial Contract Drafting",
-    "Employment contract",
-    "Shareholder Agreement",
-    "Partnership Agreement",
-    "Purchase and sale of businesses",
-    "Commercial Lending",
-    "Corporate Restructuring",
-    "Franchise agreement"
-  ],
-  "Civil Litigation": [
-    "Defamation",
-    "Debt collection",
-    "Shareholder disputes",
-    "Construction and real estate disputes",
-    "Contract disputes",
-    "Fraud claims",
-    "Estate litigations"
-  ],
-  "Conveyancing": [
-    "Residential purchase and sale",
-    "Residential mortgages including refinancing",
-    "LOTR filing",
-    "Commercial real estate purchase and sale"
-  ],
-  "Wills, Trust & Estates": [
-    "Wills",
-    "Representation Agreements",
-    "Probate with and without will",
-    "Estate Planning",
-    "Document authentication with embassies",
-    "Power of Attorney"
-  ]
-};
-
 export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: PracticeAreasCarouselProps) {
+  const { t } = useTranslation();
+  const { setModalOpen } = useModal();
+  
   // Create autoplay plugin with options but don't store a reference to it
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: 'start', slidesToScroll: 1 }, 
@@ -68,13 +26,61 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   const [showModal, setShowModal] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
 
+  // Define practice areas with translation keys
   const practiceAreas = [
-    { id: 1, title: 'Family Law', image: '/areas/family.png' },
-    { id: 2, title: 'Corporate & Commercial Law', image: '/areas/corporate.png' },
-    { id: 3, title: 'Civil Litigation', image: '/areas/litigation.png' },
-    { id: 4, title: 'Conveyancing', image: '/areas/conveyance.png' },
-    { id: 5, title: 'Wills, Trust & Estates', image: '/areas/will.png' },
+    { id: 1, titleKey: 'practiceAreas.familyLaw', image: '/areas/family.png' },
+    { id: 2, titleKey: 'practiceAreas.corporateCommercialLaw', image: '/areas/corporate.png' },
+    { id: 3, titleKey: 'practiceAreas.civilLitigation', image: '/areas/litigation.png' },
+    { id: 4, titleKey: 'practiceAreas.conveyancing', image: '/areas/conveyance.png' },
+    { id: 5, titleKey: 'practiceAreas.willsTrustEstates', image: '/areas/will.png' },
   ];
+
+  // Define subareas for each practice area using translation keys
+  const practiceAreaDetails: Record<string, string[]> = {
+    'practiceAreas.familyLaw': [
+      'practiceAreas.prenuptialAgreement',
+      'practiceAreas.separationDivorceAgreement',
+      'practiceAreas.matrimonialPropertiesDivision',
+      'practiceAreas.childSupport',
+      'practiceAreas.spouseSupport',
+      'practiceAreas.divorceOrder',
+      'practiceAreas.divorceLitigation'
+    ],
+    'practiceAreas.corporateCommercialLaw': [
+      'practiceAreas.incorporationMaintenance',
+      'practiceAreas.commercialContractDrafting',
+      'practiceAreas.employmentContract',
+      'practiceAreas.shareholderAgreement',
+      'practiceAreas.partnershipAgreement',
+      'practiceAreas.purchaseSaleBusinesses',
+      'practiceAreas.commercialLending',
+      'practiceAreas.corporateRestructuring',
+      'practiceAreas.franchiseAgreement'
+    ],
+    'practiceAreas.civilLitigation': [
+      'practiceAreas.defamation',
+      'practiceAreas.debtCollection',
+      'practiceAreas.shareholderDisputes',
+      'practiceAreas.constructionRealEstateDisputes',
+      'practiceAreas.contractDisputes',
+      'practiceAreas.fraudClaims',
+      'practiceAreas.estateLitigations'
+    ],
+    'practiceAreas.conveyancing': [
+      'practiceAreas.residentialPurchaseSale',
+      'practiceAreas.residentialMortgagesRefinancing',
+      'practiceAreas.lotrFiling',
+      'practiceAreas.commercialRealEstatePurchaseSale'
+    ],
+    'practiceAreas.willsTrustEstates': [
+      'practiceAreas.wills',
+      'practiceAreas.representationAgreements',
+      'practiceAreas.probateWithWithoutWill',
+      'practiceAreas.estatePlanning',
+      'practiceAreas.documentAuthenticationEmbassies',
+      'practiceAreas.powerOfAttorney'
+    ]
+  };
 
   // Handle mouse enter - pause autoplay
   const handleMouseEnter = useCallback(() => {
@@ -93,9 +99,11 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   }, [emblaApi, onMouseLeave]);
 
   // Handle area card click
-  const handleAreaClick = (areaTitle: string) => {
-    setSelectedArea(areaTitle);
+  const handleAreaClick = (areaTitleKey: string) => {
+    setSelectedArea(areaTitleKey);
     setShowModal(true);
+    // Update the modal context to indicate a modal is open
+    setModalOpen(true);
     // Ensure autoplay stops when modal is open
     if (emblaApi?.plugins()?.autoplay?.stop) {
       emblaApi.plugins().autoplay.stop();
@@ -106,6 +114,8 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   const closeModal = () => {
     setShowModal(false);
     setSelectedArea(null);
+    // Update the modal context to indicate the modal is closed
+    setModalOpen(false);
     if (emblaApi?.plugins()?.autoplay?.play) {
       emblaApi.plugins().autoplay.play();
     }
@@ -156,6 +166,16 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
     };
   }, [showModal]);
 
+  // Clean up modal state when component unmounts
+  useEffect(() => {
+    return () => {
+      if (showModal) {
+        // Ensure we reset modal state if component unmounts while modal is open
+        setModalOpen(false);
+      }
+    };
+  }, [showModal, setModalOpen]);
+
   return (
     <div className="relative">
       {/* Modal for showing subareas */}
@@ -194,25 +214,25 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
               <button 
                 className="absolute top-4 right-4 text-white hover:text-[#FFC107] text-2xl"
                 onClick={closeModal}
-                aria-label="Close modal"
+                aria-label={t("practiceAreas.closeModal")}
               >
                 &times;
               </button>
               
               <h2 className="text-2xl font-bold text-white mb-3">
-                {selectedArea}
+                {t(selectedArea)}
               </h2>
               <div className="w-24 h-[2px] bg-[#FFC107] mb-10"></div>
               
               <div className="max-h-[70vh] overflow-y-auto pr-4 pl-2 pb-4">
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {practiceAreaDetails[selectedArea as keyof typeof practiceAreaDetails].map((subarea, index) => (
+                  {practiceAreaDetails[selectedArea].map((subareaKey, index) => (
                     <li 
                       key={index} 
                       className="flex items-center text-white py-2 px-2 hover:bg-[#FFC107]/10 hover:text-[#FFC107] rounded transition-all"
                     >
                       <span className="h-1.5 w-1.5 bg-white rounded-full mr-3"></span>
-                      {subarea}
+                      {t(subareaKey)}
                     </li>
                   ))}
                 </ul>
@@ -233,18 +253,18 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
             <div className="embla__slide p-4 select-none" key={area.id}>
               <div 
                 className="relative h-[350px] rounded-md overflow-hidden group cursor-pointer shadow-lg select-none"
-                onClick={() => handleAreaClick(area.title)}
+                onClick={() => handleAreaClick(area.titleKey)}
               >
                 <Image 
                   src={area.image}
-                  alt={area.title}
+                  alt={t(area.titleKey)}
                   fill
                   draggable="false"
                   className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
-                  <h3 className="text-white uppercase font-bold text-lg select-none">{area.title}</h3>
+                  <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
                   <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-all duration-300 group-hover:w-24"></div>
                 </div>
               </div>

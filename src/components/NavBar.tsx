@@ -5,8 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function NavBar() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
@@ -117,7 +119,7 @@ export default function NavBar() {
             <div className="transition-all duration-300">
               <Image 
                 src="/Logo.svg" 
-                alt="Avid Law Logo" 
+                alt={t("nav.altLogo")} 
                 width={scrolled ? 160 : 200} 
                 height={scrolled ? 56 : 70} 
                 className={`brightness-150 filter transition-all duration-500 ${scrolled ? 'scale-95' : 'scale-100'}`}
@@ -136,19 +138,19 @@ export default function NavBar() {
               href="/practice-areas"
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
-              Practice Areas
+              {t("nav.practiceAreas")}
             </Link>
             <Link 
               href="/about"
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
-              About
+              {t("nav.about")}
             </Link>
             <Link 
               href="/team"
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
-              Our Team
+              {t("nav.ourTeam")}
             </Link>
             
             {/* Resources Dropdown */}
@@ -158,7 +160,7 @@ export default function NavBar() {
               onMouseLeave={handleResourcesLeave}
             >
               <div className="text-white text-base font-medium uppercase tracking-wide flex items-center space-x-1 transition-colors cursor-default">
-                <span className={resourcesOpen ? "text-[#FFC107]" : "group-hover:text-[#FFC107]"}>Resources</span>
+                <span className={resourcesOpen ? "text-[#FFC107]" : "group-hover:text-[#FFC107]"}>{t("nav.resources")}</span>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className={`h-4 w-4 transition-transform duration-300 ${resourcesOpen ? "rotate-180 text-[#FFC107]" : "text-white group-hover:text-[#FFC107]"}`} 
@@ -182,13 +184,13 @@ export default function NavBar() {
                   href="/news"
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
-                  News
+                  {t("nav.news")}
                 </Link>
                 <Link 
                   href="/articles"
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
-                  Articles
+                  {t("nav.articles")}
                 </Link>
               </div>
             </div>
@@ -198,7 +200,7 @@ export default function NavBar() {
               onClick={handleContactClick}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
-              Contact
+              {t("nav.contact")}
             </a>
             
             {/* Language Switcher - Added here */}
@@ -209,11 +211,11 @@ export default function NavBar() {
             <button
               className="h-[50px] w-[50px] flex items-center justify-center ml-4"
               onClick={openChatbot}
-              aria-label="Chat with Eve"
+              aria-label={t("nav.chatWithEve")}
             >
               <Image
                 src="/chatbot1.png"
-                alt="Chat with Eve"
+                alt={t("nav.chatWithEve")}
                 width={50}
                 height={50}
                 className="object-contain"
@@ -248,11 +250,11 @@ export default function NavBar() {
             <button
               className="h-[50px] w-[50px] flex items-center justify-center"
               onClick={openChatbot}
-              aria-label="Chat with Eve"
+              aria-label={t("nav.chatWithEve")}
             >
               <Image
                 src="/chatbot1.png"
-                alt="Chat with Eve"
+                alt={t("nav.chatWithEve")}
                 width={50}
                 height={50}
                 className="object-contain"
@@ -274,25 +276,25 @@ export default function NavBar() {
             href="/practice-areas"
             className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
           >
-            Practice Areas
+            {t("nav.practiceAreas")}
           </Link>
           <Link 
             href="/about"
             className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
           >
-            About
+            {t("nav.about")}
           </Link>
           <Link 
             href="/team"
             className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
           >
-            Our Team
+            {t("nav.ourTeam")}
           </Link>
           
           {/* Mobile Resources item with submenu */}
           <div className="flex flex-col items-center space-y-4">
             <div className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide flex items-center space-x-2 cursor-default">
-              <span>Resources</span>
+              <span>{t("nav.resources")}</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-5 w-5" 
@@ -309,14 +311,14 @@ export default function NavBar() {
                 className="text-gray-300 hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
                 onClick={(e) => e.stopPropagation()}
               >
-                News
+                {t("nav.news")}
               </Link>
               <Link
                 href="/articles"
                 className="text-gray-300 hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
                 onClick={(e) => e.stopPropagation()}
               >
-                Articles
+                {t("nav.articles")}
               </Link>
             </div>
           </div>
@@ -331,7 +333,7 @@ export default function NavBar() {
             }}
             className="text-white hover:text-[#FFC107] text-2xl font-medium uppercase tracking-wide"
           >
-            Contact
+            {t("nav.contact")}
           </a>
           
           {/* Language Switcher in mobile menu */}
@@ -350,11 +352,11 @@ export default function NavBar() {
                 e.stopPropagation(); // Prevent closing menu
                 openChatbot();      // Open chatbot
               }}
-              aria-label="Chat with Eve"
+              aria-label={t("nav.chatWithEve")}
             >
               <Image
                 src="/chatbot1.png"
-                alt="Chat with Eve"
+                alt={t("nav.chatWithEve")}
                 width={60}
                 height={60}
                 className="object-contain"

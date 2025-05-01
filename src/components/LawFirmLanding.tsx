@@ -10,6 +10,7 @@ import PracticeAreasCarousel from "./PracticeAreasCarousel";
 import "./embla.css";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
+import { useTranslation } from "@/context/TranslationContext";
 
 declare global {
   interface Window {
@@ -19,20 +20,22 @@ declare global {
 }
 
 export function LawFirmLanding() {
+  const { t } = useTranslation();
+  
   // Team members data
   const teamMembers = [
-    { id: 1, name: "Adele Sun", title: "Managing Partner", image: "/members/1. Adele Sun.jpg" },
-    { id: 2, name: "David Chen", title: "Senior Associate", image: "/members/2. David Chen.jpg" },
-    { id: 3, name: "Brent Desruisseaux", title: "Family Law Specialist", image: "/members/3. Brent Desruisseaux.jpg" },
-    { id: 4, name: "Corey Poon", title: "Corporate Law Specialist", image: "/members/4. Corey Poon.jpg" },
-    { id: 5, name: "Howard Qu", title: "Litigation Expert", image: "/members/5. Howard Qu.jpg" },
-    { id: 6, name: "Freja Li", title: "Estate Planning Attorney", image: "/members/6. Freja Li.jpg" },
-    { id: 7, name: "Rachel Li", title: "Family Law Specialist", image: "/members/7. Rachel Li.jpg" },
-    { id: 8, name: "Farrah Yang", title: "Corporate Law Specialist", image: "/members/8. Farrah Yang.jpg" },
-    { id: 9, name: "Sunny Zhang", title: "Legal Assistant", image: "/members/9. Sunny Zhang.jpg" },
-    { id: 10, name: "Jeannie Lee", title: "Legal Assistant", image: "/members/10. Jeannie Lee.jpg" },
-    { id: 11, name: "Ashley Wong", title: "Legal Assistant", image: "/members/11. Ashley Wong.jpg" },
-    { id: 12, name: "Stella Li", title: "Legal Assistant", image: "/members/12. Stella Li.jpg" },
+    { id: 1, name: "Adele Sun", title: t("attorneys.roleManagingPartner"), image: "/members/1. Adele Sun.jpg" },
+    { id: 2, name: "David Chen", title: t("attorneys.roleSeniorAssociate"), image: "/members/2. David Chen.jpg" },
+    { id: 3, name: "Brent Desruisseaux", title: t("attorneys.roleFamilyLawSpecialist"), image: "/members/3. Brent Desruisseaux.jpg" },
+    { id: 4, name: "Corey Poon", title: t("attorneys.roleCorporateLawSpecialist"), image: "/members/4. Corey Poon.jpg" },
+    { id: 5, name: "Howard Qu", title: t("attorneys.roleLitigationExpert"), image: "/members/5. Howard Qu.jpg" },
+    { id: 6, name: "Freja Li", title: t("attorneys.roleEstatePlanningAttorney"), image: "/members/6. Freja Li.jpg" },
+    { id: 7, name: "Rachel Li", title: t("attorneys.roleFamilyLawSpecialist"), image: "/members/7. Rachel Li.jpg" },
+    { id: 8, name: "Farrah Yang", title: t("attorneys.roleCorporateLawSpecialist"), image: "/members/8. Farrah Yang.jpg" },
+    { id: 9, name: "Sunny Zhang", title: t("attorneys.roleLegalAssistant"), image: "/members/9. Sunny Zhang.jpg" },
+    { id: 10, name: "Jeannie Lee", title: t("attorneys.roleLegalAssistant"), image: "/members/10. Jeannie Lee.jpg" },
+    { id: 11, name: "Ashley Wong", title: t("attorneys.roleLegalAssistant"), image: "/members/11. Ashley Wong.jpg" },
+    { id: 12, name: "Stella Li", title: t("attorneys.roleLegalAssistant"), image: "/members/12. Stella Li.jpg" },
   ];
 
   // Team slide state
@@ -74,7 +77,7 @@ export function LawFirmLanding() {
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text)
       .then(() => {
-        toast.success(`${label} copied to clipboard!`, {
+        toast.success(`${label} ${t("contact.copyButtonTooltip")}`, {
           duration: 2000,
           position: 'bottom-center',
           style: {
@@ -84,7 +87,7 @@ export function LawFirmLanding() {
         });
       })
       .catch((err) => {
-        toast.error('Failed to copy to clipboard', {
+        toast.error(t("contact.copyFailedTooltip"), {
           duration: 2000,
           position: 'bottom-center',
         });
@@ -161,10 +164,10 @@ export function LawFirmLanding() {
             <div className="text-right relative opacity-0 animate-fadeIn" style={{ animationDelay: '1.5s' }}>
               <div className="absolute left-[-50px] top-[-30px] bottom-[-2px] w-[4px] bg-[#FFC107] z-20"></div>
               <h1 className="text-5xl font-bold uppercase mb-4 text-white">
-                <span className="text-[#FFC107]">We get</span> things done
+                {t("hero.title")}
               </h1>
               <p className="text-2xl text-white font-medium mb-6">
-                Legal expertise you can trust
+                {t("hero.subtitle")}
               </p>
               <div className="flex justify-end mt-16">
                 <button 
@@ -174,7 +177,7 @@ export function LawFirmLanding() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  Chat with Eve
+                  {t("hero.chatButton")}
                 </button>
               </div>
             </div>
@@ -220,7 +223,7 @@ export function LawFirmLanding() {
             <div className="md:w-1/2 relative">
               {/* Yellow vertical line - extending from company name down but not all the way */}
               <div className="absolute left-0 top-[32px] bottom-[-200px] w-[4px] bg-[#FFC107] z-20"></div>
-              <h2 className="text-[42px] font-serif uppercase tracking-wide text-black mb-24 ml-36 mt-12">AVID LAW</h2>
+              <h2 className="text-[42px] font-serif uppercase tracking-wide text-black mb-24 ml-36 mt-12">{t("intro.companyName")}</h2>
             </div>
           </div>
           
@@ -237,7 +240,7 @@ export function LawFirmLanding() {
                 <div className="absolute bottom-0 left-0 right-0 h-[60px] bg-gradient-to-t from-black/90 to-transparent z-10">
                   <div className="text-center absolute bottom-4 left-0 right-0">
                     <p className="text-white uppercase font-bold text-sm tracking-wider">
-                      HISTORY: AVID LAW ESTABLISHED
+                      {t("intro.historyTag")}
                     </p>
                     <div className="w-16 h-[2px] bg-white mx-auto mt-2"></div>
                   </div>
@@ -247,7 +250,7 @@ export function LawFirmLanding() {
               {/* Year and Carousel Navigation - inside box 2 */}
               <div className="absolute bottom-[-80px] left-[170px] flex items-center z-20">
                 <div className="h-[50px] w-[4px] bg-gray-400 mr-4"></div>
-                <p className="text-[#FFC107] text-5xl font-serif italic">2009</p>
+                <p className="text-[#FFC107] text-5xl font-serif italic">{t("intro.year")}</p>
                 <div className="ml-6 flex space-x-6">
                   <span className="text-2xl cursor-pointer hover:text-gray-700">«</span>
                   <span className="text-2xl cursor-pointer hover:text-gray-700">»</span>
@@ -259,17 +262,17 @@ export function LawFirmLanding() {
             <div className="md:w-1/2 pt-0">
               {/* Content directly within bottom white box */}
               <div className="relative px-8 py-10 z-10 ml-28 max-w-3xl mt-16">
-                <h3 className="text-xl font-serif font-bold text-black mb-7">A Full-Service Richmond Law Firm</h3>
+                <h3 className="text-xl font-serif font-bold text-black mb-7">{t("intro.sectionTitle")}</h3>
                 <p className="text-[15px] text-gray-700 leading-7 mb-10">
-                  With experienced attorneys who can handle a broad range of complex legal issues for businesses, governmental entities, organizations, professionals, and individuals, at the local, regional, and national levels. Through more than 12 years of practicing law, the firm has developed the deep knowledge base and sound judgment that delivers value to our clients.
+                  {t("intro.sectionText")}
                 </p>
                 
                 <div className="relative inline-block group">
                   <Link href="/about">
                     <button className="h-[40px] w-[160px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
-                      <span className="relative z-10">READ MORE</span>
+                      <span className="relative z-10">{t("intro.readMore")}</span>
                       <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>
-                </button>
+                    </button>
                   </Link>
                 </div>
               </div>
@@ -294,25 +297,25 @@ export function LawFirmLanding() {
             <div className="md:w-2/5">
               <div className="relative">
                 <div className="h-[460px] overflow-y-auto pr-6 text-base text-gray-700 leading-relaxed mb-11 scrollbar-container">
-                  <h2 className="text-3xl font-bold uppercase mb-8">Our Legal Team</h2>
+                  <h2 className="text-3xl font-bold uppercase mb-8">{t("attorneys.sectionTitle")}</h2>
                   
                   <p className="mb-6 text-sm leading-relaxed">
-                    At Avid Law, our legal team is a diverse and dedicated group of professionals committed to delivering quality, efficient, and cost-effective legal services. As the largest Sino-Canadian-founded law firm in Greater Vancouver, we pride ourselves on a multicultural and multilingual approach, serving our clients proficiently in Mandarin, Cantonese, English, Korean, and Spanish.
+                    {t("attorneys.sectionText1")}
                   </p>
                   <p className="mb-6 text-sm leading-relaxed">
-                    Since our establishment in Richmond twelve years ago, Avid Law has grown to become one of the most respected law firms in the Chinese community throughout British Columbia's Lower Mainland. Our dedicated lawyers and skilled support staff operate from nearly 4,000 square feet of modern office space centrally located in downtown Richmond, ensuring accessibility and convenience for our clients.
+                    {t("attorneys.sectionText2")}
                   </p>
                   <p className="mb-6 text-sm leading-relaxed">
-                    In June 2021, we significantly enhanced our capabilities through a strategic merger between our predecessor, CNS Law Corporation, and Redman Law, combining resources and expertise to deliver unparalleled legal services. Our team excels across various legal disciplines, including family law, real estate, corporate and commercial law, civil litigation, and estate planning.
+                    {t("attorneys.sectionText3")}
                   </p>
                   <p className="mb-6 text-sm leading-relaxed">
-                    Our litigators vigorously advocate for clients across all court levels, from Small Claims and the Provincial Court of British Columbia to the Supreme Court and Court of Appeal, as well as in specialized tribunals such as the Residential Tenancy Branch, Employment Standards Branch, and the Federal Court. We are tireless in pursuing our clients' best interests, both inside and outside the courtroom, aiming for efficient, strategic, and favorable outcomes.
+                    {t("attorneys.sectionText4")}
                   </p>
                   <p className="mb-6 text-sm leading-relaxed">
-                    Conversely, our solicitors proactively address potential disputes by drafting meticulous agreements that position our clients favorably for the future. Whether negotiating a prenuptial agreement, structuring a business transaction, or providing strategic corporate advice, we firmly believe that proactive legal planning today prevents costly litigation tomorrow.
+                    {t("attorneys.sectionText5")}
                   </p>
                   <p className="text-sm leading-relaxed">
-                    At Avid Law, your interests come first, and our exceptional team is ready to guide you through every legal challenge with clarity, diligence, and confidence.
+                    {t("attorneys.sectionText6")}
                   </p>
                 </div>
                 
@@ -323,9 +326,9 @@ export function LawFirmLanding() {
               <div className="relative inline-block group">
                 <Link href="/team">
                   <button className="h-[40px] w-[180px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
-                    <span className="relative z-10">MEET OUR TEAM</span>
+                    <span className="relative z-10">{t("attorneys.meetTeam")}</span>
                     <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>
-              </button>
+                  </button>
                 </Link>
               </div>
             </div>
@@ -421,18 +424,18 @@ export function LawFirmLanding() {
             <div className="md:w-2/5">
               <div className="relative">
                 <div className="h-[460px] overflow-y-auto pr-6 text-base text-gray-700 leading-relaxed mb-11 scrollbar-container">
-                  <h2 className="text-3xl font-bold uppercase mb-8">Practice Areas</h2>
+                  <h2 className="text-3xl font-bold uppercase mb-8">{t("practiceAreas.sectionTitle")}</h2>
                   
-                  <h3 className="text-xl font-serif font-bold text-black mb-7">Comprehensive Expertise, Tailored Solutions</h3>
+                  <h3 className="text-xl font-serif font-bold text-black mb-7">{t("practiceAreas.sectionSubtitle")}</h3>
                   
                   <p className="mb-6 text-sm leading-relaxed">
-                    At Avid Law, our practice areas cover a diverse array of legal disciplines designed to serve clients effectively across a multitude of sectors and industries. Our comprehensive approach enables us to address complex issues in family law, corporate and commercial matters, civil litigation, real estate transactions, wills, trusts, and estates, and estate planning.
+                    {t("practiceAreas.sectionText1")}
                   </p>
                   <p className="mb-6 text-sm leading-relaxed">
-                    By leveraging the collective expertise of our multidisciplinary team, we deliver personalized, strategic, and results-oriented solutions tailored to meet each client's unique circumstances. Our commitment to thorough preparation and proactive counseling ensures that we can anticipate and address challenges before they arise, offering cost-effective and practical outcomes.
+                    {t("practiceAreas.sectionText2")}
                   </p>
                   <p className="text-sm leading-relaxed">
-                    Through years of dedicated service, Avid Law has built a reputation rooted in professionalism, integrity, and unwavering advocacy. We continue to uphold our tradition of excellence, providing a full spectrum of legal services crafted precisely to align with our clients' needs and objectives.
+                    {t("practiceAreas.sectionText3")}
                   </p>
                     </div>
                 
@@ -443,7 +446,7 @@ export function LawFirmLanding() {
               <div className="relative inline-block group">
                 <Link href="/practice-areas">
                   <button className="h-[40px] w-[200px] px-5 bg-gray-400 text-black uppercase text-xs font-bold tracking-wider rounded-sm z-10 relative overflow-hidden transition-colors duration-300 whitespace-nowrap">
-                    <span className="relative z-10">VIEW ALL PRACTICES</span>
+                    <span className="relative z-10">{t("practiceAreas.viewAll")}</span>
                     <span className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#FFC107] group-hover:w-full transition-all duration-300 ease-in-out"></span>
                   </button>
                 </Link>
@@ -467,11 +470,11 @@ export function LawFirmLanding() {
         
         <div className="container mx-auto px-6 relative z-10 h-full flex flex-col items-center justify-center text-center max-w-[1200px] py-[80px]">
           <h2 className="text-[32px] font-bold text-[#222222] mb-4">
-            Need Help Finding the Right Lawyer?
+            {t("eve.sectionTitle")}
           </h2>
           
           <p className="text-[18px] text-[#444444] leading-relaxed mb-8 max-w-[720px]">
-            Let Eve, our AI assistant, guide you. Ask questions or book an appointment with the perfect attorney for your needs.
+            {t("eve.sectionText")}
           </p>
           
           <div className="relative w-[120px] h-[120px] mb-8">
@@ -487,7 +490,7 @@ export function LawFirmLanding() {
             className="w-[200px] h-[50px] bg-[#FFC107] text-black font-semibold rounded-lg shadow-md hover:bg-[#e6ac00] transition-colors duration-300"
             onClick={openChatbot}
           >
-            Chat with Eve
+            {t("eve.chatButton")}
           </button>
         </div>
       </section>
@@ -509,18 +512,18 @@ export function LawFirmLanding() {
             {/* Left Column - Contact Information */}
             <div className="w-full md:w-[calc(50%-24px)] text-center md:text-left">
               <div className="flex items-center mb-6">
-                <h2 className="text-[32px] font-bold text-[#222222] mr-3">Let's Connect</h2>
+                <h2 className="text-[32px] font-bold text-[#222222] mr-3">{t("contact.sectionTitle")}</h2>
                 <div className="relative w-10 h-10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
-                  </div>
+              </div>
               
               <div className="mb-6">
-                <p className="font-semibold text-[16px] text-[#444444] mb-1">Phone:</p>
+                <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.phoneLabel")}</p>
                 <button
-                  onClick={() => copyToClipboard('+16042737565', 'Phone number')}
+                  onClick={() => copyToClipboard('+16042737565', t("contact.copyLabelPhone"))}
                   className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center"
                 >
                   +1 (604) 273-7565
@@ -531,22 +534,23 @@ export function LawFirmLanding() {
               </div>
               
               <div className="mb-6">
-                <p className="font-semibold text-[16px] text-[#444444] mb-1">Email:</p>
+                <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.emailLabel")}</p>
                 <button
-                  onClick={() => copyToClipboard('info@avid-law.com', 'Email')}
+                  onClick={() => copyToClipboard('info@avid-law.com', t("contact.copyLabelEmail"))}
                   className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center"
                 >
                   info@avid-law.com
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
-              </button>
+                </button>
               </div>
               
-              <div className="mt-12">
-                <p className="text-base text-black">
-                  Our team is available Monday through Friday, 8:30 AM - 5:30 PM. 
-                  We look forward to assisting you with your legal needs.
+              {/* Office Hours Section */}
+              <div className="mb-6">
+                <p className="font-semibold text-[16px] text-[#444444] mb-2">Office Hours:</p>
+                <p className="text-gray-700 leading-relaxed">
+                  {t("contact.officeHours")}
                 </p>
               </div>
             </div>
@@ -584,7 +588,7 @@ export function LawFirmLanding() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-[#444444]">Pacific Business Centre</h3>
+                    <h3 className="font-semibold mb-2 text-[#444444]">{t("contact.office1Title")}</h3>
                     <p className="mb-1">5811 Cooney Road</p>
                     <p className="mb-1">Suite 602 North Tower</p>
                     <p>Richmond, British Columbia V6X 3M1</p>
@@ -624,7 +628,7 @@ export function LawFirmLanding() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-[#444444]">Aberdeen Square (Satellite Office)</h3>
+                    <h3 className="font-semibold mb-2 text-[#444444]">{t("contact.office2Title")}</h3>
                     <p className="mb-1">4000 No. 3 Road</p>
                     <p className="mb-1">Unit 5235</p>
                     <p>Richmond, British Columbia V6X 0J8</p>
@@ -637,22 +641,14 @@ export function LawFirmLanding() {
         </div>
       </section>
 
-      <footer className="py-8 relative">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/bigBG.png" 
-            alt="Background" 
-            fill 
-            className="object-cover opacity-50 brightness-99" 
-                  />
-                </div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center text-black">
-            © 2025 Avid Law. All rights reserved.
-            </div>
-          </div>
-        </footer>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-10">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-sm text-gray-400">
+            {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
+          </p>
+        </div>
+      </footer>
     </div>
   );
 } 

@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function ExploreButton() {
+  const { t } = useTranslation();
+  
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setTimeout(() => {
@@ -29,7 +32,7 @@ export default function ExploreButton() {
         <polyline points="7 13 12 18 17 13"></polyline>
         <polyline points="7 6 12 11 17 6"></polyline>
       </svg>
-      <span className="text-white uppercase tracking-wider text-sm font-bold">Explore</span>
+      <span className="text-white uppercase tracking-wider text-sm font-bold">{t("exploreButton.explore")}</span>
     </a>
   );
 } 
