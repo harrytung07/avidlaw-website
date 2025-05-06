@@ -28,11 +28,11 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
 
   // Define practice areas with translation keys
   const practiceAreas = [
-    { id: 1, titleKey: 'practiceAreas.familyLaw', image: '/areas/family.png' },
-    { id: 2, titleKey: 'practiceAreas.corporateCommercialLaw', image: '/areas/corporate.png' },
-    { id: 3, titleKey: 'practiceAreas.civilLitigation', image: '/areas/litigation.png' },
-    { id: 4, titleKey: 'practiceAreas.conveyancing', image: '/areas/conveyance.png' },
-    { id: 5, titleKey: 'practiceAreas.willsTrustEstates', image: '/areas/will.png' },
+    { id: 1, titleKey: 'practiceAreas.familyLaw', image: '/areas/family1.png' },
+    { id: 2, titleKey: 'practiceAreas.corporateCommercialLaw', image: '/areas/corporate1.png' },
+    { id: 3, titleKey: 'practiceAreas.civilLitigation', image: '/areas/litigation1.png' },
+    { id: 4, titleKey: 'practiceAreas.conveyancing', image: '/areas/conveyance1.png' },
+    { id: 5, titleKey: 'practiceAreas.willsTrustEstates', image: '/areas/will1.png' },
   ];
 
   // Define subareas for each practice area using translation keys

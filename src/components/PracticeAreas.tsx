@@ -66,7 +66,7 @@ export default function PracticeAreas() {
     {
       id: 'family',
       titleKey: 'practiceAreas.familyLaw',
-      image: '/areas/family.png',
+      image: '/areas/family1.png',
       descriptionKey: 'practiceAreas.familyLawDescription',
       services: [
         'practiceAreas.prenuptialAgreement',
@@ -83,7 +83,7 @@ export default function PracticeAreas() {
     {
       id: 'corporate',
       titleKey: 'practiceAreas.corporateCommercialLaw',
-      image: '/areas/corporate.png',
+      image: '/areas/corporate1.png',
       descriptionKey: 'practiceAreas.corporateCommercialLawDescription',
       services: [
 
@@ -101,7 +101,7 @@ export default function PracticeAreas() {
     {
       id: 'litigation',
       titleKey: 'practiceAreas.civilLitigation',
-      image: '/areas/litigation.png',
+      image: '/areas/litigation1.png',
       descriptionKey: 'practiceAreas.civilLitigationDescription',
       services: [
 
@@ -116,7 +116,7 @@ export default function PracticeAreas() {
     {
       id: 'conveyancing',
       titleKey: 'practiceAreas.conveyancing',
-      image: '/areas/conveyance.png',
+      image: '/areas/conveyance1.png',
       descriptionKey: 'practiceAreas.conveyancingDescription',
       services: [
 
@@ -130,7 +130,7 @@ export default function PracticeAreas() {
     {
       id: 'wills',
       titleKey: 'practiceAreas.willsTrustEstates',
-      image: '/areas/will.png',
+      image: '/areas/will1.png',
       descriptionKey: 'practiceAreas.willsTrustEstatesDescription',
       services: [
 
