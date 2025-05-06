@@ -262,7 +262,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
                   draggable="false"
                   className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10 pointer-events-none"></div>
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10 pointer-events-none"></div> */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
                   <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
                   <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-all duration-300 group-hover:w-24"></div>
