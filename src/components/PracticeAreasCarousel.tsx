@@ -44,41 +44,45 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       'practiceAreas.childSupport',
       'practiceAreas.spouseSupport',
       'practiceAreas.divorceOrder',
-      'practiceAreas.divorceLitigation'
+      'practiceAreas.divorceLitigation',
+      'practiceAreas.incorporationMaintenance',
+      'practiceAreas.commercialContractDrafting'
     ],
     'practiceAreas.corporateCommercialLaw': [
-      'practiceAreas.incorporationMaintenance',
-      'practiceAreas.commercialContractDrafting',
+
       'practiceAreas.employmentContract',
       'practiceAreas.shareholderAgreement',
       'practiceAreas.partnershipAgreement',
       'practiceAreas.purchaseSaleBusinesses',
       'practiceAreas.commercialLending',
       'practiceAreas.corporateRestructuring',
-      'practiceAreas.franchiseAgreement'
+      'practiceAreas.franchiseAgreement',
+      'practiceAreas.defamation',
+      'practiceAreas.debtCollection'
     ],
     'practiceAreas.civilLitigation': [
-      'practiceAreas.defamation',
-      'practiceAreas.debtCollection',
       'practiceAreas.shareholderDisputes',
       'practiceAreas.constructionRealEstateDisputes',
       'practiceAreas.contractDisputes',
       'practiceAreas.fraudClaims',
-      'practiceAreas.estateLitigations'
+      'practiceAreas.estateLitigations',
+      'practiceAreas.residentialPurchaseSale'
     ],
     'practiceAreas.conveyancing': [
-      'practiceAreas.residentialPurchaseSale',
       'practiceAreas.residentialMortgagesRefinancing',
       'practiceAreas.lotrFiling',
-      'practiceAreas.commercialRealEstatePurchaseSale'
+      'practiceAreas.commercialRealEstatePurchaseSale',
+      'practiceAreas.wills',
+      'practiceAreas.representationAgreements'
     ],
     'practiceAreas.willsTrustEstates': [
-      'practiceAreas.wills',
-      'practiceAreas.representationAgreements',
+
       'practiceAreas.probateWithWithoutWill',
       'practiceAreas.estatePlanning',
+      'practiceAreas.notarization',
       'practiceAreas.documentAuthenticationEmbassies',
-      'practiceAreas.powerOfAttorney'
+      'practiceAreas.powerOfAttorney',
+      'practiceAreas.inheritance'
     ]
   };
 
