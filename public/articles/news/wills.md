@@ -3,7 +3,7 @@ title: 'Recent Developments in BC Wills, Trusts & Estates Law (2024–2025)'
 date: '2025-04-17'
 author: 'Richard Zhu'
 preview: 'British Columbia’s wills, trusts, and estates laws continue to evolve, with recent court decisions and legislative updates that affect estate planning and estate disputes...'
-featuredImage: '/news/will.png'
+featuredImage: '/news/will1.png'
 ---
 
 ## Modernizing How Wills Are Made: Electronic Wills and Remote Witnessing

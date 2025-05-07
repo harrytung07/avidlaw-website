@@ -3,7 +3,7 @@ title: 'BC Divorce Law Updates: Key Changes and Court Decisions in 2024–2025'
 date: '2025-04-17'
 author: 'Richard Zhu'
 preview: 'British Columbia’s divorce laws have seen significant updates in the past year, with new legislation and court rulings that affect separating couples and families...'
-featuredImage: '/news/family.png'
+featuredImage: '/news/family1.png'
 ---
 
 ## Legislative Changes in B.C. Divorce Law
