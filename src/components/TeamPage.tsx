@@ -34,12 +34,12 @@ export default function TeamPage() {
     { id: 11, nameKey: "team.name.FarrahYang", image: "/members/8. Farrah Yang.jpg", titleKey: "team.title.FarrahYang", descriptionKey: "team.bio.FarrahYang" },
     { id: 12, nameKey: "team.name.AshleyWong", image: "/members/11. Ashley Wong.jpg", titleKey: "team.title.AshleyWong", descriptionKey: "team.bio.AshleyWong" },
     { id: 13, nameKey: "team.name.JeannieLee", image: "/members/10. Jeannie Lee.jpg", titleKey: "team.title.JeannieLee", descriptionKey: "team.bio.JeannieLee" },
-    { id: 14, nameKey: "team.name.SarahYan", image: "/members/ava.jpg", titleKey: "team.title.SarahYan", descriptionKey: "" },
+    { id: 14, nameKey: "team.name.SarahYan", image: "/members/ava.jpg", titleKey: "team.title.SarahYan", descriptionKey: "team.bio.SarahYan" },
     { id: 15, nameKey: "team.name.StellaLi", image: "/members/12. Stella Li.jpg", titleKey: "team.title.StellaLi", descriptionKey: "team.bio.StellaLi" },
     { id: 16, nameKey: "team.name.SunnyZhang", image: "/members/9. Sunny Zhang.jpg", titleKey: "team.title.SunnyZhang", descriptionKey: "team.bio.SunnyZhang" },
-    { id: 17, nameKey: "team.name.DianaGao", image: "/members/ava.jpg", titleKey: "team.title.DianaGao", descriptionKey: "" },
-    { id: 18, nameKey: "team.name.Lynn", image: "/members/ava.jpg", titleKey: "team.title.Lynn", descriptionKey: "" },
-    { id: 19, nameKey: "team.name.RichardZhu", image: "/members/ava.jpg", titleKey: "team.title.RichardZhu", descriptionKey: "" },
+    { id: 17, nameKey: "team.name.DianaGao", image: "/members/ava.jpg", titleKey: "team.title.DianaGao", descriptionKey: "team.bio.DianaGao" },
+    { id: 18, nameKey: "team.name.Lynn", image: "/members/ava.jpg", titleKey: "team.title.Lynn", descriptionKey: "team.bio.Lynn" },
+    { id: 19, nameKey: "team.name.RichardZhu", image: "/members/ava.jpg", titleKey: "team.title.RichardZhu", descriptionKey: "team.bio.RichardZhu" },
   ];
 
   const handleMemberClick = (member: TeamMember) => {

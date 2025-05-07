@@ -148,16 +148,20 @@
   
     "team.name.SarahYan": "Sarah Yan",
     "team.title.SarahYan": "法律助理",
+    "team.bio.SarahYan": "Sarah 是一名诉讼助理，能流利使用英语和普通话。",
   
     "team.name.DianaGao": "Diana Gao",
     "team.title.DianaGao": "会计",
-  
+    "team.bio.DianaGao": "Diana 是一名注册会计师，能流利使用英语和普通话。",
+
     "team.name.Lynn": "Lynn",
     "team.title.Lynn": "主管",
+    "team.bio.Lynn": "Lynn 是安胜·弘人律师行的办公室主任，能流利使用英语、粤语和普通话。",
   
     "team.name.RichardZhu": "Richard Zhu",
     "team.title.RichardZhu": "IT 助理",
-  
+    "team.bio.RichardZhu": "Richard 是安胜·弘人律师行的IT助理，能流利使用英语和普通话。",
+    
     "hero.title": "安心乐业 · 胜券在握",
     "hero.subtitle": "值得信赖的法律专长",
     "hero.chatButton": "与 Eve 聊聊",
