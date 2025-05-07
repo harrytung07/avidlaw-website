@@ -2,11 +2,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+// ReactMarkdown and remarkGfm are NOT needed here anymore for full content rendering
 import Link from 'next/link';
 import Image from 'next/image';
-import NavBar from '@/components/NavBar'; // <--- IMPORT NavBar HERE
+import NavBar from '@/components/NavBar';
 
 // Define the structure for news post data including frontmatter
 interface NewsPost {
@@ -14,12 +13,11 @@ interface NewsPost {
   frontmatter: {
     [key: string]: any;
   };
-  content: string;
+  // content is not needed on this page anymore, only frontmatter
 }
 
-// --- Function to get news data ---
+// --- Function to get news data (only frontmatter needed now) ---
 function getNewsPosts(): NewsPost[] {
-  // Adjust the path if you move the 'news' folder outside 'public'
   const postsDirectory = path.join(process.cwd(), 'public/articles/news');
   let filenames: string[] = [];
   try {
@@ -36,16 +34,17 @@ function getNewsPosts(): NewsPost[] {
         const fullPath = path.join(postsDirectory, filename);
         try {
             const fileContents = fs.readFileSync(fullPath, 'utf8');
-            const { data, content } = matter(fileContents);
-            return { slug, frontmatter: data, content };
+            // Only parse frontmatter, content is not needed for the list page
+            const { data } = matter(fileContents);
+            return { slug, frontmatter: data };
         } catch(err) {
             console.error(`Error processing file ${filename}:`, err);
             return null;
         }
       })
-      .filter(post => post !== null) as NewsPost[];
+      .filter(post => post !== null) as NewsPost[]; // Type assertion
 
-       posts.sort((postA, postB) => { /* ... sorting logic ... */
+       posts.sort((postA, postB) => {
            const dateA = postA.frontmatter.date ? new Date(postA.frontmatter.date) : new Date(0);
            const dateB = postB.frontmatter.date ? new Date(postB.frontmatter.date) : new Date(0);
            return dateB.getTime() - dateA.getTime();
@@ -59,33 +58,14 @@ function getNewsPosts(): NewsPost[] {
 export default function NewsPage() {
   const newsPosts = getNewsPosts();
 
-  // --- Custom Components for Markdown Rendering ---
-  const markdownComponents = {
-      h2: (props: any) => <h2 className="text-2xl font-semibold mt-8 mb-4 border-b pb-2" {...props} />,
-      h3: (props: any) => <h3 className="text-xl font-semibold mt-6 mb-3" {...props} />,
-      p: (props: any) => <p className="leading-relaxed my-4" {...props} />,
-      table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-gray-300 divide-y divide-gray-300" {...props} /></div>,
-      thead: (props: any) => <thead className="bg-gray-100" {...props} />,
-      th: (props: any) => <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider border-l border-gray-300 first:border-l-0" {...props} />,
-      tbody: (props: any) => <tbody className="bg-white divide-y divide-gray-200" {...props} />,
-      tr: (props: any) => <tr className="hover:bg-gray-50" {...props} />,
-      td: (props: any) => <td className="px-4 py-3 whitespace-normal text-sm text-gray-700 border-l border-gray-300 first:border-l-0" {...props} />,
-      blockquote: (props: any) => <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4" {...props} />,
-      ul: (props: any) => <ul className="list-disc list-inside my-4 pl-4 space-y-1" {...props} />,
-      ol: (props: any) => <ol className="list-decimal list-inside my-4 pl-4 space-y-1" {...props} />,
-      li: (props: any) => <li className="mb-1" {...props} />,
-      a: (props: any) => <a className="text-blue-600 hover:text-blue-800 hover:underline" {...props} />,
-  };
-  // --- End Custom Components ---
-
+  // Markdown components are NOT needed here anymore
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <NavBar /> {/* <--- RENDER NavBar HERE --- */}
+      <NavBar />
 
       {/* Hero Section */}
-      <div className="relative h-[80vh] flex items-center justify-center text-center pt-20"> {/* Added pt-20 for NavBar space */}
-         {/* ... Hero content ... */}
+      <div className="relative h-[70vh] md:h-[80vh] flex items-center justify-center text-center pt-20">
          <div className="absolute inset-0 z-0">
             <Image src="/bigBG.png" alt="Background" fill className="object-cover opacity-90" priority />
             <div className="absolute inset-0 bg-black/50"></div>
@@ -99,46 +79,66 @@ export default function NewsPage() {
           </div>
        </div>
 
-      {/* News Feed Section */}
+      {/* News Feed Section - Updated Layout */}
       <div className="relative py-16 bg-gray-50">
-        {/* ... Optional background pattern ... */}
         <div className="absolute inset-0 z-0">
            <Image src="/whitePattern.jpg" alt="Pattern Background" fill className="object-cover opacity-10"/>
          </div>
 
-        <div className="container relative z-10 mx-auto px-6 max-w-4xl">
+        <div className="container relative z-10 mx-auto px-6 max-w-5xl"> {/* Increased max-w for grid */}
           {newsPosts.length === 0 ? (
              <p className="text-center text-gray-600 text-xl">No news articles found.</p>
            ) : (
-            <div className="space-y-12">
+            // Using a grid for better layout
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {newsPosts.map((post) => (
-                <article key={post.slug} className="bg-white p-6 md:p-8 rounded-lg shadow-lg">
-                  {/* Metadata */}
-                  <div className="mb-4 border-b pb-4 border-gray-200">
-                     {/* ... Title, Date, Author ... */}
-                     <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 hover:text-[#FFC107] transition-colors">
+                <article key={post.slug} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col group">
+                  {post.frontmatter.featuredImage && (
+                    <Link href={`/news/${post.slug}`} className="block relative h-48 w-full">
+                      <Image
+                        src={post.frontmatter.featuredImage}
+                        alt={post.frontmatter.title || 'Article image'}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </Link>
+                  )}
+                  <div className="p-6 flex flex-col flex-grow">
+                     <h2 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-[#FFC107] transition-colors">
+                        <Link href={`/news/${post.slug}`}>
                            {post.frontmatter.title || 'Untitled News Post'}
+                        </Link>
                       </h2>
-                      <div className="flex flex-wrap items-center text-sm text-gray-500 gap-x-4 gap-y-1">
-                        {post.frontmatter.date && ( <span className="whitespace-nowrap">📅 {new Date(post.frontmatter.date).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span> )}
-                        {post.frontmatter.author && ( <span className="whitespace-nowrap">👤 By {post.frontmatter.author}</span> )}
+                      <div className="flex flex-wrap items-center text-xs text-gray-500 gap-x-3 gap-y-1 mb-3">
+                        {post.frontmatter.date && ( <span className="whitespace-nowrap">📅 {new Date(post.frontmatter.date).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })}</span> )}
+                        {post.frontmatter.author && ( <span className="whitespace-nowrap">👤 {post.frontmatter.author}</span> )}
+                      </div>
+                      {post.frontmatter.preview && (
+                        <p className="text-sm text-gray-600 mb-4 flex-grow">
+                          {post.frontmatter.preview}
+                        </p>
+                      )}
+                      <div className="mt-auto">
+                        <Link href={`/news/${post.slug}`} className="inline-block text-sm font-medium text-[#FFC107] hover:text-yellow-600 transition-colors">
+                          Read More →
+                        </Link>
                       </div>
                   </div>
-                  {/* Content Preview */}
-                   {post.frontmatter.preview && ( <p className="text-gray-600 mb-6 italic">{post.frontmatter.preview}</p> )}
-                  {/* Full Content Rendered */}
-                   <div className="prose prose-lg max-w-none prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-                          {post.content}
-                      </ReactMarkdown>
-                   </div>
                 </article>
               ))}
             </div>
           )}
+          {/* TODO: Add Pagination or "Load More" button if many articles */}
         </div>
       </div>
-      {/* Optional Footer or CTA section */}
     </div>
   );
+}
+
+// Optional: Add metadata for SEO
+export async function generateMetadata() {
+  return {
+    title: 'Avid Law News & Updates',
+    description: 'Stay informed about the latest legal developments, firm announcements, and community involvement from Avid Law.',
+  };
 }

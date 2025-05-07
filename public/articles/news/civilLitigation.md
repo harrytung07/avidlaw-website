@@ -2,7 +2,8 @@
 title: 'BC Civil Litigation: Key Changes and Updates in 2024-2025'
 date: '2025-04-17'
 author: 'Richard Zhu'
-preview: 'British Columbia’s civil justice landscape has evolved significantly over the past two years. New legislation, court procedure updates, and precedent-setting court decisions are shaping how civil disputes are resolved. These developments – from streamlined court processes to landmark rulings – affect individuals and businesses involved in lawsuits. Below we break down the recent changes in plain language and explain what they mean for you.'
+preview: 'British Columbia’s civil justice landscape has evolved significantly over the past two years. New legislation, court procedure updates, and precedent-setting court decisions are shaping how civil disputes are resolved...'
+featuredImage: '/news/litigation.png'
 ---
 
 ## Modernizing Court Procedures in BC  

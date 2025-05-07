@@ -2,7 +2,8 @@
 title: 'BC Corporate & Commercial Law Update: Key Developments in 2024-2025'
 date: '2025-04-17'
 author: 'Richard Zhu'
-preview: 'British Columbia’s corporate and commercial legal landscape has seen significant changes in 2024 and 2025. From new corporate transparency requirements to court decisions clarifying contract law and shareholder rights, recent developments will impact business owners, entrepreneurs, and corporate boards across the province. In this update, we break down the latest legislative changes, case law, and regulatory trends in plain language – and explain what they mean for businesses in practical terms.'
+preview: 'British Columbia’s corporate and commercial legal landscape has seen significant changes in 2024 and 2025. From new corporate transparency requirements to court decisions clarifying contract law and shareholder rights...'
+featuredImage: '/news/corporate.png'
 ---
 
 ## New Corporate Transparency Requirements 

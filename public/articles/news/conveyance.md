@@ -2,7 +2,8 @@
 title: 'Recent Developments in Real Estate Law: British Columbia and Canada (2024–2025)'
 date: '2025-04-17'
 author: 'Richard Zhu'
-preview: 'The real estate landscape in British Columbia – and Canada more broadly – has seen significant legal changes in 2024 and into 2025. New laws and policies are aiming to improve housing affordability, regulate short-term rentals, and curb speculative practices. Below we summarize the key developments and explain what they mean for home buyers, sellers, investors, and homeowners.'
+preview: 'The real estate landscape in British Columbia – and Canada more broadly – has seen significant legal changes in 2024 and into 2025...'
+featuredImage: '/news/conveyance.png'
 ---
 
 ## Housing Supply and Zoning Reforms in B.C.

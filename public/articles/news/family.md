@@ -2,7 +2,8 @@
 title: 'BC Divorce Law Updates: Key Changes and Court Decisions in 2024–2025'
 date: '2025-04-17'
 author: 'Richard Zhu'
-preview: 'British Columbia’s divorce laws have seen significant updates in the past year, with new legislation and court rulings that affect separating couples and families. From changes in how beloved pets are treated in divorces to court decisions emphasizing child safety and fairness in financial matters, these developments aim to make the process of separation a little easier and more just for everyone involved. Below is a summary of the most important recent changes – in plain language – and what they mean for you.'
+preview: 'British Columbia’s divorce laws have seen significant updates in the past year, with new legislation and court rulings that affect separating couples and families...'
+featuredImage: '/news/family.png'
 ---
 
 ## Legislative Changes in B.C. Divorce Law
