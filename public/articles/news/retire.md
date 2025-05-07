@@ -3,7 +3,7 @@ title: 'Esteemed Justice Nigel P. Kent Retires from BC Supreme Court Bench'
 date: '2025-05-07'
 author: 'Richard Zhu'
 preview: 'The Supreme Court of British Columbia has formally announced the retirement of The Honourable Justice Nigel P. Kent, which took effect on February 3, 2025...'
-featuredImage: '/news/litigation1.png'
+featuredImage: '/news/retire.png'
 ---
 
 **Esteemed Justice Nigel P. Kent Retires from BC Supreme Court Bench**
