@@ -11,7 +11,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 // Define the structure for news post data including frontmatter AND content
-interface NewsPost {
+export interface NewsPost {
   slug: string;
   frontmatter: {
     [key: string]: any;
