@@ -46,22 +46,24 @@
 
 /* --- Chatbot Panel Structure --- */
 #chatbotPanel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 33.33%;
-    height: 100vh;
-    background-color: var(--bg-color);
-    border-radius: 0;
-    border-left: 1px solid var(--border-color);
-    box-shadow: -5px 0 15px var(--shadow-color);
-    display: none; /* Controlled by JS */
-    z-index: 1001;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-family);
-    color: var(--text-color);
+  /* position: fixed; */
+  /* top: 0; */
+  /* right: 0; */
+  /* width: 33.33%; */
+  /* height: 100vh; */
+  /* border-radius: 0; */
+  /* border-left: 1px solid var(--border-color); */ /* Consider removing this for cleaner Tailwind control */
+  /* box-shadow: -5px 0 15px var(--shadow-color); */
+  /* z-index: 1001; */ /* Let Tailwind's z-50 take effect, or adjust if needed */
+  /* overflow: hidden; */ /* Tailwind will handle this appropriately */
+
+  /* KEEP these or decide based on preferences: */
+  background-color: var(--bg-color); /* If you want this specific background. If you used bg-white in layout.tsx for the panel and prefer that, comment this line too. */
+  display: none; /* This is fine, your JS handles it */
+  display: flex; /* This is fine, matches Tailwind 'flex' */
+  flex-direction: column; /* This is fine, matches Tailwind 'flex-col' */
+  font-family: var(--font-family);
+  color: var(--text-color);
 }
 
 .chatbot-header {
