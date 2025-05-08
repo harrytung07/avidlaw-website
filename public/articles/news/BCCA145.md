@@ -1,5 +1,5 @@
 ---
-title: 'Conveyancing / Tenancies – Canada Lands Company CLC Ltd. v. Schlieper'
+title: 'Canada Lands Company CLC Ltd. v. Schlieper'
 date: '2025-05-07'
 author: 'Richard Zhu'
 preview: 'This residential‑tenancy appeal concerned tenants who persuaded a chambers judge that their landlord had waived the right to evict...'
