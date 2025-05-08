@@ -55,25 +55,25 @@ export default function RootLayout({
                 // REMOVED: inline style={{ display: 'none' }}
                 // ADDED: Tailwind classes for responsive layout and initial hidden state
                 className="
-                  hidden                      /* Initially hidden; JS toggles display via inline style */
-                  fixed inset-0 z-50         /* Mobile: full screen, high z-index */
-                  bg-white                   /* Background */
-                  flex flex-col              /* For internal layout (header, content, input) */
-                  
-                  md:top-auto md:left-auto   /* Desktop: Unset top/left from 'inset-0' */
-                  md:bottom-6 md:right-6     /* Desktop: Position */
-                  md:w-[380px]               /* Desktop: Width */
-                  md:max-w-[calc(100vw-48px)]/* Desktop: Max width to prevent overflow */
-                  md:h-[70vh]                /* Desktop: Height (viewport relative) */
-                  md:max-h-[580px]           /* Desktop: Max height in pixels */
-                  md:rounded-xl              /* Desktop: Rounded corners */
-                  md:shadow-2xl              /* Desktop: Prominent shadow */
-                  md:overflow-hidden         /* Desktop: Clip content to rounded corners */
-                "
+  hidden                     /* Initially hidden */
+  fixed inset-0 z-50         /* Mobile: full screen (this is good and should stay) */
+  bg-white                   /* Mobile: background (or var(--bg-color) if preferred) */
+  flex flex-col              /* Mobile: internal layout */
+  
+  md:left-auto md:bottom-auto /* Desktop: Reset left/bottom from inset-0 */
+  md:top-0 md:right-0        /* Desktop: Stick to top-right */
+  md:w-1/3                   /* Desktop: Width like original CSS (33.33%) */
+  md:h-screen                /* Desktop: Full viewport height like original CSS */
+  md:rounded-none            /* Desktop: No rounded corners like original CSS (border-radius: 0) */
+  md:shadow-[-5px_0_15px_rgba(0,0,0,0.3)] /* Desktop: Custom shadow to mimic original. Adjust color/opacity */
+                                         /* Or use a predefined Tailwind shadow like md:shadow-xl if acceptable */
+  md:overflow-hidden         /* Desktop: Still good to have */
+  md:border-l md:border-[var(--border-color)] /* Desktop: Restore left border from old CSS */
+"
               >
                 {/* Header: Styled with Tailwind for consistency */}
                 <div className="chatbot-header flex items-center justify-between p-3 border-b bg-slate-100 md:rounded-t-xl">
-                  <h3 className="chatbot-title font-semibold text-base text-slate-700">Avid Law Assistant</h3>
+                  <h3 className="chatbot-title font-semibold text-base text-[#FFC107]">Eve</h3>
                   <button 
                     id="closeChatbot" 
                     aria-label="Close Chatbot" 
