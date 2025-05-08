@@ -271,7 +271,7 @@ export default function PracticeAreas() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed left-0 top-1/3 z-50 flex flex-col bg-white/80 backdrop-blur-sm border-r border-gray-200 rounded-r-lg shadow-md"
+            className="fixed left-0 top-1/3 z-50 hidden md:flex flex-col bg-white/80 backdrop-blur-sm border-r border-gray-200 rounded-r-lg shadow-md"
           >
             <div className="py-4 px-2">
               {practiceAreas.map((area) => (

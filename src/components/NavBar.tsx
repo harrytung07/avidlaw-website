@@ -14,53 +14,51 @@ export default function NavBar() {
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
-  
-  // Get path without locale prefix for route matching
+
   const getPathWithoutLocale = (path: string) => {
     const segments = path.split('/');
-    // Check if the first segment is a locale
     if (segments.length > 1 && ['en', 'zh-Hans', 'zh-Hant'].includes(segments[1])) {
       return '/' + segments.slice(2).join('/');
     }
     return path;
   };
-  
+
   const pathWithoutLocale = getPathWithoutLocale(pathname || '');
   const isAboutPage = pathWithoutLocale === "/about";
   const isHomePage = pathWithoutLocale === "/";
-  
-  // Helper to create locale-aware paths
+
   const localePath = (path: string) => {
-    // If path is already absolute with locale, return it
     if (path.startsWith(`/${locale}`)) return path;
-    
-    // If path starts with /, add locale prefix
     if (path.startsWith('/')) {
       return locale === 'en' ? path : `/${locale}${path}`;
     }
-    
-    // For relative paths, return as is
     return path;
   };
-  
-  // Add scroll event listener
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(offset > 100);
     };
-    
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
-  // Smooth scroll to section function
+
+  useEffect(() => {
+    // Prevent body scroll when menu is open
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Cleanup function to restore body scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [menuOpen]);
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     const section = document.getElementById(sectionId);
@@ -69,21 +67,17 @@ export default function NavBar() {
     }
   };
 
-  // Toggle menu function
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  
-  // Handle contact link click
+
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isHomePage) {
-      // If on home page, just scroll to the section
       scrollToSection(e, 'contact');
     }
-    // If on another page, the default behavior of navigating to /#contact will occur
+    // For other pages, default navigation to /#contact (locale handled by localePath)
   };
-  
-  // Handle opening resources dropdown with a delay on close
+
   const handleResourcesEnter = () => {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -91,70 +85,60 @@ export default function NavBar() {
     }
     setResourcesOpen(true);
   };
-  
+
   const handleResourcesLeave = () => {
     const id = setTimeout(() => {
       setResourcesOpen(false);
-    }, 300); // 300ms delay before closing
+    }, 300);
     setTimeoutId(id);
   };
 
-  // --- Add the function to open the chatbot ---
-  const openChatbot = () => { // No event needed unless attaching to an anchor
+  const openChatbot = () => {
     const icon = document.getElementById('chatbotIcon');
     const panel = document.getElementById('chatbotPanel');
-
     if (icon && panel) {
-      console.log("Opening chatbot panel directly via button click (NavBar).");
-      panel.style.display = 'flex'; // Show panel
-      icon.style.display = 'none';  // Hide icon
-
-      // Set flag for the outside click listener in chatbot.js to ignore this event
+      panel.style.display = 'flex';
+      icon.style.display = 'none';
       window.ignoreNextOutsideClick = true;
-
-      // Optional: Try to focus input and scroll if the instance is available
       if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-         window.chatbotInstance.focusInput();
+        window.chatbotInstance.focusInput();
       }
       if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
         window.chatbotInstance.scrollToBottom(true);
       }
-
     } else {
-        console.error("Chatbot icon or panel element not found.");
+      console.error("Chatbot icon or panel element not found.");
     }
   };
-  // --- End function ---
 
   return (
     <>
-      <div 
+      <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
-          scrolled 
-            ? isAboutPage 
-              ? "bg-transparent py-2" 
-              : "bg-black/70 backdrop-blur-md shadow-md py-2" 
+          scrolled
+            ? isAboutPage
+              ? "bg-transparent py-2"
+              : "bg-black/70 backdrop-blur-md shadow-md py-2"
             : "bg-transparent py-6"
         }`}
         style={{ animationDelay: '0.5s' }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between relative">
-          {/* Logo - always in top left */}
           <Link href={localePath("/")} className="relative z-10">
             <div className="transition-all duration-300">
-              <Image 
-                src="/Logo.svg" 
-                alt={t("nav.altLogo")} 
-                width={scrolled ? 160 : 200} 
-                height={scrolled ? 56 : 70} 
+              <Image
+                src="/Logo.svg"
+                alt={t("nav.altLogo")}
+                width={scrolled ? 160 : 200}
+                height={scrolled ? 56 : 70}
                 className={`brightness-150 filter transition-all duration-500 ${scrolled ? 'scale-95' : 'scale-100'}`}
                 style={{ transformOrigin: 'left center' }}
               />
             </div>
           </Link>
-          
-          {/* Desktop Navigation elements - for About page, collapsed when scrolled */}
-          <div 
+
+          {/* Desktop Navigation elements */}
+          <div
             className={`hidden md:flex items-center space-x-8 transition-opacity duration-400 ease-in-out absolute right-6 ${
               isAboutPage && scrolled ? 'opacity-0 invisible' : 'opacity-100 visible'
             }`}
@@ -165,53 +149,50 @@ export default function NavBar() {
             >
               {t("nav.practiceAreas")}
             </Link>
-            <Link 
+            <Link
               href={localePath("/about")}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.about")}
             </Link>
-            <Link 
+            <Link
               href={localePath("/team")}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.ourTeam")}
             </Link>
-            
-            {/* Resources Dropdown */}
-            <div 
+
+            <div
               className="relative group"
               onMouseEnter={handleResourcesEnter}
               onMouseLeave={handleResourcesLeave}
             >
               <div className="text-white text-base font-medium uppercase tracking-wide flex items-center space-x-1 transition-colors cursor-default">
                 <span className={resourcesOpen ? "text-[#FFC107]" : "group-hover:text-[#FFC107]"}>{t("nav.resources")}</span>
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className={`h-4 w-4 transition-transform duration-300 ${resourcesOpen ? "rotate-180 text-[#FFC107]" : "text-white group-hover:text-[#FFC107]"}`} 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform duration-300 ${resourcesOpen ? "rotate-180 text-[#FFC107]" : "text-white group-hover:text-[#FFC107]"}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
-              
-              {/* Dropdown Menu */}
-              <div 
+              <div
                 className={`absolute left-0 mt-2 w-36 bg-black/50 backdrop-blur-md rounded shadow-lg transition-all duration-300 origin-top ${
                   resourcesOpen ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0 pointer-events-none"
                 }`}
-                onMouseEnter={handleResourcesEnter}
-                onMouseLeave={handleResourcesLeave}
+                onMouseEnter={handleResourcesEnter} // Keep open if mouse enters dropdown
+                onMouseLeave={handleResourcesLeave} // Close if mouse leaves dropdown
               >
-                <Link 
+                <Link
                   href={localePath("/news")}
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
                   {t("nav.news")}
                 </Link>
-                <Link 
+                <Link
                   href={localePath("/articles")}
                   className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
                 >
@@ -219,20 +200,17 @@ export default function NavBar() {
                 </Link>
               </div>
             </div>
-            
-            <a 
+
+            <a
               href={isHomePage ? "#contact" : localePath("/#contact")}
               onClick={handleContactClick}
               className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
             >
               {t("nav.contact")}
             </a>
-            
-            {/* Language Switcher - Added here */}
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
-            
             <button
               className="h-[50px] w-[50px] flex items-center justify-center ml-4"
               onClick={openChatbot}
@@ -247,109 +225,35 @@ export default function NavBar() {
               />
             </button>
           </div>
-          
-          {/* Mobile Navigation Menu */}
-          {menuOpen && (
-            <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-6">
-              <button 
-                onClick={toggleMenu}
-                className="absolute top-6 right-6 w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
-              >
-                <span className="w-6 h-0.5 bg-[#FFC107] transform rotate-45 translate-y-1"></span>
-                <span className="w-6 h-0.5 bg-[#FFC107] transform -rotate-45"></span>
-              </button>
-              
-              <div className="flex flex-col space-y-6 items-center">
-                <Link
-                  href={localePath("/practice-areas")}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                  onClick={toggleMenu}
-                >
-                  {t("nav.practiceAreas")}
-                </Link>
-                <Link 
-                  href={localePath("/about")}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                  onClick={toggleMenu}
-                >
-                  {t("nav.about")}
-                </Link>
-                <Link 
-                  href={localePath("/team")}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                  onClick={toggleMenu}
-                >
-                  {t("nav.ourTeam")}
-                </Link>
-                <Link 
-                  href={localePath("/news")}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                  onClick={toggleMenu}
-                >
-                  {t("nav.news")}
-                </Link>
-                <Link 
-                  href={localePath("/articles")}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                  onClick={toggleMenu}
-                >
-                  {t("nav.articles")}
-                </Link>
-                <a 
-                  href={isHomePage ? "#contact" : localePath("/#contact")}
-                  onClick={(e) => {
-                    toggleMenu();
-                    if (isHomePage) scrollToSection(e, 'contact');
-                  }}
-                  className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                >
-                  {t("nav.contact")}
-                </a>
-                
-                <button
-                  className="h-[50px] w-[50px] flex items-center justify-center mt-4"
-                  onClick={() => {
-                    toggleMenu();
-                    openChatbot();
-                  }}
-                  aria-label={t("nav.chatWithEve")}
-                >
-                  <Image
-                    src="/chatbot1.png"
-                    alt={t("nav.chatWithEve")}
-                    width={50}
-                    height={50}
-                    className="object-contain"
-                  />
-                </button>
-              </div>
-            </div>
-          )}
-          
-          {/* Hamburger menu - visible on mobile or when scrolled on About page */}
-          <div 
-            className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 ${
-              isAboutPage 
-                ? scrolled 
-                  ? 'opacity-100 visible md:flex' 
-                  : 'opacity-0 invisible md:hidden' 
-                : 'md:hidden'
-            }`}
+
+          {/* Hamburger menu container - Conditionally rendered based on screen size and page context */}
+          <div
+            className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden ${
+              isAboutPage && scrolled ? 'opacity-100 visible' : isAboutPage ? 'opacity-0 invisible' : 'opacity-100 visible'
+            } `}
           >
-            <button 
-              onClick={toggleMenu} 
+             {/* This hamburger button logic can be tricky with isAboutPage.
+                 The original logic for showing hamburger was:
+                 isAboutPage ? (scrolled ? 'opacity-100 visible md:flex' : 'opacity-0 invisible md:hidden') : 'md:hidden'
+                 This implies on about page, desktop nav hides and hamburger appears on scroll.
+                 On other pages, hamburger is always there for mobile (md:hidden for desktop nav, so hamburger shows).
+
+                 Let's simplify: Hamburger is for md:hidden. Special logic for About page scroll.
+                 For non-About pages, it's visible on mobile.
+                 For About page, it's visible on mobile, AND replaces desktop nav when scrolled.
+              */}
+            <button
+              onClick={toggleMenu}
               className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
+              aria-label={t("nav.toggleMenu") || "Toggle menu"}
             >
               <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
               <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
               <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
             </button>
-            
-            {/* Language Switcher - Added here for mobile/collapsed view */}
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
-            
             <button
               className="h-[40px] w-[40px] flex items-center justify-center"
               onClick={openChatbot}
@@ -366,6 +270,91 @@ export default function NavBar() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu - MODIFIED FOR SCROLLING */}
+      {menuOpen && (
+        <div className="fixed inset-0 bg-black/95 z-[60] p-6 flex flex-col"> {/* Ensure higher z-index than navbar itself if needed, main overlay */}
+          <button
+            onClick={toggleMenu}
+            className="absolute top-6 right-6 w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none z-10"
+            aria-label={t("nav.closeMenu") || "Close menu"} // Provide a fallback for aria-label
+          >
+            <span className="w-6 h-0.5 bg-[#FFC107] transform rotate-45 translate-y-[0.20rem]"></span> {/* Adjusted for better X */}
+            <span className="w-6 h-0.5 bg-[#FFC107] transform -rotate-45 -translate-y-[0.05rem]"></span> {/* Adjusted for better X */}
+          </button>
+
+          {/* Scrollable content area */}
+          {/* pt-20 to push content below potential header/close button, adjust as needed */}
+          {/* pb-6 for some bottom padding within the scrollable area */}
+          <div className="flex-grow overflow-y-auto flex items-center justify-center pt-20 pb-6">
+            <div className="flex flex-col space-y-6 items-center text-center">
+              <Link
+                href={localePath("/practice-areas")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.practiceAreas")}
+              </Link>
+              <Link
+                href={localePath("/about")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.about")}
+              </Link>
+              <Link
+                href={localePath("/team")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.ourTeam")}
+              </Link>
+              <Link
+                href={localePath("/news")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.news")}
+              </Link>
+              <Link
+                href={localePath("/articles")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.articles")}
+              </Link>
+              <a
+                href={isHomePage ? "#contact" : localePath("/#contact")}
+                onClick={(e) => {
+                  toggleMenu();
+                  if (isHomePage) scrollToSection(e, 'contact');
+                }}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              >
+                {t("nav.contact")}
+              </a>
+
+              {/* Chatbot button in mobile menu */}
+              <button
+                className="h-[50px] w-[50px] flex items-center justify-center mt-4" // Added mt-4 for spacing
+                onClick={() => {
+                  toggleMenu(); // Close menu
+                  openChatbot(); // Open chatbot
+                }}
+                aria-label={t("nav.chatWithEve")}
+              >
+                <Image
+                  src="/chatbot1.png"
+                  alt={t("nav.chatWithEve")}
+                  width={50}
+                  height={50}
+                  className="object-contain"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
-} 
+}

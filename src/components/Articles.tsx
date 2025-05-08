@@ -881,9 +881,9 @@ export default function Articles() {
       
       {/* Article Modal/Canvas */}
       <AnimatePresence>
-        {showModal && selectedArticle && ( // Ensure selectedArticle is not null
+        {showModal && selectedArticle && (
           <motion.div
-            className="fixed inset-0 z-50 flex justify-end"
+            className="fixed inset-0 z-50 flex justify-end" // Keeps slide-in from right
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -895,9 +895,9 @@ export default function Articles() {
               onClick={closeArticle}
             ></div>
 
-            {/* Canvas */}
+            {/* Canvas - UPDATED WIDTH */}
             <motion.div
-              className="relative w-[72%] h-full bg-[#333333] overflow-y-auto"
+              className="relative w-full md:w-[72%] h-full bg-[#333333] overflow-y-auto" // <-- Changed width here
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -906,25 +906,27 @@ export default function Articles() {
               {/* Close Button */}
               <button
                 onClick={closeArticle}
-                className="absolute top-6 left-6 z-50 p-2 text-white hover:text-[#FFC107] transition-colors"
+                // Adjusted position slightly for full-width mobile view
+                className="absolute top-4 right-4 md:top-6 md:left-6 z-50 p-2 text-white hover:text-[#FFC107] transition-colors"
               >
-                <X size={24} />
+                <X size={28} /> {/* Increased size slightly */}
               </button>
 
-              {/* Article Content */}
-              <div className="p-16 pt-24 text-white max-w-4xl mx-auto">
-                <div className="mb-8">
+              {/* Article Content - UPDATED PADDING */}
+              {/* Reduced padding on smaller screens (p-6, pt-20), adjusted for md/lg */}
+              <div className="p-6 pt-20 md:p-12 md:pt-24 lg:p-16 text-white max-w-4xl mx-auto">
+                <div className="mb-6 md:mb-8"> {/* Responsive margin */}
                   <span className="bg-[#FFC107] text-xs uppercase font-bold tracking-wide px-2 py-1 rounded text-black">
                     {selectedArticle.category}
                   </span>
-                  <span className="ml-4 text-white/70 text-sm">{selectedArticle.date}</span>
+                  <span className="ml-3 md:ml-4 text-white/70 text-sm">{selectedArticle.date}</span>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold mb-8">{selectedArticle.title}</h1>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8">{selectedArticle.title}</h1>
 
-                <div className="flex items-center mb-12">
+                <div className="flex items-center mb-8 md:mb-12"> {/* Responsive margin */}
                   <Image
-                    src="/chatbot1.png" // Placeholder author image - replace if needed
+                    src="/chatbot1.png"
                     alt="Author"
                     width={48}
                     height={48}
@@ -936,17 +938,20 @@ export default function Articles() {
                   </div>
                 </div>
 
-                {/* Article Body - splitting paragraphs */}
-                {/* Make sure the placeholder content is inserted here */}
-                <div className="prose prose-lg prose-invert max-w-none">
-                  {selectedArticle.content === `<<< PASTE CONTENT FROM '${selectedArticle.id}. ${selectedArticle.title}.txt' HERE >>>`
-                    ? <p className="mb-6 text-xl leading-relaxed italic text-gray-400">{selectedArticle.content}</p> // Display placeholder prominently
-                    : selectedArticle.content.split('\n\n').map((paragraph, i) => (
-                        <p key={i} className={`mb-6 ${i === 0 ? 'text-xl leading-relaxed' : 'leading-relaxed'}`}>
-                          {paragraph}
-                        </p>
-                      ))
-                  }
+                {/* Article Body */}
+                {/* Using prose-base on mobile, prose-lg on md+ for better readability */}
+                <div className="prose prose-base md:prose-lg prose-invert max-w-none">
+                  {selectedArticle.content.split('\n\n').map((paragraph, i) => (
+                    <p key={i} className={`mb-4 md:mb-6 leading-relaxed ${i === 0 ? 'text-lg md:text-xl' : ''}`}> {/* Adjusted margins/leading */}
+                       {/* Render line breaks within paragraphs if needed */}
+                       {paragraph.split('\n').map((line, j) => (
+                        <React.Fragment key={j}>
+                          {line}
+                          {j < paragraph.split('\n').length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </p>
+                  ))}
                 </div>
               </div>
             </motion.div>
