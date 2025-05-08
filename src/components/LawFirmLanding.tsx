@@ -173,30 +173,35 @@ export function LawFirmLanding() {
         
         {/* Content container */}
         <div className="container relative z-20 mx-auto px-6 py-4 h-full flex flex-col">
-          <div className="flex-1 flex items-center justify-end max-w-xl ml-auto">
-            {/* Slogan and buttons - appear after navbar */}
-            <div className="text-right relative opacity-0 animate-fadeIn" style={{ animationDelay: '1.5s' }}>
-              <div className="absolute left-[-50px] top-[-30px] bottom-[-2px] w-[4px] bg-[#FFC107] z-20"></div>
-              <h1 className="text-5xl font-bold uppercase mb-4 text-white">
-                {t("hero.title")}
-              </h1>
-              <p className="text-2xl text-white font-medium mb-6">
-                {t("hero.subtitle")}
-              </p>
-              <div className="flex justify-end mt-16">
-                <button 
-                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-5 py-2 rounded flex items-center"
-                  onClick={openChatbot}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  {t("hero.chatButton")}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="flex-1 flex items-center justify-center text-center md:justify-end md:text-right max-w-xl mx-auto md:ml-auto md:mx-0">
+    {/* Slogan and buttons container */}
+    <div className="text-right relative opacity-0 animate-fadeIn w-full md:w-auto" style={{ animationDelay: '1.5s' }}> {/* Ensure it takes width on mobile for centering */}
+      {/* Decorative line - hide on mobile, adjust for md if needed */}
+      <div className="hidden md:block absolute left-[-30px] lg:left-[-50px] top-[-20px] lg:top-[-30px] bottom-[-2px] w-[3px] lg:w-[4px] bg-[#FFC107] z-20"></div>
+      
+      {/* Responsive Title */}
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white">
+        {t("hero.title")}
+      </h1>
+      {/* Responsive Subtitle */}
+      <p className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-6 sm:mb-8">
+        {t("hero.subtitle")}
+      </p>
+      {/* Responsive Button Margin and Centering for mobile */}
+      <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end gap-4 mt-8 md:mt-12 lg:mt-16">
+        <button 
+          className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-5 py-3 rounded flex items-center w-full sm:w-auto justify-center" // Adjusted py, w-full on mobile
+          onClick={openChatbot}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+          {t("hero.chatButton")}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
         
         {/* Explore button at bottom center - appears last */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30 opacity-0 animate-fadeIn" style={{ animationDelay: '2.2s' }}>
@@ -380,31 +385,37 @@ export function LawFirmLanding() {
                 >
                   {allSlides.map((slide, slideIndex) => (
                     <div 
-                      key={slideIndex}
-                      className="absolute top-0 left-0 w-full h-full grid grid-cols-2 gap-2"
-                      style={{
-                        transform: `translateX(${slideIndex * 100}%)`
-                      }}
+                    key={slideIndex}
+                    // Added padding to the grid container for mobile, responsive gap
+                    className="absolute top-0 left-0 w-full h-full grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 p-1 sm:p-2"
+                    style={{
+                      transform: `translateX(${slideIndex * 100}%)`
+                    }}
+                  >
+                    {slide.map((member, memberIndex) => (
+                      <div 
+                      key={`${slideIndex}-${member.id}`}
+                      className="p-1.5 sm:p-2 text-center flex flex-col"
                     >
-                      {slide.map((member, memberIndex) => (
-                        <div 
-                          key={`${slideIndex}-${member.id}`}
-                          className={`p-4 text-center ${memberIndex >= 2 ? 'transform -translate-y-8' : ''}`}
-                        >
-                          <div className="w-[220px] h-[220px] relative mx-auto overflow-hidden shadow-lg">
-                            <Image 
-                              src={member.image}
-                              alt={member.name}
-                              fill
-                              className="object-cover object-center scale-110"
-                            />
-                          </div>
-                          <div className="bg-white py-2 px-4 w-[220px] mx-auto relative group shadow-md">
-                            <h3 className="font-bold text-gray-900 text-sm group-hover:text-gray-900 relative z-10">{member.name}</h3>
-                            <div className="absolute left-0 bottom-0 w-full h-[4px] bg-[#FFC107] transform origin-left group-hover:h-full transition-all duration-150 ease-out"></div>
-                          </div>
-                        </div>
-                      ))}
+                      <div className="w-full aspect-square relative mx-auto overflow-hidden shadow-lg rounded-md">
+                        <Image 
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 25vw, 220px"
+                          className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      {/* Revised Text Box (Tag) Below Image */}
+                      <div className="bg-white py-1.5 sm:py-2 px-1.5 sm:px-2 w-full mx-auto relative group shadow-md mt-1.5 sm:mt-2 rounded-sm"> {/* Adjusted padding, removed flex centering for single line */}
+                        <h3 className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base group-hover:text-gray-900 relative z-10 truncate text-center"> {/* Ensured text-center, adjusted font sizes slightly */}
+                          {member.name}
+                        </h3>
+                        {/* The <p> tag for member.title has been removed */}
+                        <div className="absolute left-0 bottom-0 w-full h-[3px] bg-[#FFC107] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out"></div>
+                      </div>
+                    </div>
+                    ))}
                   </div>
                 ))}
                 </div>
@@ -510,7 +521,7 @@ export function LawFirmLanding() {
       </section>
 
       {/* Contact and Location Footer Section */}
-      <section id="contact" className="py-20 relative overflow-hidden" style={{ height: "80vh" }}>
+      <section id="contact" className="py-12 sm:py-16 md:py-20 relative">
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image 
