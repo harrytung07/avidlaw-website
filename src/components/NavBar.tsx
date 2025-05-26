@@ -228,7 +228,7 @@ export default function NavBar() {
 
           {/* Hamburger menu container - Conditionally rendered based on screen size and page context */}
           <div
-            className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden ${
+            className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden z-20 ${
               isAboutPage && scrolled ? 'opacity-100 visible' : isAboutPage ? 'opacity-0 invisible' : 'opacity-100 visible'
             } `}
           >
