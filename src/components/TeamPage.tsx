@@ -133,7 +133,7 @@ export default function TeamPage() {
                     alt={t(member.nameKey)}
                     width={260}
                     height={260}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-3 text-center">
@@ -179,7 +179,7 @@ export default function TeamPage() {
                     alt={t(member.nameKey)}
                     width={260}
                     height={260}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-3 text-center">
