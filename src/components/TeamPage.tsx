@@ -21,7 +21,7 @@ export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   const teamMembers: TeamMember[] = [
-    { id: 1, nameKey: "team.name.AdeleSun", image: "/members/1. Adele Sun.jpg", titleKey: "team.title.AdeleSun", descriptionKey: "team.bio.AdeleSun" },
+    { id: 1, nameKey: "team.name.AdeleSun", image: "/members/Adele1.JPG", titleKey: "team.title.AdeleSun", descriptionKey: "team.bio.AdeleSun" },
     { id: 2, nameKey: "team.name.DavidChen", image: "/members/2. David Chen.jpg", titleKey: "team.title.DavidChen", descriptionKey: "team.bio.DavidChen" },
     { id: 4, nameKey: "team.name.BrentDesruisseaux", image: "/members/3. Brent Desruisseaux.jpg", titleKey: "team.title.BrentDesruisseaux", descriptionKey: "team.bio.BrentDesruisseaux" },
     { id: 3, nameKey: "team.name.AbielKwok", image: "/members/abiel.JPG", titleKey: "team.title.AbielKwok", descriptionKey: "" },
@@ -277,12 +277,14 @@ export default function TeamPage() {
                 </button>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <div className="mx-auto">
-                    <div className="relative w-[300px] h-[300px] overflow-hidden rounded-lg shadow-lg">
+                    <div className="relative w-[300px] overflow-hidden rounded-lg shadow-lg">
                       <Image
                         src={selectedMember.image}
                         alt={t(selectedMember.nameKey)}
-                        fill
-                        className="object-cover"
+                        //fill
+                        width={300}
+                        height={500}
+                        className="object-contain"
                       />
                     </div>
                   </div>
