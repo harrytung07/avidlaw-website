@@ -16,6 +16,44 @@ type TeamMember = {
   descriptionKey: string;
 };
 
+const TeamMemberCard = ({ member, onMemberClick, t }: { member: TeamMember, onMemberClick: (member: TeamMember) => void, t: (key: string) => string }) => (
+  <div
+    key={member.id}
+    className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
+  >
+    <div className="aspect-square overflow-hidden">
+      <Image
+        src={member.image}
+        alt={t(member.nameKey)}
+        width={260}
+        height={260}
+        className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+      />
+    </div>
+    <div className="p-3 text-center">
+      <h3 className="font-semibold text-gray-900 text-base">{t(member.nameKey)}</h3>
+      <p className="text-xs text-gray-600">{t(member.titleKey)}</p>
+    </div>
+    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <button
+        onClick={() => onMemberClick(member)}
+        className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-5 py-2 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none text-sm"
+      >
+        {t('team.viewProfile')}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+);
+
 export default function TeamPage() {
   const { t } = useTranslation();
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
@@ -25,6 +63,7 @@ export default function TeamPage() {
     { id: 2, nameKey: "team.name.DavidChen", image: "/members/2. David Chen.jpg", titleKey: "team.title.DavidChen", descriptionKey: "team.bio.DavidChen" },
     { id: 4, nameKey: "team.name.BrentDesruisseaux", image: "/members/3. Brent Desruisseaux.jpg", titleKey: "team.title.BrentDesruisseaux", descriptionKey: "team.bio.BrentDesruisseaux" },
     { id: 3, nameKey: "team.name.AbielKwok", image: "/members/abiel1.JPG", titleKey: "team.title.AbielKwok", descriptionKey: "" },
+    { id: 20, nameKey: "team.name.KunDong", image: "/members/ava.jpg", titleKey: "team.title.KunDong", descriptionKey: "" },
     { id: 5, nameKey: "team.name.CoreyPoon", image: "/members/4. Corey Poon.jpg", titleKey: "team.title.CoreyPoon", descriptionKey: "team.bio.CoreyPoon" },
     { id: 6, nameKey: "team.name.HowardQu", image: "/members/5. Howard Qu.jpg", titleKey: "team.title.HowardQu", descriptionKey: "team.bio.HowardQu" },
     { id: 7, nameKey: "team.name.FrejaLi", image: "/members/6. Freja Li.jpg", titleKey: "team.title.FrejaLi", descriptionKey: "team.bio.FrejaLi" },
@@ -76,13 +115,29 @@ export default function TeamPage() {
     }
   };
   // --- End function ---
+  const barristerSolicitorRoleString = t('team.title.AdeleSun'); // "Barrister & Solicitor"
+  const articlingStudentRoleString = t('team.title.AbielKwok'); // "Articling Student"
+
+  const barristersAndSolicitors = teamMembers.filter(
+    member => t(member.titleKey) === barristerSolicitorRoleString &&
+              !(member.nameKey === "team.name.AbielKwok" || member.nameKey === "team.name.KunDong") // Ensure articling students are not in this list
+  );
+
+  const articlingStudents = teamMembers.filter(
+    member => (member.nameKey === "team.name.AbielKwok" || member.nameKey === "team.name.KunDong") &&
+              t(member.titleKey) === articlingStudentRoleString
+  );
+  
+  const supportStaff = teamMembers.filter(member =>
+    !barristersAndSolicitors.some(bs => bs.id === member.id) &&
+    !articlingStudents.some(as => as.id === member.id)
+  );
+
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* NavBar */}
       <NavBar />
       
-      {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -103,12 +158,9 @@ export default function TeamPage() {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
             {t('team.sectionDescription')}
           </p>
-          
-          
         </div>
       </section>
 
-      {/* Team Members Grid */}
       <section id="team-grid" className="py-20 relative">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -121,91 +173,45 @@ export default function TeamPage() {
         
         <div className="container relative z-10 mx-auto px-6">
           {/* Barristers & Solicitors */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {teamMembers.slice(0, 10).map((member) => (
-              <div
-                key={member.id}
-                className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
-              >
-                <div className="aspect-square overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={t(member.nameKey)}
-                    width={260}
-                    height={260}
-                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-3 text-center">
-                  <h3 className="font-semibold text-gray-900 text-base">{t(member.nameKey)}</h3>
-                  <p className="text-xs text-gray-600">{t(member.titleKey)}</p>
-                </div>
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <button
-                    onClick={() => handleMemberClick(member)}
-                    className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-5 py-2 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none text-sm"
-                  >
-                    {t('team.viewProfile')}
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {barristersAndSolicitors.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {barristersAndSolicitors.map((member) => (
+                <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+              ))}
+            </div>
+          )}
           
-          {/* Separator */}
-          <div className="my-16">
-            <div className="h-[2px] w-full bg-gray-500"></div>
-          </div>
+          {/* Separator 1: Between B&S and Articling Students, OR B&S and Support Staff if no Articling Students */}
+          {barristersAndSolicitors.length > 0 && (articlingStudents.length > 0 || supportStaff.length > 0) && (
+            <div className="my-14 md:my-24"> {/* Increased margin for better visual separation */}
+              <div className="h-[4px] w-full bg-gray-400"></div>
+            </div>
+          )}
+          
+          {/* Articling Students */}
+          {articlingStudents.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
+              {articlingStudents.map((member) => (
+                 <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+              ))}
+            </div>
+          )}
+          
+          {/* Separator 2: Between Articling Students and Support Staff */}
+          {articlingStudents.length > 0 && supportStaff.length > 0 && (
+            <div className="my-12 md:my-24"> {/* Increased margin */}
+              <div className="h-[4px] w-full bg-gray-400"></div>
+            </div>
+          )}
           
           {/* Support Staff */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {teamMembers.slice(10).map((member) => (
-              <div
-                key={member.id}
-                className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
-              >
-                <div className="aspect-square overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={t(member.nameKey)}
-                    width={260}
-                    height={260}
-                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-3 text-center">
-                  <h3 className="font-semibold text-gray-900 text-base">{t(member.nameKey)}</h3>
-                  <p className="text-xs text-gray-600">{t(member.titleKey)}</p>
-                </div>
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <button
-                    onClick={() => handleMemberClick(member)}
-                    className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-5 py-2 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none text-sm"
-                  >
-                    {t('team.viewProfile')}
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {supportStaff.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {supportStaff.map((member) => (
+                <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
