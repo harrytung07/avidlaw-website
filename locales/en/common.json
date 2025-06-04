@@ -34,8 +34,7 @@
   "practiceAreas.commercialLending": "M&A Business",
   "practiceAreas.corporateRestructuring": "Commercial Loans",
   "practiceAreas.franchiseAgreement": "Corporate Restructuring",
-  "practiceAreas.defamation": "Enterprise Joining",
-  "practiceAreas.debtCollection": "Enterprise Agency",
+  "practiceAreas.defamation": "Franchising",
 
   "practiceAreas.shareholderDisputes": "Defamation",
   "practiceAreas.constructionRealEstateDisputes": "Debt Litigation",
@@ -44,7 +43,7 @@
   "practiceAreas.estateLitigations": "Breach of Contract",
   "practiceAreas.residentialPurchaseSale": "Tort, Unjust Enrichment Litigation",
 
-  "practiceAreas.residentialMortgagesRefinancing": "Real Estate Mortgage",
+  "practiceAreas.residentialMortgagesRefinancing": "Refinancing",
   "practiceAreas.lotrFiling": "Real Estate Transfer",
   "practiceAreas.commercialRealEstatePurchaseSale": "Real Estate Inquiries",
   "practiceAreas.wills": "Application for Read Estate Certificate",
@@ -54,7 +53,7 @@
   "practiceAreas.estatePlanning": "Consulate Document Authentication",
   "practiceAreas.notarization":"Certificate & Document Notarization",
   "practiceAreas.documentAuthenticationEmbassies": "Power of Attorney",
-  "practiceAreas.powerOfAttorney": "Apply for Probate",
+  "practiceAreas.powerOfAttorney": "Probate",
   "practiceAreas.inheritance": "Inheritance",
 
   "practiceAreas.closeModal": "Close modal",

@@ -35,7 +35,6 @@
     "practiceAreas.corporateRestructuring": "商業貸款",
     "practiceAreas.franchiseAgreement": "企業重組",
     "practiceAreas.defamation": "企業加盟",
-    "practiceAreas.debtCollection": "企業代理",
 
     "practiceAreas.shareholderDisputes": "誹謗",
     "practiceAreas.constructionRealEstateDisputes": "債務訴訟",
@@ -54,7 +53,7 @@
     "practiceAreas.estatePlanning": "領館文件認證",
     "practiceAreas.notarization": "證件與文件公證",
     "practiceAreas.documentAuthenticationEmbassies": "授權書",
-    "practiceAreas.powerOfAttorney": "申請遺囑認證",
+    "practiceAreas.powerOfAttorney": "遺囑認證",
     "practiceAreas.inheritance": "遺產處理",
 
     "practiceAreas.closeModal": "關閉",

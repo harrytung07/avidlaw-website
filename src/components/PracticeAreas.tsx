@@ -94,8 +94,7 @@ export default function PracticeAreas() {
         'practiceAreas.commercialLending',
         'practiceAreas.corporateRestructuring',
         'practiceAreas.franchiseAgreement',
-        'practiceAreas.defamation',
-        'practiceAreas.debtCollection'
+        'practiceAreas.defamation'
       ]
     },
     {

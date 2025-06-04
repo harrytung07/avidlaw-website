@@ -35,7 +35,6 @@
     "practiceAreas.corporateRestructuring": "商业贷款",
     "practiceAreas.franchiseAgreement": "企业重组",
     "practiceAreas.defamation": "企业加盟",
-    "practiceAreas.debtCollection": "企业代理",
 
     "practiceAreas.shareholderDisputes": "诽谤",
     "practiceAreas.constructionRealEstateDisputes": "债务诉讼",
@@ -54,7 +53,7 @@
     "practiceAreas.estatePlanning": "领馆文件认证",
     "practiceAreas.notarization": "证件与文件公证",
     "practiceAreas.documentAuthenticationEmbassies": "授权书",
-    "practiceAreas.powerOfAttorney": "申请遗嘱认证",
+    "practiceAreas.powerOfAttorney": "遗嘱认证",
     "practiceAreas.inheritance": "遗产处理",
 
     "practiceAreas.closeModal": "关闭",

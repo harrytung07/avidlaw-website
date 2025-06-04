@@ -57,8 +57,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       'practiceAreas.commercialLending',
       'practiceAreas.corporateRestructuring',
       'practiceAreas.franchiseAgreement',
-      'practiceAreas.defamation',
-      'practiceAreas.debtCollection'
+      'practiceAreas.defamation'
     ],
     'practiceAreas.civilLitigation': [
       'practiceAreas.shareholderDisputes',
