@@ -67,7 +67,7 @@ export default function TeamPage() {
     { id: 5, nameKey: "team.name.CoreyPoon", image: "/members/4. Corey Poon.jpg", titleKey: "team.title.CoreyPoon", descriptionKey: "team.bio.CoreyPoon" },
     { id: 6, nameKey: "team.name.HowardQu", image: "/members/5. Howard Qu.jpg", titleKey: "team.title.HowardQu", descriptionKey: "team.bio.HowardQu" },
     { id: 7, nameKey: "team.name.FrejaLi", image: "/members/6. Freja Li.jpg", titleKey: "team.title.FrejaLi", descriptionKey: "team.bio.FrejaLi" },
-    { id: 8, nameKey: "team.name.NicoleTam", image: "/members/nicole.jpg", titleKey: "team.title.NicoleTam", descriptionKey: "" },
+    { id: 8, nameKey: "team.name.NicoleTam", image: "/members/nicole.jpg", titleKey: "team.title.NicoleTam", descriptionKey: "team.bio.NicoleTam" },
     { id: 9, nameKey: "team.name.OliviaNicolaides", image: "/members/olivia.JPG", titleKey: "team.title.OliviaNicolaides", descriptionKey: "" },
     { id: 10, nameKey: "team.name.RachelLi", image: "/members/7. Rachel Li.jpg", titleKey: "team.title.RachelLi", descriptionKey: "team.bio.RachelLi" },
     { id: 11, nameKey: "team.name.FarrahYang", image: "/members/8. Farrah Yang.jpg", titleKey: "team.title.FarrahYang", descriptionKey: "team.bio.FarrahYang" },
