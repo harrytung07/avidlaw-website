@@ -115,19 +115,36 @@ export default function TeamPage() {
     }
   };
   // --- End function ---
-  const barristerSolicitorRoleString = t('team.title.AdeleSun'); // "Barrister & Solicitor"
-  const articlingStudentRoleString = t('team.title.AbielKwok'); // "Articling Student"
+  const barristerSolicitorRoleString = t('team.title.AdeleSun'); // Gets "Barrister & Solicitor"
+  const articlingStudentRoleString = t('team.title.KunDong');   // Gets "Articling Student"
 
-  const barristersAndSolicitors = teamMembers.filter(
-    member => t(member.titleKey) === barristerSolicitorRoleString &&
-              !(member.nameKey === "team.name.AbielKwok" || member.nameKey === "team.name.KunDong") // Ensure articling students are not in this list
-  );
+  // 2. Filter based on title ONLY, not by hardcoded names.
+  const barristersAndSolicitors = teamMembers
+  .filter(member => t(member.titleKey) === barristerSolicitorRoleString)
+  .sort((a, b) => {
+    const nameA = t(a.nameKey);
+    const nameB = t(b.nameKey);
+
+    const adeleName = t("team.name.AdeleSun");
+    const davidName = t("team.name.DavidChen");
+
+    // Pin Adele Sun to the top
+    if (nameA === adeleName) return -1;
+    if (nameB === adeleName) return 1;
+
+    // Pin David Chen second
+    if (nameA === davidName) return -1;
+    if (nameB === davidName) return 1;
+
+    // Sort all other members alphabetically by their full name
+    return nameA.localeCompare(nameB);
+  });
 
   const articlingStudents = teamMembers.filter(
-    member => (member.nameKey === "team.name.AbielKwok" || member.nameKey === "team.name.KunDong") &&
-              t(member.titleKey) === articlingStudentRoleString
+    member => t(member.titleKey) === articlingStudentRoleString
   );
   
+  // 3. The support staff filter remains the same, as it correctly collects the rest.
   const supportStaff = teamMembers.filter(member =>
     !barristersAndSolicitors.some(bs => bs.id === member.id) &&
     !articlingStudents.some(as => as.id === member.id)
