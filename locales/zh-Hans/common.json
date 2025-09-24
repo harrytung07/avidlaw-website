@@ -202,6 +202,10 @@
     "eve.sectionTitle": "不确定哪位律师最适合您？",
     "eve.sectionText": "让 AI 助手 Eve 指引您，根据您的具体法律需求匹配最合适的律师。",
     "eve.chatButton": "与 Eve 聊聊",
+    "eve.qrCodeEnglish": "英文预约",
+  "eve.qrCodeChinese": "中文预约",
+  "eve.qrCodeTitle": "准备好预约咨询了吗？",
+
   
     "contact.sectionTitle": "联系我们",
     "contact.phoneLabel": "电话：",

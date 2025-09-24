@@ -488,7 +488,8 @@ export function LawFirmLanding() {
       </section>
 
       {/* Eve Chatbot Introduction Section */}
-      <section className="py-20 relative overflow-hidden" style={{ height: "80vh" }}>
+      {/* UPDATED: Added 'flex' and 'items-center' to vertically center the entire content block */}
+      <section className="py-20 relative overflow-hidden flex items-center" style={{ minHeight: "80vh" }}>
         {/* Marble textured background */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -499,30 +500,71 @@ export function LawFirmLanding() {
           />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 h-full flex flex-col items-center justify-center text-center max-w-[1200px] py-[80px]">
-          <h2 className="text-[32px] font-bold text-[#222222] mb-4">
-            {t("eve.sectionTitle")}
-          </h2>
+        {/* UPDATED: Reduced overall vertical padding as the section now handles centering */}
+        <div className="container mx-auto px-6 relative z-10 h-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20 max-w-[1200px] py-12">
 
-          <p className="text-[18px] text-[#444444] leading-relaxed mb-8 max-w-[720px]">
-            {t("eve.sectionText")}
-          </p>
-
-          <div className="relative w-[120px] h-[120px] mb-8">
-            <Image
-              src="/chatbot.png"
-              alt="Eve AI Assistant"
-              fill
-              className="object-contain"
-            />
+          {/* --- Left Column (Existing Content) --- */}
+          <div className="md:w-1/2 lg:w-3/5 flex flex-col items-center md:items-start text-center md:text-left">
+            <h2 className="text-[32px] font-bold text-[#222222] mb-4">
+              {t("eve.sectionTitle")}
+            </h2>
+            <p className="text-[18px] text-[#444444] leading-relaxed mb-8 max-w-[720px]">
+              {t("eve.sectionText")}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <button
+                className="w-[200px] h-[50px] bg-[#FFC107] text-black font-semibold rounded-lg shadow-md hover:bg-[#e6ac00] transition-colors duration-300 flex items-center justify-center gap-2"
+                onClick={openChatbot}
+              >
+                <div className="relative w-8 h-8">
+                  <Image
+                    src="/chatbot.png"
+                    alt="Eve AI Assistant Icon"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                {t("eve.chatButton")}
+              </button>
+            </div>
           </div>
 
-          <button
-            className="w-[200px] h-[50px] bg-[#FFC107] text-black font-semibold rounded-lg shadow-md hover:bg-[#e6ac00] transition-colors duration-300"
-            onClick={openChatbot}
-          >
-            {t("eve.chatButton")}
-          </button>
+          {/* --- Right Column (QR Codes) --- */}
+          <div className="md:w-1/2 lg:w-2/5 flex flex-col items-center">
+            {/* NEW: Added a title above the QR codes */}
+            <h3 className="text-xl font-semibold mb-6 text-[#222222] text-center">
+              {t("eve.qrCodeTitle")}
+            </h3>
+            <div className="flex flex-row gap-6">
+              {/* English QR Code */}
+              <div className="flex flex-col items-center gap-2 text-center">
+                <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                    alt="QR Code for English booking form"
+                    width={150}
+                    height={150}
+                    className="rounded-lg shadow-md"
+                  />
+                </a>
+                <p className="font-semibold text-sm text-[#333333] mt-1">{t("eve.qrCodeEnglish")}</p>
+              </div>
+
+              {/* Chinese QR Code */}
+              <div className="flex flex-col items-center gap-2 text-center">
+                <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                    alt="QR Code for Chinese booking form"
+                    width={150}
+                    height={150}
+                    className="rounded-lg shadow-md"
+                  />
+                </a>
+                <p className="font-semibold text-sm text-[#333333] mt-1">{t("eve.qrCodeChinese")}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

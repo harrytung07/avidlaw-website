@@ -8,6 +8,16 @@ const nextConfig = {
     locales: ['en', 'zh-Hans', 'zh-Hant'],
     defaultLocale: 'en',
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.jotform.com',
+        port: '',
+        pathname: '/uploads/**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig; 

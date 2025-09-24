@@ -202,6 +202,9 @@
     "eve.sectionTitle": "不確定哪位律師最適合您？",
     "eve.sectionText": "讓 AI 助手 Eve 為您導航，根據您的法律需求配對最合適的律師。",
     "eve.chatButton": "與 Eve 聊聊",
+    "eve.qrCodeEnglish": "英文預約",
+  "eve.qrCodeChinese": "中文預約",
+  "eve.qrCodeTitle": "準備好預約諮詢了嗎？",
   
     "contact.sectionTitle": "聯絡我們",
     "contact.phoneLabel": "電話：",

@@ -202,6 +202,9 @@
   "eve.sectionTitle": "Need Help Finding the Right Lawyer?",
   "eve.sectionText": "Let Eve, our AI assistant, guide you. Ask questions or book an appointment with the perfect attorney for your needs.",
   "eve.chatButton": "Chat with Eve",
+  "eve.qrCodeEnglish": "Book in English",
+  "eve.qrCodeChinese": "中文预约 (Book in Chinese)",
+  "eve.qrCodeTitle": "Ready to Schedule a Consultation?",
 
   "contact.sectionTitle": "Let's Connect",
   "contact.phoneLabel": "Phone:",
