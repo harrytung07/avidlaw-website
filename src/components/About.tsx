@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, MouseEvent } from 'react';
+import React, { useEffect, useRef, MouseEvent, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -15,6 +15,24 @@ if (typeof window !== 'undefined') {
 
 export default function About() {
   const { t, locale } = useTranslation();
+
+  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
+  const bookingBoxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
+        setBookingBoxVisible(false);
+      }
+    }
+    if (isBookingBoxVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isBookingBoxVisible, bookingBoxRef]);
+  // --- END BLOCK ---
   const containerRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<HTMLDivElement[]>([]); // Populated by addToRefs or querySelectorAll
 
@@ -394,43 +412,69 @@ if (i === 0) { // Panel 0: About Avid Law (Animate on Load)
             </div>
           </div>
 
-          {/* Section 6: Want to Dive Deeper? */}
-          <div className="panel w-screen h-screen flex-shrink-0 relative flex flex-col items-center justify-start pt-24 md:pt-0 md:justify-center overflow-y-auto md:overflow-hidden" ref={addToRefs}>
-            <div className="absolute inset-0 z-0">
-                <Image src="/sideBG.png" alt="Background" fill style={{ objectFit: 'cover', opacity: 0.6 }} /> {/* Explicit opacity */}
-                <div className="absolute inset-0 bg-black/40"></div>
-            </div>
-            <div className="relative z-10 max-w-4xl w-full mx-auto px-6 md:px-8 text-center pb-10 md:pb-0">
-                <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-6 md:mb-8">{t('about.eveTitle')}</h2>
-                <div className="divider h-[3px] w-[100px] md:w-[120px] bg-[#FFC107] mx-auto mb-8 md:mb-12"></div>
-                <p className="section-content text-lg md:text-xl text-white leading-relaxed mb-10 md:mb-16 max-w-2xl mx-auto">
-                    {t('about.eveText')}
-                </p>
-                <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
-                    <Link
-                        href={localePath("/team")}
-                        className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] hover:text-black focus:outline-none"
-                    >
-                        {t('about.eveButton')}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </Link>
-                    <a
-                        onClick={openChatbot}
-                        role="button"
-                        tabIndex={0} // for accessibility if it's not a native button
-                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openChatbot(e as any); }} // for accessibility
-                        className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none cursor-pointer"
-                    >
-                        {t('eve.chatButton')}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
+          {/* --- MODIFIED: Section 6: Booking Section --- */}
+        <div className="panel w-screen h-screen flex-shrink-0 relative flex flex-col items-center justify-start pt-24 md:pt-0 md:justify-center overflow-y-auto md:overflow-hidden" ref={addToRefs}>
+          <div className="absolute inset-0 z-0">
+              <Image src="/sideBG.png" alt="Background" fill style={{ objectFit: 'cover', opacity: 0.6 }} />
+              <div className="absolute inset-0 bg-black/40"></div>
           </div>
+          <div className="relative z-10 max-w-4xl w-full mx-auto px-6 md:px-8 text-center pb-10 md:pb-0">
+              <h2 className="section-heading text-4xl md:text-5xl font-bold text-[#FFC107] mb-6 md:mb-8">{t('about.eveTitle')}</h2>
+              <div className="divider h-[3px] w-[100px] md:w-[120px] bg-[#FFC107] mx-auto mb-8 md:mb-12"></div>
+              <p className="section-content text-lg md:text-xl text-white leading-relaxed mb-10 md:mb-16 max-w-2xl mx-auto">
+                  {t('about.eveText')}
+              </p>
+              
+              {/* --- NEW: Replaced buttons with Booking Feature --- */}
+              <div 
+                ref={bookingBoxRef}
+                className="relative flex flex-col items-center justify-center mt-8"
+              >
+                {/* Book Consultation Button */}
+                <button
+                  onClick={() => setBookingBoxVisible(prevState => !prevState)}
+                  className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none"
+                >
+                  {t('hero.bookButton')} {/* Reusing translation key */}
+                </button>
+
+                {/* Booking Box with QR Codes */}
+                <div className={`absolute top-full mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 ${isBookingBoxVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
+                      {t('hero.bookingBoxText')} {/* Reusing translation key */}
+                    </p>
+                    <div className="flex justify-center gap-6">
+                        {/* English QR Code */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                                    alt="QR Code for English booking form"
+                                    width={100}
+                                    height={100}
+                                    className="rounded-md"
+                                />
+                            </a>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeEnglish")}</p>
+                        </div>
+                        {/* Chinese QR Code */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                                    alt="QR Code for Chinese booking form"
+                                    width={100}
+                                    height={100}
+                                    className="rounded-md"
+                                />
+                            </a>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeChinese")}</p>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
 
         </div> {/* End panels-container */}
       </div> {/* End horizontal-scroll-container */}

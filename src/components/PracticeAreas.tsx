@@ -309,7 +309,7 @@ export default function PracticeAreas() {
         <PracticeAreaSection key={area.id} area={area} index={index} />
       ))}
       
-      {/* Footer CTA Section */}
+      {/* --- MODIFIED: Footer Booking Section --- */}
       <section className="py-24 relative">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -322,29 +322,41 @@ export default function PracticeAreas() {
         </div>
         
         <div className="container relative z-10 mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">{t('practiceAreas.eveTitle')}</h2>
-          <div className="flex items-center justify-center">
-            <button
-              onClick={openChatbot}
-              className="group relative inline-flex items-center gap-3 rounded-md bg-transparent px-8 py-3 font-semibold text-gray-900 border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] hover:text-white focus:outline-none"
-            >
-              <Image
-                src="/chatbot.png"
-                alt="Eve Bot"
-                width={50}
-                height={50}
-              />
-              {t('eve.chatButton')}
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-               >
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-               </svg>
-            </button>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{t('practiceAreas.eveTitle')}</h2>
+          <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mb-10"></div>
+          <p className="text-lg text-gray-700 leading-relaxed mb-12 max-w-2xl mx-auto">
+            {t('practiceAreas.bookingDescription')}
+          </p>
+          
+          {/* --- NEW: QR Code Booking Section --- */}
+          <div className="flex flex-col sm:flex-row gap-8 justify-center mt-8">
+            {/* English QR Code */}
+            <div className="flex flex-col items-center gap-2 text-center">
+              <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                <Image
+                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                  alt="QR Code for English booking form"
+                  width={150}
+                  height={150}
+                  className="rounded-lg shadow-lg"
+                />
+              </a>
+              <p className="font-semibold text-sm text-gray-800 mt-1">{t("eve.qrCodeEnglish")}</p>
+            </div>
+
+            {/* Chinese QR Code */}
+            <div className="flex flex-col items-center gap-2 text-center">
+              <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                <Image
+                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                  alt="QR Code for Chinese booking form"
+                  width={150}
+                  height={150}
+                  className="rounded-lg shadow-lg"
+                />
+              </a>
+              <p className="font-semibold text-sm text-gray-800 mt-1">{t("eve.qrCodeChinese")}</p>
+            </div>
           </div>
         </div>
       </section>
