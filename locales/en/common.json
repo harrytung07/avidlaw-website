@@ -167,7 +167,8 @@
 
   "hero.title": "WE GET THINGS DONE",
   "hero.subtitle": "Legal expertise you can trust",
-  "hero.chatButton": "Chat with Eve",
+  "hero.bookButton": "Book Consultation",
+  "hero.bookingBoxText": "Click or scan with your phone's camera / WeChat.",
 
   "intro.companyName": "AVID LAW",
   "intro.historyTag": "HISTORY: AVID LAW ESTABLISHED",
@@ -210,6 +211,7 @@
   "contact.phoneLabel": "Phone:",
   "contact.emailLabel": "Email:",
   "contact.officeHours": "Our team is available Monday through Friday, 8:30 AM - 5:30 PM. We look forward to assisting you with your legal needs.",
+  "contact.bookConsultationTitle": "Click or scan with your phone's camera / WeChat to book online:",
   "contact.office1Title": "Pacific Business Centre",
   "contact.office2Title": "Aberdeen Square (Satellite Office)",
   "contact.copyButtonTooltip": "copied to clipboard!",

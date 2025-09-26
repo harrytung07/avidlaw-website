@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useEffect, useState, MouseEvent } from "react";
+import React, { useEffect, useState, useRef, MouseEvent } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import ExploreButton from "./ExploreButton";
@@ -21,6 +20,13 @@ declare global {
 
 export function LawFirmLanding() {
   const { t, locale } = useTranslation();
+  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
+  const bookingBoxRef = useRef<HTMLDivElement>(null);
+
+  // Team slide state
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   // Helper to create locale-aware paths
   const localePath = (path: string) => {
@@ -36,10 +42,7 @@ export function LawFirmLanding() {
     return path;
   };
 
-  // Team members data updated from TeamPage.tsx
-  // Members with "ava.jpg" are excluded.
-  // Names are derived from nameKey.
-  // Titles use titleKey from TeamPage.tsx (ensure these keys are in your translation files for LawFirmLanding).
+  // Team members data
   const teamMembers = [
     { id: 1, name: "Adele Sun", title: t("team.title.AdeleSun"), image: "/members/Adele1.JPG" },
     { id: 2, name: "David Chen", title: t("team.title.DavidChen"), image: "/members/2. David Chen.jpg" },
@@ -58,30 +61,38 @@ export function LawFirmLanding() {
     { id: 15, name: "Stella Li", title: t("team.title.StellaLi"), image: "/members/12. Stella Li.jpg" },
     { id: 16, name: "Sunny Zhang", title: t("team.title.SunnyZhang"), image: "/members/9. Sunny Zhang.jpg" },
   ];
-
-  // Team slide state
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const itemsPerSlide = 4; // Assuming 4 members per slide as in the original structure
+  
+  const itemsPerSlide = 4;
   const totalSlides = Math.ceil(teamMembers.length / itemsPerSlide);
-  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
-  const [isResetting, setIsResetting] = useState(false);
 
-  // Group team members into sets of itemsPerSlide for pagination
   const teamSlides = Array.from({ length: totalSlides }, (_, i) =>
     teamMembers.slice(i * itemsPerSlide, (i * itemsPerSlide) + itemsPerSlide)
   );
-
-  // Add the first slide again at the end for continuous scrolling if there's more than one slide
+  
   const allSlides = totalSlides > 0 ? [...teamSlides, teamSlides[0]] : [];
   const effectiveTotalSlides = totalSlides > 1 ? totalSlides : (totalSlides === 1 ? 1 : 0);
 
+  // Handles closing the booking box when clicking outside of it
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
+        setBookingBoxVisible(false);
+      }
+    }
+    if (isBookingBoxVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isBookingBoxVisible, bookingBoxRef]);
 
-  // Slide change timer
+  // Handles the auto-scroll timer for the team carousel
   useEffect(() => {
     if (isAutoScrollPaused || isResetting || effectiveTotalSlides <= 1) return;
 
     const timer = setTimeout(() => {
-      if (currentSlide === effectiveTotalSlides) { // This condition might need adjustment if totalSlides is 0 or 1
+      if (currentSlide === effectiveTotalSlides) {
         setIsResetting(true);
         setCurrentSlide(0);
         setTimeout(() => setIsResetting(false), 50);
@@ -118,26 +129,21 @@ export function LawFirmLanding() {
   // Open address in Google Maps
   const openInMaps = (address: string) => {
     const encodedAddress = encodeURIComponent(address);
-    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
+    window.open(`https://maps.google.com/?q=${encodedAddress}`, '_blank');
   };
 
-  // --- Function to open the chatbot ---
-  const openChatbot = () => { // No event needed here anymore
+  // Function to open the chatbot
+  const openChatbot = () => {
     const icon = document.getElementById('chatbotIcon');
     const panel = document.getElementById('chatbotPanel');
 
     if (icon && panel) {
       console.log("Opening chatbot panel directly via button click.");
-      panel.style.display = 'flex'; // Show panel
-      icon.style.display = 'none';  // Hide icon
+      panel.style.display = 'flex';
+      icon.style.display = 'none';
 
-      // --- Add this line ---
-      // Set flag for the outside click listener in chatbot.js to ignore this event
       window.ignoreNextOutsideClick = true;
-      // --- End added line ---
 
-
-      // Optional: Try to focus input and scroll if the instance is available
       if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
         window.chatbotInstance.focusInput();
       }
@@ -161,55 +167,87 @@ export function LawFirmLanding() {
 
       {/* Hero Section */}
       <header className="relative h-[100vh] bg-gray-900 pt-0">
-        {/* Gradient overlay - visible immediately without delay */}
+        {/* ... (The Gradient overlay and Background Image divs remain the same) ... */}
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-800/70 z-10" />
-
-        {/* Background image with darker initial state */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/A.png"
-            alt="Background"
-            fill
-            className="object-cover object-bottom"
-            priority
-          />
+           <Image
+             src="/A.png"
+             alt="Background"
+             fill
+             className="object-cover object-bottom"
+             priority
+           />
         </div>
-
-        {/* Navbar is already handled with its own animation in NavBar.tsx */}
 
         {/* Content container */}
         <div className="container relative z-20 mx-auto px-6 py-4 h-full flex flex-col">
           <div className="flex-1 flex items-center justify-center text-center md:justify-end md:text-right max-w-xl mx-auto md:ml-auto md:mx-0">
-            {/* Slogan and buttons container */}
-            <div className="text-right relative opacity-0 animate-fadeIn w-full md:w-auto" style={{ animationDelay: '1.5s' }}> {/* Ensure it takes width on mobile for centering */}
-              {/* Decorative line - hide on mobile, adjust for md if needed */}
+            {/* Slogan container */}
+            <div className="text-right relative opacity-0 animate-fadeIn w-full md:w-auto" style={{ animationDelay: '1.5s' }}>
+              {/* ... (Decorative line, h1, and p tags remain the same) ... */}
               <div className="hidden md:block absolute left-[-30px] lg:left-[-50px] top-[-20px] lg:top-[-30px] bottom-[-2px] w-[3px] lg:w-[4px] bg-[#FFC107] z-20"></div>
-
-              {/* Responsive Title */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white">
                 {t("hero.title")}
               </h1>
-              {/* Responsive Subtitle */}
               <p className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-6 sm:mb-8">
                 {t("hero.subtitle")}
               </p>
-              {/* Responsive Button Margin and Centering for mobile */}
-              <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end gap-4 mt-8 md:mt-12 lg:mt-16">
+              
+              {/* --- MODIFIED: Container for the button and the booking box --- */}
+              {/* Added the ref, removed hover events and fixed height */}
+              <div 
+                ref={bookingBoxRef}
+                className="relative flex flex-col items-center md:items-end mt-8 md:mt-12 lg:mt-16 w-full sm:w-auto"
+              >
+                {/* MODIFIED: Button now uses onClick to toggle visibility */}
                 <button
-                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-5 py-3 rounded flex items-center w-full sm:w-auto justify-center" // Adjusted py, w-full on mobile
-                  onClick={openChatbot}
+                  onClick={() => setBookingBoxVisible(prevState => !prevState)}
+                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  {t("hero.chatButton")}
+                  {t("hero.bookButton")}
                 </button>
+
+                {/* MODIFIED: Box visibility is now controlled by click */}
+                {/* Re-introduced the visual gap with mt-4 */}
+                <div className={`absolute top-full mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 ${isBookingBoxVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
+                      {t("hero.bookingBoxText")}
+                    </p>
+                    <div className="flex justify-center gap-6">
+                        {/* English QR Code */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                                    alt="QR Code for English booking form"
+                                    width={100}
+                                    height={100}
+                                    className="rounded-md"
+                                />
+                            </a>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeEnglish")}</p>
+                        </div>
+
+                        {/* Chinese QR Code */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                                    alt="QR Code for Chinese booking form"
+                                    width={100}
+                                    height={100}
+                                    className="rounded-md"
+                                />
+                            </a>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeChinese")}</p>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Explore button at bottom center - appears last */}
+        {/* ... (Explore button remains the same) ... */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30 opacity-0 animate-fadeIn" style={{ animationDelay: '2.2s' }}>
           <ExploreButton />
         </div>
@@ -487,104 +525,24 @@ export function LawFirmLanding() {
         </div>
       </section>
 
-      {/* Eve Chatbot Introduction Section */}
-      {/* UPDATED: Added 'flex' and 'items-center' to vertically center the entire content block */}
-      <section className="py-20 relative overflow-hidden flex items-center" style={{ minHeight: "80vh" }}>
-        {/* Marble textured background */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/bigBG.png"
-            alt="Marble Background"
-            fill
-            className="object-cover opacity-50 brightness-125"
-          />
-        </div>
-
-        {/* UPDATED: Reduced overall vertical padding as the section now handles centering */}
-        <div className="container mx-auto px-6 relative z-10 h-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20 max-w-[1200px] py-12">
-
-          {/* --- Left Column (Existing Content) --- */}
-          <div className="md:w-1/2 lg:w-3/5 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-[32px] font-bold text-[#222222] mb-4">
-              {t("eve.sectionTitle")}
-            </h2>
-            <p className="text-[18px] text-[#444444] leading-relaxed mb-8 max-w-[720px]">
-              {t("eve.sectionText")}
-            </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <button
-                className="w-[200px] h-[50px] bg-[#FFC107] text-black font-semibold rounded-lg shadow-md hover:bg-[#e6ac00] transition-colors duration-300 flex items-center justify-center gap-2"
-                onClick={openChatbot}
-              >
-                <div className="relative w-8 h-8">
-                  <Image
-                    src="/chatbot.png"
-                    alt="Eve AI Assistant Icon"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                {t("eve.chatButton")}
-              </button>
-            </div>
-          </div>
-
-          {/* --- Right Column (QR Codes) --- */}
-          <div className="md:w-1/2 lg:w-2/5 flex flex-col items-center">
-            {/* NEW: Added a title above the QR codes */}
-            <h3 className="text-xl font-semibold mb-6 text-[#222222] text-center">
-              {t("eve.qrCodeTitle")}
-            </h3>
-            <div className="flex flex-row gap-6">
-              {/* English QR Code */}
-              <div className="flex flex-col items-center gap-2 text-center">
-                <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                    alt="QR Code for English booking form"
-                    width={150}
-                    height={150}
-                    className="rounded-lg shadow-md"
-                  />
-                </a>
-                <p className="font-semibold text-sm text-[#333333] mt-1">{t("eve.qrCodeEnglish")}</p>
-              </div>
-
-              {/* Chinese QR Code */}
-              <div className="flex flex-col items-center gap-2 text-center">
-                <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                    alt="QR Code for Chinese booking form"
-                    width={150}
-                    height={150}
-                    className="rounded-lg shadow-md"
-                  />
-                </a>
-                <p className="font-semibold text-sm text-[#333333] mt-1">{t("eve.qrCodeChinese")}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Contact and Location Footer Section */}
       <section id="contact" className="py-12 sm:py-16 md:py-20 relative">
-        {/* Common background image */}
-        <div className="absolute inset-0 z-0">
+        {/* MODIFIED: Added bg-gray-50 to lighten the background and differentiate the section */}
+        <div className="absolute inset-0 z-0 bg-gray-50">
           <Image
             src="/bigBG.png"
             alt="Background"
             fill
-            className="object-cover opacity-50 brightness-99"
+            className="object-cover opacity-40 brightness-105" // Adjusted opacity/brightness for the new background
           />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 max-w-[1200px] py-[60px]">
           <div className="flex flex-wrap gap-12 md:gap-[48px]">
-            {/* Left Column - Contact Information */}
+            {/* --- Left Column - Contact Information --- */}
             <div className="w-full md:w-[calc(50%-24px)] text-center md:text-left">
-              <div className="flex items-center mb-6">
+              <div className="flex items-center justify-center md:justify-start mb-6">
                 <h2 className="text-[32px] font-bold text-[#222222] mr-3">{t("contact.sectionTitle")}</h2>
                 <div className="relative w-10 h-10 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -593,38 +551,73 @@ export function LawFirmLanding() {
                 </div>
               </div>
 
-              <div className="mb-6">
-                <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.phoneLabel")}</p>
-                <button
-                  onClick={() => copyToClipboard('+16042737565', t("contact.copyLabelPhone"))}
-                  className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center"
-                >
-                  +1 (604) 273-7565
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="mb-6">
-                <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.emailLabel")}</p>
-                <button
-                  onClick={() => copyToClipboard('info@avid-law.com', t("contact.copyLabelEmail"))}
-                  className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center"
-                >
-                  info@avid-law.com
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
+              {/* Flex container for Phone and Email */}
+              <div className="flex flex-col sm:flex-row gap-8 mb-6">
+                <div className="flex-1">
+                  <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.phoneLabel")}</p>
+                  <button
+                    onClick={() => copyToClipboard('+16042737565', t("contact.copyLabelPhone"))}
+                    className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center justify-center sm:justify-start"
+                  >
+                    +1 (604) 273-7565
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-[16px] text-[#444444] mb-1">{t("contact.emailLabel")}</p>
+                  <button
+                    onClick={() => copyToClipboard('info@avid-law.com', t("contact.copyLabelEmail"))}
+                    className="text-black hover:text-[#FFC107] transition-colors cursor-pointer flex items-center justify-center sm:justify-start"
+                  >
+                    info@avid-law.com
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               {/* Office Hours Section */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <p className="font-semibold text-[16px] text-[#444444] mb-2">Office Hours:</p>
                 <p className="text-gray-700 leading-relaxed">
                   {t("contact.officeHours")}
                 </p>
+              </div>
+
+              {/* NEW: QR Code section */}
+              <div>
+              <p className="font-semibold text-[16px] text-[#444444] mb-4">{t("contact.bookConsultationTitle")}</p>
+              <div className="flex flex-row gap-6 justify-center md:justify-start">
+                  {/* English QR Code */}
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                        alt="QR Code for English booking form"
+                        width={120}
+                        height={120}
+                        className="rounded-lg shadow-md"
+                      />
+                    </a>
+                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("eve.qrCodeEnglish")}</p>
+                  </div>
+                  {/* Chinese QR Code */}
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                        alt="QR Code for Chinese booking form"
+                        width={120}
+                        height={120}
+                        className="rounded-lg shadow-md"
+                      />
+                    </a>
+                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("eve.qrCodeChinese")}</p>
+                  </div>
+                </div>
               </div>
             </div>
 
