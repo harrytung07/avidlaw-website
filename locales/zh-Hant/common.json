@@ -5,6 +5,7 @@
   "nav.resources": "資源",
   "nav.news": "新聞",
   "nav.articles": "文章",
+  "nav.forms": "表格",
   "nav.contact": "聯絡我們",
   "nav.altLogo": "安勝 · 弘人律師行標誌",
   "nav.bookButton": "預約",
@@ -209,6 +210,25 @@
   "contact.copyLabelAddress1": "太平洋商務中心地址",
   "contact.copyLabelAddress2": "時代坊地址",
   "contact.mapButtonTooltip": "查看地圖",
+
+  "forms.pageTitle": "客戶表格",
+  "forms.pageDescription": "訪問我們的線上表格進行諮詢和問卷調查。掃描下面的二維碼或點擊直接打開表格。",
+  "forms.sectionTitle": "可用表格",
+  "forms.sectionDescription": "選擇下面的適當表格。您可以使用手機相機或微信掃描二維碼，或點擊按鈕直接打開表格。",
+  "forms.consultationEnglish": "諮詢預約表（英文）",
+  "forms.consultationChinese": "諮詢預約表（中文）",
+  "forms.consultationDescription": "與我們的法律團隊預約諮詢",
+  "forms.willEnglish": "簡單遺囑和遺產問卷（英文）",
+  "forms.willChinese": "簡單遺囑和遺產問卷（中文）",
+  "forms.willDescription": "完成我們的遺囑和遺產規劃問卷",
+  "forms.prenup": "婚前協議問卷 Pre-Nuptial Agreement Questionnaire",
+  "forms.prenupDescription": "婚前協議的雙語問卷",
+  "forms.divorce": "離婚/婚姻事務問卷",
+  "forms.divorceDescription": "離婚和家庭事務的雙語問卷",
+  "forms.openForm": "打開表格",
+  "forms.helpTitle": "需要幫助？",
+  "forms.helpText": "如果您對使用哪種表格有任何疑問或需要幫助填寫表格，請隨時與我們聯絡。我們的團隊隨時為您服務。",
+  "forms.contactUs": "聯絡我們",
   
   "footer.copyright": "© {currentYear} 安勝 · 弘人律師行。版權所有。"
 }

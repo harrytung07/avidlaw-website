@@ -5,6 +5,7 @@
   "nav.resources": "资源",
   "nav.news": "新闻",
   "nav.articles": "文章",
+  "nav.forms": "表格",
   "nav.contact": "联系我们",
   "nav.altLogo": "安胜 · 弘人律师行标志",
   "nav.bookButton": "预约",
@@ -209,6 +210,25 @@
   "contact.copyLabelAddress1": "太平洋商务中心地址",
   "contact.copyLabelAddress2": "时代坊地址",
   "contact.mapButtonTooltip": "查看地图",
+
+  "forms.pageTitle": "客户表格",
+  "forms.pageDescription": "访问我们的在线表格进行咨询和问卷调查。扫描下面的二维码或点击直接打开表格。",
+  "forms.sectionTitle": "可用表格",
+  "forms.sectionDescription": "选择下面的适当表格。您可以使用手机相机或微信扫描二维码，或点击按钮直接打开表格。",
+  "forms.consultationEnglish": "咨询预约表（英文）",
+  "forms.consultationChinese": "咨询预约表（中文）",
+  "forms.consultationDescription": "与我们的法律团队预约咨询",
+  "forms.willEnglish": "简单遗嘱和遗产问卷（英文）",
+  "forms.willChinese": "简单遗嘱和遗产问卷（中文）",
+  "forms.willDescription": "完成我们的遗嘱和遗产规划问卷",
+  "forms.prenup": "婚前协议问卷 Pre-Nuptial Agreement Questionnaire",
+  "forms.prenupDescription": "婚前协议的双语问卷",
+  "forms.divorce": "离婚/婚姻事务问卷",
+  "forms.divorceDescription": "离婚和家庭事务的双语问卷",
+  "forms.openForm": "打开表格",
+  "forms.helpTitle": "需要帮助？",
+  "forms.helpText": "如果您对使用哪种表格有任何疑问或需要帮助填写表格，请随时与我们联系。我们的团队随时为您服务。",
+  "forms.contactUs": "联系我们",
   
   "footer.copyright": "© {currentYear} 安胜 · 弘人律师行。版权所有。"
 }

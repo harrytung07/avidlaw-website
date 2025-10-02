@@ -5,6 +5,7 @@
   "nav.resources": "Resources",
   "nav.news": "News",
   "nav.articles": "Articles",
+  "nav.forms": "Forms",
   "nav.contact": "Contact",
   "nav.altLogo": "Avid Law Logo",
   "nav.bookButton": "Book",
@@ -228,6 +229,25 @@
   "contact.copyLabelAddress1": "Pacific Business Centre address",
   "contact.copyLabelAddress2": "Aberdeen Square address",
   "contact.mapButtonTooltip": "View in Map",
+
+  "forms.pageTitle": "Client Forms",
+  "forms.pageDescription": "Access our online forms for consultations and questionnaires. Scan the QR codes below or click to open the forms directly.",
+  "forms.sectionTitle": "Available Forms",
+  "forms.sectionDescription": "Select the appropriate form below. You can scan the QR code with your phone's camera or WeChat, or click the button to open the form directly.",
+  "forms.consultationEnglish": "Consultation Booking Form (English)",
+  "forms.consultationChinese": "Consultation Booking Form (Chinese)",
+  "forms.consultationDescription": "Book a consultation with our legal team",
+  "forms.willEnglish": "Simple Will and Estate Questionnaire (English)",
+  "forms.willChinese": "Simple Will and Estate Questionnaire (Chinese)",
+  "forms.willDescription": "Complete our will and estate planning questionnaire",
+  "forms.prenup": "Pre-Nuptial Agreement Questionnaire 婚前协议问卷",
+  "forms.prenupDescription": "Bilingual questionnaire for prenuptial agreements",
+  "forms.divorce": "Divorce/Matrimonial Matters Questionnaire",
+  "forms.divorceDescription": "Bilingual questionnaire for divorce and family matters",
+  "forms.openForm": "Open Form",
+  "forms.helpTitle": "Need Assistance?",
+  "forms.helpText": "If you have any questions about which form to use or need help completing a form, please don't hesitate to contact us. Our team is here to assist you.",
+  "forms.contactUs": "Contact Us",
 
   "footer.copyright": "© {currentYear} Avid Law. All rights reserved."
 } 

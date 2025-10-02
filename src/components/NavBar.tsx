@@ -214,6 +214,12 @@ export default function NavBar() {
                 >
                   {t("nav.articles")}
                 </Link>
+                <Link
+                  href={localePath("/forms")}
+                  className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
+                >
+                  {t("nav.forms")}
+                </Link>
               </div>
             </div>
 
@@ -362,6 +368,13 @@ export default function NavBar() {
                 onClick={toggleMenu}
               >
                 {t("nav.articles")}
+              </Link>
+              <Link
+                href={localePath("/forms")}
+                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                onClick={toggleMenu}
+              >
+                {t("nav.forms")}
               </Link>
               <a
                 href={isHomePage ? "#contact" : localePath("/#contact")}
