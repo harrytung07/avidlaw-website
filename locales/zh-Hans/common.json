@@ -7,6 +7,10 @@
   "nav.articles": "文章",
   "nav.contact": "联系我们",
   "nav.altLogo": "安胜 · 弘人律师行标志",
+  "nav.bookButton": "预约",
+  "nav.bookingBoxText": "点击或用手机相机/微信扫描",
+  "nav.qrCodeEnglish": "英文预约",
+  "nav.qrCodeChinese": "中文预约",
 
   "exploreButton.explore": "探索",
 

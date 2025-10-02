@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +13,8 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
+  const bookingBoxRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   const getPathWithoutLocale = (path: string) => {
@@ -93,6 +95,20 @@ export default function NavBar() {
     setTimeoutId(id);
   };
 
+  // Handle click outside to close booking box
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
+        setBookingBoxVisible(false);
+      }
+    }
+    if (isBookingBoxVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isBookingBoxVisible, bookingBoxRef]);
 
   return (
     <>
@@ -194,6 +210,52 @@ export default function NavBar() {
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
+            
+            {/* Book Button with Booking Box */}
+            <div className="relative" ref={bookingBoxRef}>
+              <button
+                onClick={() => setBookingBoxVisible(prevState => !prevState)}
+                className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-900 hover:bg-[#ffcb38] transition-colors font-semibold px-6 py-2 rounded uppercase text-sm tracking-wide"
+              >
+                {t("nav.bookButton")}
+              </button>
+              
+              {/* Booking Box */}
+              <div className={`absolute top-full right-0 mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 ${isBookingBoxVisible ? 'opacity-100 z-50' : 'opacity-0 pointer-events-none'}`}>
+                <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
+                  {t("nav.bookingBoxText")}
+                </p>
+                <div className="flex justify-center gap-6">
+                  {/* English QR Code */}
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
+                        alt="QR Code for English booking form"
+                        width={100}
+                        height={100}
+                        className="rounded-md"
+                      />
+                    </a>
+                    <p className="font-semibold text-xs text-white/90 mt-1">{t("nav.qrCodeEnglish")}</p>
+                  </div>
+                  
+                  {/* Chinese QR Code */}
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
+                        alt="QR Code for Chinese booking form"
+                        width={100}
+                        height={100}
+                        className="rounded-md"
+                      />
+                    </a>
+                    <p className="font-semibold text-xs text-white/90 mt-1">{t("nav.qrCodeChinese")}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Hamburger menu container - Conditionally rendered based on screen size and page context */}
@@ -224,6 +286,22 @@ export default function NavBar() {
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
+            
+            {/* Mobile Book Button - Simple version without popup */}
+            <button
+              onClick={() => {
+                // On mobile, directly navigate to contact section or show simple link
+                const section = document.getElementById('contact');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = localePath('/#contact');
+                }
+              }}
+              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-900 hover:bg-[#ffcb38] transition-colors font-semibold px-4 py-2 rounded uppercase text-xs tracking-wide"
+            >
+              {t("nav.bookButton")}
+            </button>
           </div>
         </div>
       </div>

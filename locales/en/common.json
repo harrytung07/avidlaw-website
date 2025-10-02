@@ -7,6 +7,10 @@
   "nav.articles": "Articles",
   "nav.contact": "Contact",
   "nav.altLogo": "Avid Law Logo",
+  "nav.bookButton": "Book",
+  "nav.bookingBoxText": "Click or scan with your phone's camera / WeChat.",
+  "nav.qrCodeEnglish": "Book in English",
+  "nav.qrCodeChinese": "中文预约 (Book in Chinese)",
 
   "exploreButton.explore": "Explore",
 
