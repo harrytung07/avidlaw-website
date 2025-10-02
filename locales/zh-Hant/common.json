@@ -6,7 +6,6 @@
   "nav.news": "新聞",
   "nav.articles": "文章",
   "nav.contact": "聯絡我們",
-  "nav.chatWithEve": "與 Eve 聊聊",
   "nav.altLogo": "安勝 · 弘人律師行標誌",
 
   "exploreButton.explore": "探索",
@@ -66,6 +65,8 @@
   "practiceAreas.willsTrustEstatesDescription": "全面遺產規劃，守護您的資產與至親。",
   "practiceAreas.eveTitle": "準備好討論您的案件了嗎？",
   "practiceAreas.bookingDescription": "點擊或用手機相機/微信掃描，透過我們的安全線上表格預約諮詢。",
+  "practiceAreas.qrCodeEnglish": "英文預約",
+  "practiceAreas.qrCodeChinese": "中文預約",
 
   "about.sectionTitle": "關於安勝 · 弘人律師行",
   "about.sectionText": "安勝 · 弘人律師行是大溫哥華地區規模最大的華裔律師創辦的律師事務所。總部位於列治文，我們自豪地以普通話、粵語及英語提供法律服務。",
@@ -82,12 +83,16 @@
   "about.eveTitle": "想深入了解？",
   "about.eveText": "我們的團隊隨時準備為您服務。準備好邁出下一步了嗎？透過我們的安全線上表格輕鬆預約諮詢。",
   "about.eveButton": "認識我們的團隊",
+  "about.qrCodeEnglish": "英文預約",
+  "about.qrCodeChinese": "中文預約",
 
   "team.sectionTitle": "我們的團隊",
   "team.sectionDescription": "認識成就我們律所卓越的專業人士",
   "team.viewProfile": "查看簡介",
   "team.needHelpQuestion": "準備好預約諮詢了嗎？",
   "team.eveDescription": "點擊或用手機相機/微信掃描。透過我們的安全線上表格，輕鬆預約。",
+  "team.qrCodeEnglish": "英文預約",
+  "team.qrCodeChinese": "中文預約",
 
   "team.name.AdeleSun": "孫紫涵",
   "team.title.AdeleSun": "出庭律師兼事務律師",
@@ -151,6 +156,8 @@
   "hero.subtitle": "值得信賴的法律專長",
   "hero.bookButton": "預約諮詢",
   "hero.bookingBoxText": "點擊或用手機相機/微信掃描",
+  "hero.qrCodeEnglish": "英文預約",
+  "hero.qrCodeChinese": "中文預約",
 
   "intro.companyName": "安勝 · 弘人律師行",
   "intro.historyTag": "歷史：安勝 · 弘人律師行成立",
@@ -182,18 +189,13 @@
   "practiceAreas.sectionText3": "多年來，安勝 · 弘人律師行憑藉專業、誠信與不懈的客戶倡導精神建立卓越聲譽，並將繼續為客戶提供全方位法律服務。",
   "practiceAreas.viewAll": "查看全部服務",
   
-  "eve.sectionTitle": "不確定哪位律師最適合您？",
-  "eve.sectionText": "讓 AI 助手 Eve 為您導航，根據您的法律需求配對最合適的律師。",
-  "eve.chatButton": "與 Eve 聊聊",
-  "eve.qrCodeEnglish": "英文預約",
-  "eve.qrCodeChinese": "中文預約",
-  "eve.qrCodeTitle": "準備好預約諮詢了嗎？",
-  
   "contact.sectionTitle": "聯絡我們",
   "contact.phoneLabel": "電話：",
   "contact.emailLabel": "電郵：",
   "contact.officeHours": "我們團隊週一至週五 08:30–17:30 竭誠為您服務，期待協助您解決法律需求。",
   "contact.bookConsultationTitle": "點擊或用手機相機/微信掃描線上預約：",
+  "contact.qrCodeEnglish": "英文預約",
+  "contact.qrCodeChinese": "中文預約",
   "contact.office1Title": "太平洋商務中心",
   "contact.office2Title": "時代坊（衛星辦公室）",
   "contact.copyButtonTooltip": "已複製到剪貼簿！",

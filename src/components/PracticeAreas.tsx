@@ -201,33 +201,6 @@ export default function PracticeAreas() {
     );
   };
 
-  // --- Add the function to open the chatbot ---
-  const openChatbot = () => { // No event param needed here unless preventing default on an anchor
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-
-    if (icon && panel) {
-      console.log("Opening chatbot panel directly via button click (Practice Areas Page).");
-      panel.style.display = 'flex'; // Show panel
-      icon.style.display = 'none';  // Hide icon
-
-      // Set flag for the outside click listener in chatbot.js to ignore this event
-      window.ignoreNextOutsideClick = true;
-
-      // Optional: Try to focus input and scroll if the instance is available
-      if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-         window.chatbotInstance.focusInput();
-      }
-      if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
-        window.chatbotInstance.scrollToBottom(true);
-      }
-
-    } else {
-        console.error("Chatbot icon or panel element not found.");
-    }
-    // If attached to an anchor: event.preventDefault();
-  };
-  // --- End function ---
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -341,7 +314,7 @@ export default function PracticeAreas() {
                   className="rounded-lg shadow-lg"
                 />
               </a>
-              <p className="font-semibold text-sm text-gray-800 mt-1">{t("eve.qrCodeEnglish")}</p>
+              <p className="font-semibold text-sm text-gray-800 mt-1">{t("practiceAreas.qrCodeEnglish")}</p>
             </div>
 
             {/* Chinese QR Code */}
@@ -355,7 +328,7 @@ export default function PracticeAreas() {
                   className="rounded-lg shadow-lg"
                 />
               </a>
-              <p className="font-semibold text-sm text-gray-800 mt-1">{t("eve.qrCodeChinese")}</p>
+              <p className="font-semibold text-sm text-gray-800 mt-1">{t("practiceAreas.qrCodeChinese")}</p>
             </div>
           </div>
         </div>

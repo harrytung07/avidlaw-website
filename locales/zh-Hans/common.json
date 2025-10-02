@@ -6,7 +6,6 @@
   "nav.news": "新闻",
   "nav.articles": "文章",
   "nav.contact": "联系我们",
-  "nav.chatWithEve": "与 Eve 聊聊",
   "nav.altLogo": "安胜 · 弘人律师行标志",
 
   "exploreButton.explore": "探索",
@@ -66,6 +65,8 @@
   "practiceAreas.willsTrustEstatesDescription": "全面的遗产规划，守护您的财富与家人。",
   "practiceAreas.eveTitle": "准备好讨论您的案件了吗？",
   "practiceAreas.bookingDescription": "点击或用手机相机/微信扫描，通过我们的安全在线表格预约咨询。",
+  "practiceAreas.qrCodeEnglish": "英文预约",
+  "practiceAreas.qrCodeChinese": "中文预约",
 
   "about.sectionTitle": "关于安胜 · 弘人律师行",
   "about.sectionText": "安胜 · 弘人律师行是大温哥华地区规模最大的华裔律师创办的律师事务所。总部位于列治文，我们自豪地以普通话、粤语和英语提供法律服务。",
@@ -82,12 +83,16 @@
   "about.eveTitle": "想了解更多？",
   "about.eveText": "我们的团队随时准备为您服务。准备好迈出下一步了吗？通过我们的安全在线表格轻松预约咨询。",
   "about.eveButton": "认识我们的团队",
+  "about.qrCodeEnglish": "英文预约",
+  "about.qrCodeChinese": "中文预约",
 
   "team.sectionTitle": "我们的团队",
   "team.sectionDescription": "认识成就我们律所卓越的专业人士",
   "team.viewProfile": "查看简介",
   "team.needHelpQuestion": "准备好预约咨询了吗？",
   "team.eveDescription": "点击或用手机相机/微信扫描。通过我们的安全在线表格，轻松预约。",
+  "team.qrCodeEnglish": "英文预约",
+  "team.qrCodeChinese": "中文预约",
 
   "team.name.AdeleSun": "孙紫涵",
   "team.title.AdeleSun": "出庭律师兼事务律师",
@@ -151,6 +156,8 @@
   "hero.subtitle": "值得信赖的法律专长",
   "hero.bookButton": "预约咨询",
   "hero.bookingBoxText": "点击或用手机相机/微信扫描",
+  "hero.qrCodeEnglish": "英文预约",
+  "hero.qrCodeChinese": "中文预约",
 
   "intro.companyName": "安胜 · 弘人律师行",
   "intro.historyTag": "历史：安胜 · 弘人律师行成立",
@@ -182,18 +189,13 @@
   "practiceAreas.sectionText3": "多年耕耘，安胜 · 弘人律师行凭借专业、诚信与不懈的客户倡导建立了卓越声誉，并将继续为客户提供全方位法律服务。",
   "practiceAreas.viewAll": "查看全部服务",
   
-  "eve.sectionTitle": "不确定哪位律师最适合您？",
-  "eve.sectionText": "让 AI 助手 Eve 指引您，根据您的具体法律需求匹配最合适的律师。",
-  "eve.chatButton": "与 Eve 聊聊",
-  "eve.qrCodeEnglish": "英文预约",
-  "eve.qrCodeChinese": "中文预约",
-  "eve.qrCodeTitle": "准备好预约咨询了吗？",
-  
   "contact.sectionTitle": "联系我们",
   "contact.phoneLabel": "电话：",
   "contact.emailLabel": "邮箱：",
   "contact.officeHours": "我们团队周一至周五 08:30–17:30 提供服务，期待协助您解决法律需求。",
   "contact.bookConsultationTitle": "点击或用手机相机/微信扫描在线预约：",
+  "contact.qrCodeEnglish": "英文预约",
+  "contact.qrCodeChinese": "中文预约",
   "contact.office1Title": "太平洋商务中心",
   "contact.office2Title": "时代坊（卫星办公室）",
   "contact.copyButtonTooltip": "已复制到剪贴板！",

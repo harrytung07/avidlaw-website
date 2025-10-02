@@ -11,12 +11,6 @@ import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { useTranslation } from "@/context/TranslationContext";
 
-declare global {
-  interface Window {
-    chatbotInstance?: any; // Or a more specific type if you define one
-    ignoreNextOutsideClick?: boolean;
-  }
-}
 
 export function LawFirmLanding() {
   const { t, locale } = useTranslation();
@@ -132,30 +126,6 @@ export function LawFirmLanding() {
     window.open(`https://maps.google.com/?q=${encodedAddress}`, '_blank');
   };
 
-  // Function to open the chatbot
-  const openChatbot = () => {
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-
-    if (icon && panel) {
-      console.log("Opening chatbot panel directly via button click.");
-      panel.style.display = 'flex';
-      icon.style.display = 'none';
-
-      window.ignoreNextOutsideClick = true;
-
-      if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-        window.chatbotInstance.focusInput();
-      }
-      if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
-        window.chatbotInstance.scrollToBottom(true);
-      }
-
-    } else {
-      console.error("Chatbot icon or panel element not found.");
-    }
-  };
-  // --- End function ---
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -225,7 +195,7 @@ export function LawFirmLanding() {
                                     className="rounded-md"
                                 />
                             </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeEnglish")}</p>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("hero.qrCodeEnglish")}</p>
                         </div>
 
                         {/* Chinese QR Code */}
@@ -239,7 +209,7 @@ export function LawFirmLanding() {
                                     className="rounded-md"
                                 />
                             </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeChinese")}</p>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("hero.qrCodeChinese")}</p>
                         </div>
                     </div>
                 </div>
@@ -602,7 +572,7 @@ export function LawFirmLanding() {
                         className="rounded-lg shadow-md"
                       />
                     </a>
-                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("eve.qrCodeEnglish")}</p>
+                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("contact.qrCodeEnglish")}</p>
                   </div>
                   {/* Chinese QR Code */}
                   <div className="flex flex-col items-center gap-2 text-center">
@@ -615,7 +585,7 @@ export function LawFirmLanding() {
                         className="rounded-lg shadow-md"
                       />
                     </a>
-                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("eve.qrCodeChinese")}</p>
+                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("contact.qrCodeChinese")}</p>
                   </div>
                 </div>
               </div>

@@ -264,25 +264,6 @@ if (i === 0) { // Panel 0: About Avid Law (Animate on Load)
     }
   };
 
-  const openChatbot = (event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-    event.preventDefault();
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-    if (icon && panel) {
-      panel.style.display = 'flex';
-      icon.style.display = 'none';
-      // It's good practice to type window extensions
-      (window as any).ignoreNextOutsideClick = true;
-      if ((window as any).chatbotInstance?.focusInput) {
-        (window as any).chatbotInstance.focusInput();
-      }
-      if ((window as any).chatbotInstance?.scrollToBottom) {
-        (window as any).chatbotInstance.scrollToBottom(true);
-      }
-    } else {
-      console.error("Chatbot icon or panel element not found.");
-    }
-  };
 
   // --- JSX Return ---
   return (
@@ -455,7 +436,7 @@ if (i === 0) { // Panel 0: About Avid Law (Animate on Load)
                                     className="rounded-md"
                                 />
                             </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeEnglish")}</p>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("about.qrCodeEnglish")}</p>
                         </div>
                         {/* Chinese QR Code */}
                         <div className="flex flex-col items-center gap-2 text-center">
@@ -468,7 +449,7 @@ if (i === 0) { // Panel 0: About Avid Law (Animate on Load)
                                     className="rounded-md"
                                 />
                             </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("eve.qrCodeChinese")}</p>
+                            <p className="font-semibold text-xs text-white/90 mt-1">{t("about.qrCodeChinese")}</p>
                         </div>
                     </div>
                 </div>

@@ -93,23 +93,6 @@ export default function NavBar() {
     setTimeoutId(id);
   };
 
-  const openChatbot = () => {
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-    if (icon && panel) {
-      panel.style.display = 'flex';
-      icon.style.display = 'none';
-      window.ignoreNextOutsideClick = true;
-      if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-        window.chatbotInstance.focusInput();
-      }
-      if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
-        window.chatbotInstance.scrollToBottom(true);
-      }
-    } else {
-      console.error("Chatbot icon or panel element not found.");
-    }
-  };
 
   return (
     <>
@@ -211,19 +194,6 @@ export default function NavBar() {
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
-            <button
-              className="h-[50px] w-[50px] flex items-center justify-center ml-4"
-              onClick={openChatbot}
-              aria-label={t("nav.chatWithEve")}
-            >
-              <Image
-                src="/chatbot1.png"
-                alt={t("nav.chatWithEve")}
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-            </button>
           </div>
 
           {/* Hamburger menu container - Conditionally rendered based on screen size and page context */}
@@ -254,19 +224,6 @@ export default function NavBar() {
             <div className="flex items-center">
               <LanguageSwitcher />
             </div>
-            <button
-              className="h-[40px] w-[40px] flex items-center justify-center"
-              onClick={openChatbot}
-              aria-label={t("nav.chatWithEve")}
-            >
-              <Image
-                src="/chatbot1.png"
-                alt={t("nav.chatWithEve")}
-                width={40}
-                height={40}
-                className="object-contain"
-              />
-            </button>
           </div>
         </div>
       </div>
@@ -334,23 +291,6 @@ export default function NavBar() {
                 {t("nav.contact")}
               </a>
 
-              {/* Chatbot button in mobile menu */}
-              <button
-                className="h-[50px] w-[50px] flex items-center justify-center mt-4" // Added mt-4 for spacing
-                onClick={() => {
-                  toggleMenu(); // Close menu
-                  openChatbot(); // Open chatbot
-                }}
-                aria-label={t("nav.chatWithEve")}
-              >
-                <Image
-                  src="/chatbot1.png"
-                  alt={t("nav.chatWithEve")}
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </button>
             </div>
           </div>
         </div>

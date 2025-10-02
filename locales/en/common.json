@@ -6,7 +6,6 @@
   "nav.news": "News",
   "nav.articles": "Articles",
   "nav.contact": "Contact",
-  "nav.chatWithEve": "Chat with Eve",
   "nav.altLogo": "Avid Law Logo",
 
   "exploreButton.explore": "Explore",
@@ -66,6 +65,8 @@
   "practiceAreas.willsTrustEstatesDescription": "Comprehensive estate planning to protect your legacy and loved ones.",
   "practiceAreas.eveTitle": "Ready to Discuss Your Case?",
   "practiceAreas.bookingDescription": "Click or scan with your phone's camera / WeChat to book a consultation using our secure online form.",
+  "practiceAreas.qrCodeEnglish": "Book in English",
+  "practiceAreas.qrCodeChinese": "中文预约 (Book in Chinese)",
 
   "about.sectionTitle": "About Avid Law",
   "about.sectionText": "Avid Law is the largest law firm in the Greater Vancouver area founded by Sino-Canadian lawyer. Located in Richmond, we proudly offer legal services in Mandarin, Cantonese, and English.",
@@ -82,12 +83,16 @@
   "about.eveTitle": "Ready to Schedule a Consultation?",
   "about.eveText": "Click or scan with your phone's camera / WeChat. Our secure online form makes booking easy.",
   "about.eveButton": "Meet Our Team",
+  "about.qrCodeEnglish": "Book in English",
+  "about.qrCodeChinese": "中文预约 (Book in Chinese)",
 
   "team.sectionTitle": "Our Team",
   "team.sectionDescription": "Meet the dedicated professionals who make our firm exceptional",
   "team.viewProfile": "View Profile",
   "team.needHelpQuestion": "Ready to Schedule a Consultation?",
   "team.eveDescription": "Click or scan with your phone's camera / WeChat. Our secure online form makes booking easy.",
+  "team.qrCodeEnglish": "Book in English",
+  "team.qrCodeChinese": "中文预约 (Book in Chinese)",
 
   "team.name.AdeleSun": "Adele Sun",
   "team.title.AdeleSun": "Barrister & Solicitor",
@@ -170,6 +175,8 @@
   "hero.subtitle": "Legal expertise you can trust",
   "hero.bookButton": "Book Consultation",
   "hero.bookingBoxText": "Click or scan with your phone's camera / WeChat.",
+  "hero.qrCodeEnglish": "Book in English",
+  "hero.qrCodeChinese": "中文预约 (Book in Chinese)",
 
   "intro.companyName": "AVID LAW",
   "intro.historyTag": "HISTORY: AVID LAW ESTABLISHED",
@@ -201,18 +208,13 @@
   "practiceAreas.sectionText3": "Through years of dedicated service, Avid Law has built a reputation rooted in professionalism, integrity, and unwavering advocacy. We continue to uphold our tradition of excellence, providing a full spectrum of legal services crafted precisely to align with our clients' needs and objectives.",
   "practiceAreas.viewAll": "VIEW ALL PRACTICES",
 
-  "eve.sectionTitle": "Need Help Finding the Right Lawyer?",
-  "eve.sectionText": "Let Eve, our AI assistant, guide you. Ask questions or book an appointment with the perfect attorney for your needs.",
-  "eve.chatButton": "Chat with Eve",
-  "eve.qrCodeEnglish": "Book in English",
-  "eve.qrCodeChinese": "中文预约 (Book in Chinese)",
-  "eve.qrCodeTitle": "Ready to Schedule a Consultation?",
-
   "contact.sectionTitle": "Let's Connect",
   "contact.phoneLabel": "Phone:",
   "contact.emailLabel": "Email:",
   "contact.officeHours": "Our team is available Monday through Friday, 8:30 AM - 5:30 PM. We look forward to assisting you with your legal needs.",
   "contact.bookConsultationTitle": "Click or scan with your phone's camera / WeChat to book online:",
+  "contact.qrCodeEnglish": "Book in English",
+  "contact.qrCodeChinese": "中文预约 (Book in Chinese)",
   "contact.office1Title": "Pacific Business Centre",
   "contact.office2Title": "Aberdeen Square (Satellite Office)",
   "contact.copyButtonTooltip": "copied to clipboard!",

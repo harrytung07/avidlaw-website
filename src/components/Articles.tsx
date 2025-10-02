@@ -705,34 +705,6 @@ export default function Articles() {
   // Use the first article as the featured article
   const featuredArticle = allArticlesData.length > 0 ? allArticlesData[0] : null;
 
-  // --- Add the function to open the chatbot ---
-  const openChatbot = (event: MouseEvent<HTMLAnchorElement>) => { // Use HTMLAnchorElement
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-
-    if (icon && panel) {
-      console.log("Opening chatbot panel directly via button click (Articles Page).");
-      panel.style.display = 'flex'; // Show panel
-      icon.style.display = 'none';  // Hide icon
-
-      // Set flag for the outside click listener in chatbot.js to ignore this event
-      window.ignoreNextOutsideClick = true;
-
-      // Optional: Try to focus input and scroll if the instance is available
-      if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-         window.chatbotInstance.focusInput();
-      }
-      if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
-        window.chatbotInstance.scrollToBottom(true);
-      }
-
-    } else {
-        console.error("Chatbot icon or panel element not found.");
-    }
-    // Prevent default anchor tag navigation
-    event.preventDefault();
-  };
-  // --- End function ---
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -907,10 +879,10 @@ export default function Articles() {
             Reach out today for a consultation.
           </p>
           
-          <div className="flex flex-col md:flex-row gap-6 justify-center">
+          <div className="flex justify-center">
             <a 
               href="/#contact" 
-              className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-transparent px-8 py-4 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] hover:text-black focus:outline-none"
+              className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none"
             >
               Contact Us
               <svg 
@@ -922,25 +894,6 @@ export default function Articles() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </a>
-            
-            <a
-              // href="/chat" // REMOVE href
-              onClick={openChatbot} // ADD onClick
-              role="button" // ADD role
-              className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none cursor-pointer" // ADD cursor-pointer
-            >
-              Chat with Eve
-              {/* ... svg ... */}
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
             </a>
           </div>
         </div>

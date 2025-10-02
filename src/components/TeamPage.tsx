@@ -89,32 +89,6 @@ export default function TeamPage() {
     setSelectedMember(null);
   };
 
-    // --- Add the function to open the chatbot ---
-  const openChatbot = () => { // No event param needed if not using stopPropagation
-    const icon = document.getElementById('chatbotIcon');
-    const panel = document.getElementById('chatbotPanel');
-
-    if (icon && panel) {
-      console.log("Opening chatbot panel directly via button click (Team Page).");
-      panel.style.display = 'flex'; // Show panel
-      icon.style.display = 'none';  // Hide icon
-
-      // Set flag for the outside click listener in chatbot.js to ignore this event
-      window.ignoreNextOutsideClick = true;
-
-      // Optional: Try to focus input and scroll if the instance is available
-      if (window.chatbotInstance && typeof window.chatbotInstance.focusInput === 'function') {
-         window.chatbotInstance.focusInput();
-      }
-      if (window.chatbotInstance && typeof window.chatbotInstance.scrollToBottom === 'function') {
-        window.chatbotInstance.scrollToBottom(true);
-      }
-
-    } else {
-        console.error("Chatbot icon or panel element not found.");
-    }
-  };
-  // --- End function ---
   const barristerSolicitorRoleString = t('team.title.AdeleSun'); // Gets "Barrister & Solicitor"
   const articlingStudentRoleString = t('team.title.KunDong');   // Gets "Articling Student"
 
@@ -265,7 +239,7 @@ export default function TeamPage() {
                   className="rounded-lg bg-white p-1 shadow-lg"
                 />
               </a>
-              <p className="font-semibold text-sm text-white/90 mt-1">{t("eve.qrCodeEnglish")}</p>
+              <p className="font-semibold text-sm text-white/90 mt-1">{t("team.qrCodeEnglish")}</p>
             </div>
 
             {/* Chinese QR Code */}
@@ -280,7 +254,7 @@ export default function TeamPage() {
                   className="rounded-lg bg-white p-1 shadow-lg"
                 />
               </a>
-              <p className="font-semibold text-sm text-white/90 mt-1">{t("eve.qrCodeChinese")}</p>
+              <p className="font-semibold text-sm text-white/90 mt-1">{t("team.qrCodeChinese")}</p>
             </div>
           </div>
         </div>
@@ -333,35 +307,6 @@ export default function TeamPage() {
                       <p>{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
                     </div>
                     
-                    {selectedMember.titleKey === "team.title.AdeleSun" || 
-                     selectedMember.titleKey === "team.title.DavidChen" || 
-                     selectedMember.titleKey === "team.title.BrentDesruisseaux" || 
-                     selectedMember.titleKey === "team.title.AbielKwok" || 
-                     selectedMember.titleKey === "team.title.CoreyPoon" || 
-                     selectedMember.titleKey === "team.title.HowardQu" || 
-                     selectedMember.titleKey === "team.title.FrejaLi" || 
-                     selectedMember.titleKey === "team.title.NicoleTam" || 
-                     selectedMember.titleKey === "team.title.OliviaNicolaides" || 
-                     selectedMember.titleKey === "team.title.RachelLi" ? (
-                    <button
-                      onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                        e.stopPropagation();
-                        openChatbot();
-                      }}
-                      className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-6 py-3 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none self-start"
-                    >
-                      {t('attorneys.meetTeam')}
-                       <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                       >
-                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                       </svg>
-                    </button>
-                    ) : null}
                   </div>
                 </div>
               </div>
