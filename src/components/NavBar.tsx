@@ -10,6 +10,8 @@ import { useTranslation } from "@/context/TranslationContext";
 export default function NavBar() {
   const { t, locale } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
@@ -39,14 +41,31 @@ export default function NavBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 100);
+      const currentScrollY = window.scrollY;
+      
+      // Update scrolled state for background color
+      setScrolled(currentScrollY > 100);
+      
+      // Determine visibility based on scroll direction
+      if (currentScrollY < 100) {
+        // Always show navbar at the top
+        setVisible(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 150) {
+        // Scrolling down - hide navbar (but only after scrolling past 150px)
+        setVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     // Prevent body scroll when menu is open
@@ -113,11 +132,11 @@ export default function NavBar() {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
+          visible ? 'top-0' : '-top-32'
+        } ${
           scrolled
-            ? isAboutPage
-              ? "bg-transparent py-2"
-              : "bg-black/70 backdrop-blur-md shadow-md py-2"
+            ? "bg-black/70 backdrop-blur-md shadow-md py-2"
             : "bg-transparent py-6"
         }`}
         style={{ animationDelay: '0.5s' }}
@@ -138,9 +157,7 @@ export default function NavBar() {
 
           {/* Desktop Navigation elements */}
           <div
-            className={`hidden md:flex items-center space-x-8 transition-opacity duration-400 ease-in-out absolute right-6 ${
-              isAboutPage && scrolled ? 'opacity-0 invisible' : 'opacity-100 visible'
-            }`}
+            className="hidden md:flex items-center space-x-8 transition-opacity duration-400 ease-in-out absolute right-6 opacity-100 visible"
           >
             <Link
               href={localePath("/practice-areas")}
@@ -258,22 +275,10 @@ export default function NavBar() {
             </div>
           </div>
 
-          {/* Hamburger menu container - Conditionally rendered based on screen size and page context */}
+          {/* Hamburger menu container */}
           <div
-            className={`flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden z-20 ${
-              isAboutPage && scrolled ? 'opacity-100 visible' : isAboutPage ? 'opacity-0 invisible' : 'opacity-100 visible'
-            } `}
+            className="flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden z-20 opacity-100 visible"
           >
-             {/* This hamburger button logic can be tricky with isAboutPage.
-                 The original logic for showing hamburger was:
-                 isAboutPage ? (scrolled ? 'opacity-100 visible md:flex' : 'opacity-0 invisible md:hidden') : 'md:hidden'
-                 This implies on about page, desktop nav hides and hamburger appears on scroll.
-                 On other pages, hamburger is always there for mobile (md:hidden for desktop nav, so hamburger shows).
-
-                 Let's simplify: Hamburger is for md:hidden. Special logic for About page scroll.
-                 For non-About pages, it's visible on mobile.
-                 For About page, it's visible on mobile, AND replaces desktop nav when scrolled.
-              */}
             <button
               onClick={toggleMenu}
               className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
