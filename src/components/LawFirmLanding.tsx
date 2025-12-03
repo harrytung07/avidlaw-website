@@ -52,7 +52,6 @@ export function LawFirmLanding() {
     { id: 12, name: "Farrah Yang", title: t("team.title.FarrahYang"), image: "/members/8. Farrah Yang.jpg" },
     { id: 13, name: "Ashley Wong", title: t("team.title.AshleyWong"), image: "/members/11. Ashley Wong.jpg" },
     { id: 14, name: "Jeannie Lee", title: t("team.title.JeannieLee"), image: "/members/10. Jeannie Lee.jpg" },
-    { id: 15, name: "Stella Li", title: t("team.title.StellaLi"), image: "/members/12. Stella Li.jpg" },
     { id: 16, name: "Sunny Zhang", title: t("team.title.SunnyZhang"), image: "/members/9. Sunny Zhang.jpg" },
   ];
   
