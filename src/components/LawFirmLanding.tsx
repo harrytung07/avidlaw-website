@@ -10,6 +10,7 @@ import "./embla.css";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { useTranslation } from "@/context/TranslationContext";
+import { X } from "lucide-react";
 
 
 export function LawFirmLanding() {
@@ -21,6 +22,26 @@ export function LawFirmLanding() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  // NEW: Holiday Modal State
+  const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
+
+  // NEW: Holiday Data Configuration
+  const upcomingHolidays = [
+    { date: "Dec 24, 2025 (Wed)", name: "Christmas Eve", note: "Closes at 1:00 PM" },
+    { date: "Dec 25, 2025 (Thu)", name: "Christmas Day" },
+    { year: "2026 Statutory Holidays" }, // Section Header
+    { date: "Jan 1, 2026 (Thu)", name: "New Year's Day" },
+    { date: "Feb 16, 2026 (Mon)", name: "Family Day" },
+    { date: "Apr 3, 2026 (Fri)", name: "Good Friday" },
+    { date: "May 18, 2026 (Mon)", name: "Victoria Day" },
+    { date: "Jul 1, 2026 (Wed)", name: "Canada Day" },
+    { date: "Aug 3, 2026 (Mon)", name: "B.C. Day" },
+    { date: "Sep 7, 2026 (Mon)", name: "Labour Day" },
+    { date: "Sep 30, 2026 (Wed)", name: "National Day for Truth and Reconciliation" },
+    { date: "Oct 12, 2026 (Mon)", name: "Thanksgiving Day" },
+    { date: "Nov 11, 2026 (Wed)", name: "Remembrance Day" },
+    { date: "Dec 25, 2026 (Fri)", name: "Christmas Day" },
+  ];
 
   // Helper to create locale-aware paths
   const localePath = (path: string) => {
@@ -137,13 +158,15 @@ export function LawFirmLanding() {
       {/* Hero Section */}
       <header className="relative h-[100vh] bg-gray-900 pt-0">
         {/* ... (The Gradient overlay and Background Image divs remain the same) ... */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-800/70 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
         <div className="absolute inset-0 z-0">
-           <Image
-             src="/A.png"
+        <Image
+             src="/unnamed.jpg"
              alt="Background"
              fill
-             className="object-cover object-bottom"
+             // CHANGE: replaced 'object-cover' with 'object-contain'
+             // Added 'object-center' to ensure it stays in the middle
+             className="object-contain object-center" 
              priority
            />
         </div>
@@ -262,12 +285,12 @@ export function LawFirmLanding() {
           <div className="flex flex-col md:flex-row items-start">
             {/* Left column - Historical Image */}
             <div className="md:w-1/2 mb-12 md:mb-0 relative z-20">
-              <div className="w-[450px] h-[380px] relative shadow-md mx-auto md:mx-0">
+              <div className="w-[450px] h-[380px] relative mx-auto md:mx-0">
                 <Image
-                  src="/intro.png"
+                  src="/intro.jpg"
                   alt="Historical Photo"
                   fill
-                  className="object-cover opacity-90 grayscale"
+                  className="object-cover object-center opacity-90"
                 />
                 <div className="absolute bottom-0 left-0 right-0 h-[60px] bg-gradient-to-t from-black/90 to-transparent z-10">
                   <div className="text-center absolute bottom-4 left-0 right-0">
@@ -551,9 +574,20 @@ export function LawFirmLanding() {
               {/* Office Hours Section */}
               <div className="mb-8">
                 <p className="font-semibold text-[16px] text-[#444444] mb-2">Office Hours:</p>
-                <p className="text-gray-700 leading-relaxed">
-                  {t("contact.officeHours")}
-                </p>
+                <div className="text-black leading-relaxed">
+                  <span>{t("contact.officeHoursPrefix")} </span>
+                  {/* Clickable Link */}
+                  <button 
+                    onClick={() => setIsHolidayModalOpen(true)}
+                    className="text-[#FFC107] font-medium hover:underline focus:outline-none"
+                  >
+                    {t("contact.statutoryHolidaysLink")}
+                  </button>
+                  .
+                  <br />
+                  {/* Fallback for "We look forward..." if you kept it in the prefix or want to hardcode it */}
+                  <span>We look forward to assisting you with your legal needs.</span>
+                </div>
               </div>
 
               {/* NEW: QR Code section */}
@@ -684,6 +718,72 @@ export function LawFirmLanding() {
           </p>
         </div>
       </footer>
-    </div>
+      {/* Holiday Modal */}
+      {isHolidayModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsHolidayModalOpen(false)}
+          ></div>
+
+          {/* Modal Content */}
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[85vh] overflow-hidden flex flex-col animate-fadeIn">
+            {/* Header */}
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50">
+              <h3 className="font-bold text-lg text-gray-800">
+                {t("contact.holidayModalTitle") || "Upcoming Holiday Closures"}
+              </h3>
+              <button 
+                onClick={() => setIsHolidayModalOpen(false)}
+                className="p-1 rounded-full hover:bg-gray-200 transition-colors text-gray-500"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Scrollable List */}
+            <div className="overflow-y-auto p-0">
+              {upcomingHolidays.map((item, index) => {
+                // If it's a section header (has 'year' property)
+                if (item.year) {
+                  return (
+                    <div key={index} className="bg-gray-100 px-5 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider sticky top-0">
+                      {item.year}
+                    </div>
+                  );
+                }
+                // Regular Holiday Item
+                return (
+                  <div key={index} className="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex justify-between items-start group">
+                    <div>
+                      <p className="font-bold text-gray-800">{item.name}</p>
+                      {item.note && (
+                        <p className="text-xs font-semibold text-red-500 mt-1">
+                          {item.note}
+                        </p>
+                      )}
+                    </div>
+                    <span className="text-sm text-gray-500 group-hover:text-gray-900 text-right w-1/2">
+                      {item.date}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
+              <button 
+                onClick={() => setIsHolidayModalOpen(false)}
+                className="text-sm font-semibold text-gray-600 hover:text-gray-900"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div> // End of main container
   );
 }
