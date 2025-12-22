@@ -579,14 +579,13 @@ export function LawFirmLanding() {
                   {/* Clickable Link */}
                   <button 
                     onClick={() => setIsHolidayModalOpen(true)}
-                    className="text-[#FFC107] font-medium hover:underline focus:outline-none"
+                    className="text-[#FF4500] font-bold hover:underline focus:outline-none"
                   >
                     {t("contact.statutoryHolidaysLink")}
                   </button>
-                  .
+                  
                   <br />
-                  {/* Fallback for "We look forward..." if you kept it in the prefix or want to hardcode it */}
-                  <span>We look forward to assisting you with your legal needs.</span>
+                  
                 </div>
               </div>
 
