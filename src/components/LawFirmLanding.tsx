@@ -573,7 +573,7 @@ export function LawFirmLanding() {
 
               {/* Office Hours Section */}
               <div className="mb-8">
-                <p className="font-semibold text-[16px] text-[#444444] mb-2">Office Hours:</p>
+                <p className="font-semibold text-[16px] text-[#444444] mb-2">☕Office Hours:</p>
                 <div className="text-black leading-relaxed">
                   <span>{t("contact.officeHoursPrefix")} </span>
                   {/* Clickable Link */}
