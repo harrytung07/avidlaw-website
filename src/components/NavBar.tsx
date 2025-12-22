@@ -7,6 +7,90 @@ import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "@/context/TranslationContext";
 
+// --- Snow Effect Component ---
+const SnowEffect = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const particles: { x: number; y: number; radius: number; speed: number; wind: number }[] = [];
+    const particleCount = 150; // Number of snowflakes
+
+    // Initialize particles
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 3 + 1, // Size variation
+        speed: Math.random() * 2 + 0.5, // Speed variation
+        wind: Math.random() * 0.5 - 0.25, // Slight horizontal drift
+      });
+    }
+
+    let animationFrameId: number;
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.beginPath();
+
+      particles.forEach((p) => {
+        ctx.moveTo(p.x, p.y);
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        
+        // Update position
+        p.y += p.speed;
+        p.x += p.wind;
+
+        // Reset if off screen
+        if (p.y > height) {
+          p.y = -5;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+      });
+
+      ctx.fill();
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[9999]"
+      style={{ pointerEvents: "none" }}
+    />
+  );
+};
+
 export default function NavBar() {
   const { t, locale } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
@@ -16,6 +100,10 @@ export default function NavBar() {
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
+  
+  // NEW: State for snow effect
+  const [isSnowing, setIsSnowing] = useState(false);
+  
   const bookingBoxRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
@@ -28,7 +116,6 @@ export default function NavBar() {
   };
 
   const pathWithoutLocale = getPathWithoutLocale(pathname || '');
-  const isAboutPage = pathWithoutLocale === "/about";
   const isHomePage = pathWithoutLocale === "/";
 
   const localePath = (path: string) => {
@@ -131,6 +218,9 @@ export default function NavBar() {
 
   return (
     <>
+      {/* NEW: Render SnowEffect if active */}
+      {isSnowing && <SnowEffect />}
+
       <div
         className={`fixed left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
           visible ? 'top-0' : '-top-32'
@@ -234,6 +324,16 @@ export default function NavBar() {
               <LanguageSwitcher />
             </div>
             
+            {/* NEW: Snowflake Toggle Button */}
+            <button
+                onClick={() => setIsSnowing(!isSnowing)}
+                className={`text-xl transition-all duration-300 focus:outline-none hover:scale-110 ${isSnowing ? 'opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : 'opacity-70 hover:opacity-100'}`}
+                title="Toggle Snow"
+                aria-label="Toggle Snow Effect"
+            >
+                ❄️
+            </button>
+
             {/* Book Button with Booking Box */}
             <div className="relative" ref={bookingBoxRef}>
               <button
@@ -386,6 +486,14 @@ export default function NavBar() {
               >
                 {t("nav.contact")}
               </a>
+              
+              {/* Mobile Snow Toggle */}
+              <button
+                onClick={() => setIsSnowing(!isSnowing)}
+                className={`text-2xl mt-4 ${isSnowing ? 'opacity-100' : 'opacity-70'}`}
+              >
+                {isSnowing ? '❄️ Snow On' : '❄️ Snow Off'}
+              </button>
 
             </div>
           </div>
