@@ -250,7 +250,7 @@ export function LawFirmLanding() {
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/bigBG.png"
+            src="/bigBG1.png"
             alt="Background"
             fill
             className="object-cover opacity-50 brightness-99"
@@ -341,7 +341,7 @@ export function LawFirmLanding() {
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/bigBG.png"
+            src="/bigBG2.png"
             alt="Background"
             fill
             className="object-cover opacity-50 brightness-125"
@@ -466,7 +466,7 @@ export function LawFirmLanding() {
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/bigBG.png"
+            src="/bigBG1.png"
             alt="Background"
             fill
             className="object-cover opacity-50 brightness-99"
@@ -523,10 +523,10 @@ export function LawFirmLanding() {
         {/* MODIFIED: Added bg-gray-50 to lighten the background and differentiate the section */}
         <div className="absolute inset-0 z-0 bg-gray-50">
           <Image
-            src="/bigBG.png"
+            src="/bigBG2.png"
             alt="Background"
             fill
-            className="object-cover opacity-40 brightness-105" // Adjusted opacity/brightness for the new background
+            className="object-cover object-bottom opacity-40 brightness-105" // Adjusted opacity/brightness for the new background
           />
         </div>
 
