@@ -190,7 +190,7 @@ export function LawFirmLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
         <div className="absolute inset-0 z-0">
         <Image
-             src="/unnamed.jpg"
+             src="/B.png"
              alt="Background"
              fill
              // CHANGE: replaced 'object-cover' with 'object-contain'
