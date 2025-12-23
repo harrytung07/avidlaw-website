@@ -24,7 +24,36 @@ export function LawFirmLanding() {
   const [isResetting, setIsResetting] = useState(false);
   // NEW: Holiday Modal State
   const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
+  const [currentHistoryIndex, setCurrentHistoryIndex] = useState(0);
 
+  // --- NEW: History Data Definitions ---
+  const historySlides = [
+    {
+      id: 1,
+      year: t("intro.slide1.year"),
+      tag: t("intro.slide1.tag"),
+      title: t("intro.slide1.title"),
+      text: t("intro.slide1.text"),
+      image: "/intro.jpg" 
+    },
+    {
+      id: 2,
+      year: t("intro.slide2.year"),
+      tag: t("intro.slide2.tag"),
+      title: t("intro.slide2.title"),
+      text: t("intro.slide2.text"),
+      image: "/merge.jpg" 
+    }
+  ];
+
+  // --- NEW: Navigation Handlers ---
+  const handleNextHistory = () => {
+    setCurrentHistoryIndex((prev) => (prev + 1) % historySlides.length);
+  };
+
+  const handlePrevHistory = () => {
+    setCurrentHistoryIndex((prev) => (prev - 1 + historySlides.length) % historySlides.length);
+  };
   // NEW: Holiday Data Configuration
   const upcomingHolidays = [
     { date: "Dec 24, 2025 (Wed)", name: "Christmas Eve", note: "Closes at 1:00 PM" },
@@ -286,40 +315,59 @@ export function LawFirmLanding() {
             {/* Left column - Historical Image */}
             <div className="md:w-1/2 mb-12 md:mb-0 relative z-20">
               <div className="w-[450px] h-[380px] relative mx-auto md:mx-0">
+                {/* UPDATED: Dynamic Image Source */}
                 <Image
-                  src="/intro.jpg"
+                  key={historySlides[currentHistoryIndex].image} // Key forces re-render for smooth transition if needed
+                  src={historySlides[currentHistoryIndex].image}
                   alt="Historical Photo"
                   fill
-                  className="object-cover object-center opacity-90"
+                  className="object-cover object-center opacity-90 transition-opacity duration-500"
                 />
                 <div className="absolute bottom-0 left-0 right-0 h-[60px] bg-gradient-to-t from-black/90 to-transparent z-10">
                   <div className="text-center absolute bottom-4 left-0 right-0">
+                    {/* UPDATED: Dynamic Tag */}
                     <p className="text-white uppercase font-bold text-sm tracking-wider">
-                      {t("intro.historyTag")}
+                      {historySlides[currentHistoryIndex].tag}
                     </p>
                     <div className="w-16 h-[2px] bg-white mx-auto mt-2"></div>
                   </div>
                 </div>
               </div>
 
-              {/* Year and Carousel Navigation - inside box 2 */}
+              {/* Year and Carousel Navigation */}
               <div className="absolute bottom-[-80px] left-[170px] flex items-center z-20">
                 <div className="h-[50px] w-[4px] bg-gray-400 mr-4"></div>
-                <p className="text-[#FFC107] text-5xl font-serif italic">{t("intro.year")}</p>
-                <div className="ml-6 flex space-x-6">
-                  <span className="text-2xl cursor-pointer hover:text-gray-700">«</span>
-                  <span className="text-2xl cursor-pointer hover:text-gray-700">»</span>
+                {/* UPDATED: Dynamic Year */}
+                <p className="text-[#FFC107] text-5xl font-serif italic">
+                  {historySlides[currentHistoryIndex].year}
+                </p>
+                <div className="ml-6 flex space-x-6 select-none">
+                  {/* UPDATED: Click Handlers */}
+                  <span 
+                    onClick={handlePrevHistory}
+                    className="text-2xl cursor-pointer hover:text-gray-700 hover:scale-110 transition-transform"
+                  >
+                    «
+                  </span>
+                  <span 
+                    onClick={handleNextHistory}
+                    className="text-2xl cursor-pointer hover:text-gray-700 hover:scale-110 transition-transform"
+                  >
+                    »
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Right column - Firm Introduction Text Block */}
+            {/* Right column - Text Block */}
             <div className="md:w-1/2 pt-0">
-              {/* Content directly within bottom white box */}
               <div className="relative px-8 py-10 z-10 ml-28 max-w-3xl mt-16">
-                <h3 className="text-xl font-serif font-bold text-black mb-7">{t("intro.sectionTitle")}</h3>
-                <p className="text-[15px] text-gray-700 leading-7 mb-10">
-                  {t("intro.sectionText")}
+                {/* UPDATED: Dynamic Title and Text */}
+                <h3 className="text-xl font-serif font-bold text-black mb-7 transition-all duration-300">
+                  {historySlides[currentHistoryIndex].title}
+                </h3>
+                <p className="text-[15px] text-gray-700 leading-7 mb-10 transition-all duration-300 min-h-[120px]">
+                  {historySlides[currentHistoryIndex].text}
                 </p>
 
                 <div className="relative inline-block group">
