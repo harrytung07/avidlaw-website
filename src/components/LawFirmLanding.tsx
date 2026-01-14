@@ -34,7 +34,7 @@ export function LawFirmLanding() {
       tag: t("intro.slide1.tag"),
       title: t("intro.slide1.title"),
       text: t("intro.slide1.text"),
-      image: "/intro.jpg" 
+      image: "/intro1.jpg" 
     },
     {
       id: 2,
@@ -56,8 +56,8 @@ export function LawFirmLanding() {
   };
   // NEW: Holiday Data Configuration
   const upcomingHolidays = [
-    { date: "Dec 24, 2025 (Wed)", name: "Christmas Eve", note: "Closes at 1:00 PM" },
-    { date: "Dec 25, 2025 (Thu)", name: "Christmas Day" },
+    //{ date: "Dec 24, 2025 (Wed)", name: "Christmas Eve", note: "Closes at 1:00 PM" },
+    //{ date: "Dec 25, 2025 (Thu)", name: "Christmas Day" },
     { year: "2026 Statutory Holidays" }, // Section Header
     { date: "Jan 1, 2026 (Thu)", name: "New Year's Day" },
     { date: "Feb 16, 2026 (Mon)", name: "Family Day" },
@@ -190,7 +190,7 @@ export function LawFirmLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
         <div className="absolute inset-0 z-0">
         <Image
-             src="/B.png"
+             src="/C.png"
              alt="Background"
              fill
              // CHANGE: replaced 'object-cover' with 'object-contain'
@@ -389,7 +389,7 @@ export function LawFirmLanding() {
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/bigBG2.png"
+            src="/bigBG.png"
             alt="Background"
             fill
             className="object-cover opacity-50 brightness-125"
@@ -514,7 +514,7 @@ export function LawFirmLanding() {
         {/* Common background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/bigBG1.png"
+            src="/bigBG.png"
             alt="Background"
             fill
             className="object-cover opacity-50 brightness-99"
@@ -571,7 +571,7 @@ export function LawFirmLanding() {
         {/* MODIFIED: Added bg-gray-50 to lighten the background and differentiate the section */}
         <div className="absolute inset-0 z-0 bg-gray-50">
           <Image
-            src="/bigBG2.png"
+            src="/bigBG.png"
             alt="Background"
             fill
             className="object-cover object-bottom opacity-40 brightness-105" // Adjusted opacity/brightness for the new background
@@ -805,11 +805,7 @@ export function LawFirmLanding() {
                   <div key={index} className="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex justify-between items-start group">
                     <div>
                       <p className="font-bold text-gray-800">{item.name}</p>
-                      {item.note && (
-                        <p className="text-xs font-semibold text-red-500 mt-1">
-                          {item.note}
-                        </p>
-                      )}
+                      
                     </div>
                     <span className="text-sm text-gray-500 group-hover:text-gray-900 text-right w-1/2">
                       {item.date}
