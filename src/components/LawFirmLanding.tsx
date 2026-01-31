@@ -56,10 +56,10 @@ export function LawFirmLanding() {
   };
   // NEW: Holiday Data Configuration
   const upcomingHolidays = [
-    //{ date: "Dec 24, 2025 (Wed)", name: "Christmas Eve", note: "Closes at 1:00 PM" },
+    { date: "Feb 13, 2026 (Friday)", name: "Chinese New Year", note: "Closes at 1:00 PM" },
     //{ date: "Dec 25, 2025 (Thu)", name: "Christmas Day" },
     { year: "2026 Statutory Holidays" }, // Section Header
-    { date: "Jan 1, 2026 (Thu)", name: "New Year's Day" },
+    //{ date: "Jan 1, 2026 (Thu)", name: "New Year's Day" },
     { date: "Feb 16, 2026 (Mon)", name: "Family Day" },
     { date: "Apr 3, 2026 (Fri)", name: "Good Friday" },
     { date: "May 18, 2026 (Mon)", name: "Victoria Day" },
@@ -190,7 +190,7 @@ export function LawFirmLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
         <div className="absolute inset-0 z-0">
         <Image
-             src="/C.png"
+             src="/D.png"
              alt="Background"
              fill
              // CHANGE: replaced 'object-cover' with 'object-contain'
