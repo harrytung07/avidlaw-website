@@ -805,7 +805,11 @@ export function LawFirmLanding() {
                   <div key={index} className="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex justify-between items-start group">
                     <div>
                       <p className="font-bold text-gray-800">{item.name}</p>
-                      
+                      {item.note && (
+                        <p className="text-xs font-semibold text-red-500 mt-1">
+                          {item.note}
+                        </p>
+                      )}
                     </div>
                     <span className="text-sm text-gray-500 group-hover:text-gray-900 text-right w-1/2">
                       {item.date}
