@@ -93,7 +93,7 @@ export function LawFirmLanding() {
     { id: 3, name: "Brent Desruisseaux", title: t("team.title.BrentDesruisseaux"), image: "/members/3. Brent Desruisseaux.jpg" },
     { id: 4, name: "Corey Poon", title: t("team.title.CoreyPoon"), image: "/members/4. Corey Poon.jpg" },
     { id: 5, name: "Howard Qu", title: t("team.title.HowardQu"), image: "/members/5. Howard Qu.jpg" },
-    { id: 6, name: "Freja Li", title: t("team.title.FrejaLi"), image: "/members/6. Freja Li.jpg" },
+    //{ id: 6, name: "Freja Li", title: t("team.title.FrejaLi"), image: "/members/6. Freja Li.jpg" },
     { id: 7, name: "Nicole Tam", title: t("team.title.NicoleTam"), image: "/members/nicole.jpg" },
     { id: 8, name: "Olivia Nicolaides", title: t("team.title.OliviaNicolaides"), image: "/members/olivia.JPG" },
     { id: 9, name: "Rachel Li", title: t("team.title.RachelLi"), image: "/members/7. Rachel Li.jpg" },
