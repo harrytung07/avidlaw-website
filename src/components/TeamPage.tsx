@@ -79,7 +79,6 @@ export default function TeamPage() {
     { id: 17, nameKey: "team.name.DianaGao", image: "/members/ava.jpg", titleKey: "team.title.DianaGao", descriptionKey: "team.bio.DianaGao" },
     { id: 18, nameKey: "team.name.Lynn", image: "/members/ava.jpg", titleKey: "team.title.Lynn", descriptionKey: "team.bio.Lynn" },
     { id: 19, nameKey: "team.name.RichardZhu", image: "/members/ava.jpg", titleKey: "team.title.RichardZhu", descriptionKey: "team.bio.RichardZhu" },
-    { id: 21, nameKey: "team.name.BrighamYang", image: "/members/ava.jpg", titleKey: "team.title.BrighamYang", descriptionKey: "" },
     { id: 22, nameKey: "team.name.KellyLu", image: "/members/ava.jpg", titleKey: "team.title.KellyLu", descriptionKey: "team.bio.KellyLu" },
   ];
 
