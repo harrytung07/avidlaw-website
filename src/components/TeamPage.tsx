@@ -66,7 +66,7 @@ export default function TeamPage() {
     { id: 20, nameKey: "team.name.KunDong", image: "/members/kun.jpg", titleKey: "team.title.KunDong", descriptionKey: "" },
     { id: 5, nameKey: "team.name.CoreyPoon", image: "/members/4. Corey Poon.jpg", titleKey: "team.title.CoreyPoon", descriptionKey: "team.bio.CoreyPoon" },
     { id: 6, nameKey: "team.name.HowardQu", image: "/members/5. Howard Qu.jpg", titleKey: "team.title.HowardQu", descriptionKey: "team.bio.HowardQu" },
-    { id: 7, nameKey: "team.name.FrejaLi", image: "/members/6. Freja Li.jpg", titleKey: "team.title.FrejaLi", descriptionKey: "team.bio.FrejaLi" },
+    //{ id: 7, nameKey: "team.name.FrejaLi", image: "/members/6. Freja Li.jpg", titleKey: "team.title.FrejaLi", descriptionKey: "team.bio.FrejaLi" },
     { id: 8, nameKey: "team.name.NicoleTam", image: "/members/nicole.jpg", titleKey: "team.title.NicoleTam", descriptionKey: "team.bio.NicoleTam" },
     { id: 9, nameKey: "team.name.OliviaNicolaides", image: "/members/olivia.JPG", titleKey: "team.title.OliviaNicolaides", descriptionKey: "" },
     { id: 10, nameKey: "team.name.RachelLi", image: "/members/7. Rachel Li.jpg", titleKey: "team.title.RachelLi", descriptionKey: "team.bio.RachelLi" },
@@ -78,6 +78,8 @@ export default function TeamPage() {
     { id: 17, nameKey: "team.name.DianaGao", image: "/members/ava.jpg", titleKey: "team.title.DianaGao", descriptionKey: "team.bio.DianaGao" },
     { id: 18, nameKey: "team.name.Lynn", image: "/members/ava.jpg", titleKey: "team.title.Lynn", descriptionKey: "team.bio.Lynn" },
     { id: 19, nameKey: "team.name.RichardZhu", image: "/members/ava.jpg", titleKey: "team.title.RichardZhu", descriptionKey: "team.bio.RichardZhu" },
+    { id: 21, nameKey: "team.name.BrighamYang", image: "/members/ava.jpg", titleKey: "team.title.BrighamYang", descriptionKey: "" },
+    { id: 22, nameKey: "team.name.KellyLu", image: "/members/ava.jpg", titleKey: "team.title.KellyLu", descriptionKey: "team.bio.KellyLu" },
   ];
 
   const handleMemberClick = (member: TeamMember) => {
@@ -89,7 +91,7 @@ export default function TeamPage() {
   };
 
   const barristerSolicitorRoleString = t('team.title.AdeleSun'); // Gets "Barrister & Solicitor"
-  const articlingStudentRoleString = t('team.title.KunDong');   // Gets "Articling Student"
+  const articlingStudentRoleString = t('team.title.BrighamYang');   // Gets "Articling Student"
 
   // 2. Filter based on title ONLY, not by hardcoded names.
   const barristersAndSolicitors = teamMembers
