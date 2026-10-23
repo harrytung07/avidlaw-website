@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { TranslationProvider } from '@/context/TranslationContext';
 import { ModalProvider } from '@/context/ModalContext';
+import { getRequestLocaleAndPath } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Avid Law - Legal Excellence',
@@ -17,10 +18,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { locale } = getRequestLocaleAndPath();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <TranslationProvider>
+        <TranslationProvider initialLocale={locale}>
           <LanguageProvider>
             <ModalProvider>
               {children}

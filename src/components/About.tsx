@@ -1,29 +1,20 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import NavBar from './NavBar';
 import { useTranslation } from '@/context/TranslationContext';
 
 export default function About() {
   const { t, locale } = useTranslation();
-  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
-  const bookingBoxRef = useRef<HTMLDivElement>(null);
-
-  // Handle click outside to close booking box
-  useEffect(() => {
-    function handleClickOutside(event: globalThis.MouseEvent) {
-      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
-        setBookingBoxVisible(false);
-      }
-    }
-    if (isBookingBoxVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isBookingBoxVisible, bookingBoxRef]);
+  const localePath = (path: string) => {
+    if (path.startsWith(`/${locale}`)) return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-800 text-white">
@@ -187,52 +178,14 @@ export default function About() {
             {t('about.eveText')}
           </p>
           
-          {/* Booking Feature */}
-          <div 
-            ref={bookingBoxRef}
-            className="relative flex flex-col items-center justify-center"
-          >
-            <button
-              onClick={() => setBookingBoxVisible(prevState => !prevState)}
+          {/* Booking CTA */}
+          <div className="flex flex-col items-center justify-center">
+            <Link
+              href={localePath('/#contact')}
               className="group relative inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] focus:outline-none"
             >
               {t('hero.bookButton')}
-            </button>
-
-            {/* Booking Box with QR Codes */}
-            <div className={`absolute top-full mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 z-50 ${isBookingBoxVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
-                {t('hero.bookingBoxText')}
-              </p>
-              <div className="flex justify-center gap-6">
-                {/* English QR Code */}
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                    <Image
-                      src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                      alt="QR Code for English booking form"
-                      width={100}
-                      height={100}
-                      className="rounded-md"
-                    />
-                  </a>
-                  <p className="font-semibold text-xs text-white/90 mt-1">{t("about.qrCodeEnglish")}</p>
-                </div>
-                {/* Chinese QR Code */}
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                    <Image
-                      src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                      alt="QR Code for Chinese booking form"
-                      width={100}
-                      height={100}
-                      className="rounded-md"
-                    />
-                  </a>
-                  <p className="font-semibold text-xs text-white/90 mt-1">{t("about.qrCodeChinese")}</p>
-                </div>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

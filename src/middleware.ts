@@ -54,9 +54,12 @@ export function middleware(request: NextRequest) {
     newUrl.pathname = pathWithoutLocale;
     
     // Forward locale and clean pathname via request headers for server components & metadata
+    // When pathWithoutLocale is '/', set x-clean-pathname to '' to avoid trailing slash canonical mismatch
+    const cleanPath = pathWithoutLocale === '/' ? '' : pathWithoutLocale;
+
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-locale', pathLocale);
-    requestHeaders.set('x-clean-pathname', pathWithoutLocale);
+    requestHeaders.set('x-clean-pathname', cleanPath);
 
     return NextResponse.rewrite(newUrl, {
       request: {

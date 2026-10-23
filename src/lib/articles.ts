@@ -58,23 +58,12 @@ export async function getSortedArticles(): Promise<Article[]> {
         throw new Error(`Could not find content for ${filename}`);
     }
 
-    // Construct the MultiLangContent objects
-    const constructField = (field: string): string | MultiLangContent => {
-      // If it's a simple string in frontmatter (like date), return it directly
-      // If it's text content, structure it
-      return {
-        en: enData?.data[field] || enData?.content || "",
-        'zh-Hans': hansData?.data[field] || hansData?.content || enData?.data[field] || "",
-        'zh-Hant': hantData?.data[field] || hantData?.content || enData?.data[field] || "",
-      } as any; // Cast mainly because accessing data[field] vs content varies
-    };
-
     return {
       id,
-      date: base.data.date,
-      author: base.data.author,
-      role: base.data.role,
-      image: base.data.featuredImage, // Mapping featuredImage from MD to image prop
+      date: base.data.date || '',
+      author: base.data.author || 'Avid Law',
+      role: base.data.role || 'Legal Counsel',
+      image: base.data.featuredImage || '/article1.png',
       
       // Multi-lang fields (Frontmatter)
       title: {
@@ -109,4 +98,14 @@ export async function getSortedArticles(): Promise<Article[]> {
       return -1;
     }
   });
+}
+
+export async function getArticleById(id: string): Promise<Article | undefined> {
+  const articles = await getSortedArticles();
+  return articles.find((article) => article.id === id);
+}
+
+export async function getAllArticleIds(): Promise<string[]> {
+  const articles = await getSortedArticles();
+  return articles.map((article) => article.id);
 }

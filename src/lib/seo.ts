@@ -12,11 +12,11 @@ export function getRequestLocaleAndPath(): { locale: Locale; cleanPath: string }
 
     const locale: Locale =
       rawLocale === 'zh-Hans' || rawLocale === 'zh-Hant' ? rawLocale : 'en';
-    const cleanPath = rawPath && rawPath.startsWith('/') ? rawPath : '/';
+    const cleanPath = !rawPath || rawPath === '/' ? '' : (rawPath.startsWith('/') ? rawPath : `/${rawPath}`);
 
     return { locale, cleanPath };
   } catch {
-    return { locale: 'en', cleanPath: '/' };
+    return { locale: 'en', cleanPath: '' };
   }
 }
 
@@ -37,7 +37,14 @@ export function buildLocalizedMetadata({
   ogImage,
   type = 'website',
 }: BuildMetadataParams): Metadata {
-  const normalizedPath = cleanPath === '/' ? '' : cleanPath.replace(/\/$/, '');
+  // Normalize cleanPath: empty string or '/' becomes empty string, ensuring homepage resolves to /${locale} without trailing slash
+  const normalizedPath =
+    !cleanPath || cleanPath === '/' || cleanPath === ''
+      ? ''
+      : cleanPath.startsWith('/')
+      ? cleanPath.replace(/\/$/, '')
+      : `/${cleanPath.replace(/\/$/, '')}`;
+
   const canonicalUrl = `${siteConfig.url}/${locale}${normalizedPath}`;
   const image = ogImage || siteConfig.ogImage;
 
@@ -47,8 +54,18 @@ export function buildLocalizedMetadata({
     'zh-Hant': 'zh_TW',
   };
 
+  const suffixMap: Record<Locale, string> = {
+    en: ' | Avid Law Corporation',
+    'zh-Hans': ' | 安胜 · 弘人律师行',
+    'zh-Hant': ' | 安勝 · 弘人律師行',
+  };
+
+  const fullTitle = title.includes('|')
+    ? title
+    : `${title}${suffixMap[locale] || ' | Avid Law Corporation'}`;
+
   return {
-    title: `${title} | Avid Law`,
+    title: fullTitle,
     description,
     alternates: {
       canonical: canonicalUrl,
@@ -60,7 +77,7 @@ export function buildLocalizedMetadata({
       },
     },
     openGraph: {
-      title: `${title} | Avid Law`,
+      title: fullTitle,
       description,
       url: canonicalUrl,
       siteName: siteConfig.name,
@@ -71,13 +88,13 @@ export function buildLocalizedMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: `${title} - Avid Law Corporation`,
+          alt: fullTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | Avid Law`,
+      title: fullTitle,
       description,
       images: [image],
     },

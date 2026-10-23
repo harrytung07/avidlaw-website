@@ -4,6 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link'; // Still used for NavBar internal links, or external if any
 import NavBar from '@/components/NavBar';
+import { useTranslation } from '@/context/TranslationContext';
 import React, { useState, useEffect, MouseEvent } from 'react'; // Added
 import { motion, AnimatePresence } from 'framer-motion'; // Added
 import { X } from 'lucide-react'; // Added
@@ -29,8 +30,32 @@ interface NewsClientProps {
 }
 
 
+const uiContent = {
+  en: {
+    heroTitle: "Firm News & Updates",
+    heroDescription: "Stay informed about the latest legal developments, firm announcements, and community involvement from Avid Law.",
+    readMore: "Read More →",
+    noNews: "No news articles found.",
+  },
+  'zh-Hans': {
+    heroTitle: "律所新闻与动态",
+    heroDescription: "及时了解安胜 · 弘人律师行的最新法律动态、重大公告及社区参与活动。",
+    readMore: "阅读全文 →",
+    noNews: "暂无新闻文章。",
+  },
+  'zh-Hant': {
+    heroTitle: "律所新聞與動態",
+    heroDescription: "及時了解安勝 · 弘人律師行的最新法律動態、重大公告及社區參與活動。",
+    readMore: "閱讀全文 →",
+    noNews: "暫無新聞文章。",
+  },
+};
+
 // --- News Page Component ---
 export default function NewsClient({ newsPosts }: NewsClientProps) {
+  const { locale } = useTranslation();
+  const currentLocale = (locale === 'zh-Hans' || locale === 'zh-Hant' ? locale : 'en') as 'en' | 'zh-Hans' | 'zh-Hant';
+  const content = uiContent[currentLocale];
   
 
   const [showModal, setShowModal] = useState(false);
@@ -81,26 +106,32 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
 
         <div className="container relative z-10 mx-auto px-6 max-w-5xl">
           {newsPosts.length === 0 ? (
-            <p className="text-center text-gray-600 text-xl">No news articles found.</p>
+            <p className="text-center text-gray-600 text-xl">{content.noNews}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {newsPosts.map((post) => (
                 <article key={post.slug} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col group">
                   {post.frontmatter.featuredImage && (
-                    <button onClick={() => openNewsModal(post)} className="block relative h-48 w-full focus:outline-none">
+                    <Link
+                      href={`/${locale}/news/${post.slug}`}
+                      className="block relative h-48 w-full focus:outline-none"
+                    >
                       <Image
                         src={post.frontmatter.featuredImage}
                         alt={post.frontmatter.title || 'Article image'}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                    </button>
+                    </Link>
                   )}
                   <div className="p-6 flex flex-col flex-grow">
                     <h2 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-[#FFC107] transition-colors">
-                      <button onClick={() => openNewsModal(post)} className="text-left hover:underline focus:outline-none">
+                      <Link
+                        href={`/${locale}/news/${post.slug}`}
+                        className="text-left hover:underline focus:outline-none"
+                      >
                         {post.frontmatter.title || 'Untitled News Post'}
-                      </button>
+                      </Link>
                     </h2>
                     <div className="flex flex-wrap items-center text-xs text-gray-500 gap-x-3 gap-y-1 mb-3">
                       {post.frontmatter.date && (<span className="whitespace-nowrap">📅 {new Date(post.frontmatter.date).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })}</span>)}
@@ -112,12 +143,12 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
                       </p>
                     )}
                     <div className="mt-auto">
-                      <button
-                        onClick={() => openNewsModal(post)}
+                      <Link
+                        href={`/${locale}/news/${post.slug}`}
                         className="inline-block text-sm font-medium text-[#FFC107] hover:text-yellow-600 transition-colors focus:outline-none"
                       >
-                        Read More →
-                      </button>
+                        {content.readMore}
+                      </Link>
                     </div>
                   </div>
                 </article>

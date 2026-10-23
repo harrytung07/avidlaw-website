@@ -1,95 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef, MouseEvent } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "@/context/TranslationContext";
-
-// --- Snow Effect Component ---
-const SnowEffect = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const particles: { x: number; y: number; radius: number; speed: number; wind: number }[] = [];
-    const particleCount = 150; // Number of snowflakes
-
-    // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 3 + 1, // Size variation
-        speed: Math.random() * 2 + 0.5, // Speed variation
-        wind: Math.random() * 0.5 - 0.25, // Slight horizontal drift
-      });
-    }
-
-    let animationFrameId: number;
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-      ctx.beginPath();
-
-      particles.forEach((p) => {
-        ctx.moveTo(p.x, p.y);
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        
-        // Update position
-        p.y += p.speed;
-        p.x += p.wind;
-
-        // Reset if off screen
-        if (p.y > height) {
-          p.y = -5;
-          p.x = Math.random() * width;
-        }
-        if (p.x > width) p.x = 0;
-        if (p.x < 0) p.x = width;
-      });
-
-      ctx.fill();
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ pointerEvents: "none" }}
-    />
-  );
-};
 
 export default function NavBar() {
   const { t, locale } = useTranslation();
@@ -99,12 +15,7 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
   
-  // NEW: State for snow effect
-  const [isSnowing, setIsSnowing] = useState(false);
-  
-  const bookingBoxRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   const getPathWithoutLocale = (path: string) => {
@@ -116,32 +27,27 @@ export default function NavBar() {
   };
 
   const pathWithoutLocale = getPathWithoutLocale(pathname || '');
-  const isHomePage = pathWithoutLocale === "/";
+  const isHomePage = pathWithoutLocale === "/" || pathWithoutLocale === "";
 
   const localePath = (path: string) => {
     if (path.startsWith(`/${locale}`)) return path;
-    if (path.startsWith('/')) {
-      return locale === 'en' ? path : `/${locale}${path}`;
-    }
-    return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
   };
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Update scrolled state for background color
-      setScrolled(currentScrollY > 100);
+      setScrolled(currentScrollY > 60);
       
-      // Determine visibility based on scroll direction
       if (currentScrollY < 100) {
-        // Always show navbar at the top
         setVisible(true);
       } else if (currentScrollY < lastScrollY) {
-        // Scrolling up - show navbar
         setVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        // Scrolling down - hide navbar (but only after scrolling past 150px)
         setVisible(false);
       }
       
@@ -155,13 +61,11 @@ export default function NavBar() {
   }, [lastScrollY]);
 
   useEffect(() => {
-    // Prevent body scroll when menu is open
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
     }
-    // Cleanup function to restore body scroll when component unmounts
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -183,7 +87,12 @@ export default function NavBar() {
     if (isHomePage) {
       scrollToSection(e, 'contact');
     }
-    // For other pages, default navigation to /#contact (locale handled by localePath)
+  };
+
+  const handleBookClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isHomePage) {
+      scrollToSection(e, 'contact');
+    }
   };
 
   const handleResourcesEnter = () => {
@@ -201,114 +110,98 @@ export default function NavBar() {
     setTimeoutId(id);
   };
 
-  // Handle click outside to close booking box
-  useEffect(() => {
-    function handleClickOutside(event: globalThis.MouseEvent) {
-      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
-        setBookingBoxVisible(false);
-      }
-    }
-    if (isBookingBoxVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isBookingBoxVisible, bookingBoxRef]);
-
   return (
     <>
-      {/* NEW: Render SnowEffect if active */}
-      {isSnowing && <SnowEffect />}
-
-      <div
+      <header
         className={`fixed left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
-          visible ? 'top-0' : '-top-32'
+          visible ? "top-0" : "-top-28"
         } ${
           scrolled
-            ? "bg-black/70 backdrop-blur-md shadow-md py-2"
-            : "bg-transparent py-6"
+            ? "py-3.5 bg-black/90 backdrop-blur-md shadow-lg"
+            : "py-5 md:py-6 bg-transparent"
         }`}
-        style={{ animationDelay: '0.5s' }}
+        style={{
+          animationDelay: "0.2s",
+          animationFillMode: "forwards"
+        }}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between relative">
-          <Link href={localePath("/")} className="relative z-10">
-            <div className="transition-all duration-300">
-              <Image
-                src="/Logo.svg"
-                alt={t("nav.altLogo")}
-                width={scrolled ? 160 : 200}
-                height={scrolled ? 56 : 70}
-                className={`brightness-150 filter transition-all duration-500 ${scrolled ? 'scale-95' : 'scale-100'}`}
-                style={{ transformOrigin: 'left center' }}
-              />
-            </div>
+        <div className="container mx-auto px-6 flex justify-between items-center relative">
+          {/* Logo with substantial executive presence */}
+          <Link href={localePath("/")} className="relative z-10 flex items-center">
+            <Image
+              src="/Logo.svg"
+              alt={t("nav.altLogo")}
+              width={190}
+              height={64}
+              priority
+              className={`w-auto brightness-150 transition-all duration-300 ${
+                scrolled ? "h-11 sm:h-12" : "h-12 sm:h-14 md:h-16"
+              }`}
+            />
           </Link>
 
-          {/* Desktop Navigation elements */}
-          <div
-            className="hidden md:flex items-center space-x-8 transition-opacity duration-400 ease-in-out absolute right-6 opacity-100 visible"
-          >
+          {/* Desktop Navigation links */}
+          <nav aria-label="Main Navigation" className="hidden md:flex items-center space-x-8">
             <Link
               href={localePath("/practice-areas")}
-              className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.practiceAreas")}
             </Link>
             <Link
               href={localePath("/about")}
-              className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.about")}
             </Link>
             <Link
               href={localePath("/team")}
-              className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.ourTeam")}
             </Link>
-
-            <div
-              className="relative group"
+            
+            {/* Resources Dropdown */}
+            <div 
+              className="relative"
               onMouseEnter={handleResourcesEnter}
               onMouseLeave={handleResourcesLeave}
             >
-              <div className="text-white text-base font-medium uppercase tracking-wide flex items-center space-x-1 transition-colors cursor-default">
-                <span className={resourcesOpen ? "text-[#FFC107]" : "group-hover:text-[#FFC107]"}>{t("nav.resources")}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={`h-4 w-4 transition-transform duration-300 ${resourcesOpen ? "rotate-180 text-[#FFC107]" : "text-white group-hover:text-[#FFC107]"}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <button 
+                className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide flex items-center gap-1.5 py-2"
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+              >
+                <span>{t("nav.resources")}</span>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className={`h-4 w-4 transition-transform duration-200 ${resourcesOpen ? 'rotate-180 text-[#FFC107]' : ''}`} 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
                   stroke="currentColor"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </div>
-              <div
-                className={`absolute left-0 mt-2 w-36 bg-black/50 backdrop-blur-md rounded shadow-lg transition-all duration-300 origin-top ${
-                  resourcesOpen ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0 pointer-events-none"
+              </button>
+              
+              {/* Dropdown Menu (Removed /forms per sunsetting) */}
+              <div 
+                className={`absolute top-full left-0 w-48 py-2 bg-black/95 backdrop-blur-md border border-zinc-800 rounded-lg shadow-2xl transition-all duration-200 ${
+                  resourcesOpen 
+                    ? 'opacity-100 translate-y-0 pointer-events-auto' 
+                    : 'opacity-0 -translate-y-2 pointer-events-none'
                 }`}
-                onMouseEnter={handleResourcesEnter} // Keep open if mouse enters dropdown
-                onMouseLeave={handleResourcesLeave} // Close if mouse leaves dropdown
               >
                 <Link
                   href={localePath("/news")}
-                  className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
+                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
                 >
                   {t("nav.news")}
                 </Link>
                 <Link
                   href={localePath("/articles")}
-                  className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
+                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
                 >
                   {t("nav.articles")}
-                </Link>
-                <Link
-                  href={localePath("/forms")}
-                  className="block px-4 py-3 text-sm text-white hover:text-[#FFC107] hover:bg-black/50 uppercase tracking-wide"
-                >
-                  {t("nav.forms")}
                 </Link>
               </div>
             </div>
@@ -316,185 +209,149 @@ export default function NavBar() {
             <a
               href={isHomePage ? "#contact" : localePath("/#contact")}
               onClick={handleContactClick}
-              className="text-white hover:text-[#FFC107] text-base font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.contact")}
             </a>
-            <div className="flex items-center">
+
+            <div className="flex items-center pl-2">
               <LanguageSwitcher />
             </div>
-            
-            {/* NEW: Snowflake Toggle Button */}
-            <button
-                onClick={() => setIsSnowing(!isSnowing)}
-                className={`text-xl transition-all duration-300 focus:outline-none hover:scale-110 ${isSnowing ? 'opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : 'opacity-70 hover:opacity-100'}`}
-                title="Toggle Snow"
-                aria-label="Toggle Snow Effect"
+
+            {/* Direct Booking Button - Navigates directly to #contact */}
+            <a
+              href={isHomePage ? "#contact" : localePath("/#contact")}
+              onClick={handleBookClick}
+              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] transition-all font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md"
             >
-                ❄️
-            </button>
+              {t("nav.bookButton")}
+            </a>
+          </nav>
 
-            {/* Book Button with Booking Box */}
-            <div className="relative" ref={bookingBoxRef}>
-              <button
-                onClick={() => setBookingBoxVisible(prevState => !prevState)}
-                className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-900 hover:bg-[#ffcb38] transition-colors font-semibold px-6 py-2 rounded uppercase text-sm tracking-wide"
-              >
-                {t("nav.bookButton")}
-              </button>
-              
-              {/* Booking Box */}
-              <div className={`absolute top-full right-0 mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 ${isBookingBoxVisible ? 'opacity-100 z-50' : 'opacity-0 pointer-events-none'}`}>
-                <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
-                  {t("nav.bookingBoxText")}
-                </p>
-                <div className="flex justify-center gap-6">
-                  {/* English QR Code */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                        alt="QR Code for English booking form"
-                        width={100}
-                        height={100}
-                        className="rounded-md"
-                      />
-                    </a>
-                    <p className="font-semibold text-xs text-white/90 mt-1">{t("nav.qrCodeEnglish")}</p>
-                  </div>
-                  
-                  {/* Chinese QR Code */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                        alt="QR Code for Chinese booking form"
-                        width={100}
-                        height={100}
-                        className="rounded-md"
-                      />
-                    </a>
-                    <p className="font-semibold text-xs text-white/90 mt-1">{t("nav.qrCodeChinese")}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Hamburger menu container */}
-          <div
-            className="flex items-center space-x-4 transition-opacity duration-400 ease-in-out absolute right-6 md:hidden z-20 opacity-100 visible"
-          >
+          {/* Hamburger menu button */}
+          <div className="flex items-center space-x-4 md:hidden z-20">
             <button
               onClick={toggleMenu}
               className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
-              aria-label={t("nav.toggleMenu") || "Toggle menu"}
+              aria-label="Toggle menu"
             >
-              <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
-              <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
-              <span className="w-6 h-0.5 bg-[#FFC107] transition-all"></span>
-            </button>
-            <div className="flex items-center">
-              <LanguageSwitcher />
-            </div>
-            
-            {/* Mobile Book Button - Simple version without popup */}
-            <button
-              onClick={() => {
-                // On mobile, directly navigate to contact section or show simple link
-                const section = document.getElementById('contact');
-                if (section) {
-                  section.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = localePath('/#contact');
-                }
-              }}
-              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-900 hover:bg-[#ffcb38] transition-colors font-semibold px-4 py-2 rounded uppercase text-xs tracking-wide"
-            >
-              {t("nav.bookButton")}
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  menuOpen ? "rotate-45 translate-y-2" : ""
+                }`}
+              ></span>
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  menuOpen ? "opacity-0" : ""
+                }`}
+              ></span>
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  menuOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              ></span>
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Navigation Menu - MODIFIED FOR SCROLLING */}
+      {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/95 z-[60] p-6 flex flex-col"> {/* Ensure higher z-index than navbar itself if needed, main overlay */}
-          <button
-            onClick={toggleMenu}
-            className="absolute top-6 right-6 w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none z-10"
-            aria-label={t("nav.closeMenu") || "Close menu"} // Provide a fallback for aria-label
-          >
-            <span className="w-6 h-0.5 bg-[#FFC107] transform rotate-45 translate-y-[0.20rem]"></span> {/* Adjusted for better X */}
-            <span className="w-6 h-0.5 bg-[#FFC107] transform -rotate-45 -translate-y-[0.05rem]"></span> {/* Adjusted for better X */}
-          </button>
+        <div className="fixed inset-0 z-40 bg-black/95 flex flex-col justify-between py-12 px-6 md:hidden overflow-y-auto">
+          <div className="flex justify-between items-center w-full">
+            <Link href={localePath("/")} onClick={toggleMenu}>
+              <Image
+                src="/Logo.svg"
+                alt={t("nav.altLogo")}
+                width={190}
+                height={64}
+                className="w-auto h-12 brightness-150"
+              />
+            </Link>
+            <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
+              <button
+                onClick={toggleMenu}
+                className="text-white hover:text-[#FFC107] focus:outline-none p-2"
+                aria-label="Close menu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
 
-          {/* Scrollable content area */}
-          {/* pt-20 to push content below potential header/close button, adjust as needed */}
-          {/* pb-6 for some bottom padding within the scrollable area */}
-          <div className="flex-grow overflow-y-auto flex items-center justify-center pt-20 pb-6">
-            <div className="flex flex-col space-y-6 items-center text-center">
-              <Link
-                href={localePath("/practice-areas")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.practiceAreas")}
-              </Link>
-              <Link
-                href={localePath("/about")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.about")}
-              </Link>
-              <Link
-                href={localePath("/team")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.ourTeam")}
-              </Link>
-              <Link
-                href={localePath("/news")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.news")}
-              </Link>
-              <Link
-                href={localePath("/articles")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.articles")}
-              </Link>
-              <Link
-                href={localePath("/forms")}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
-                onClick={toggleMenu}
-              >
-                {t("nav.forms")}
-              </Link>
+          <div className="flex flex-col items-center space-y-6 my-auto text-center py-8">
+            <Link
+              href={localePath("/practice-areas")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.practiceAreas")}
+            </Link>
+            <Link
+              href={localePath("/about")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.about")}
+            </Link>
+            <Link
+              href={localePath("/team")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.ourTeam")}
+            </Link>
+            <Link
+              href={localePath("/news")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.news")}
+            </Link>
+            <Link
+              href={localePath("/articles")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.articles")}
+            </Link>
+            <a
+              href={isHomePage ? "#contact" : localePath("/#contact")}
+              onClick={(e) => {
+                toggleMenu();
+                if (isHomePage) scrollToSection(e, 'contact');
+              }}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.contact")}
+            </a>
+
+            {/* Direct Mobile Booking Button pointing to #contact */}
+            <div className="pt-4 w-full max-w-xs">
               <a
                 href={isHomePage ? "#contact" : localePath("/#contact")}
                 onClick={(e) => {
                   toggleMenu();
                   if (isHomePage) scrollToSection(e, 'contact');
                 }}
-                className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+                className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md"
               >
-                {t("nav.contact")}
+                {t("nav.bookButton")}
               </a>
-              
-              {/* Mobile Snow Toggle */}
-              <button
-                onClick={() => setIsSnowing(!isSnowing)}
-                className={`text-2xl mt-4 ${isSnowing ? 'opacity-100' : 'opacity-70'}`}
-              >
-                {isSnowing ? '❄️ Snow On' : '❄️ Snow Off'}
-              </button>
-
             </div>
           </div>
         </div>

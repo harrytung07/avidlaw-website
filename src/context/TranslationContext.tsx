@@ -33,8 +33,8 @@ const TranslationContext = createContext<TranslationContextType>({
 });
 
 // Helper function to extract locale from pathname
-function getLocaleFromPathname(pathname: string | null): string {
-  if (!pathname) return DEFAULT_LOCALE;
+function getLocaleFromPathname(pathname: string | null): string | null {
+  if (!pathname) return null;
   
   const segments = pathname.split('/');
   // Check if the first segment after the root is a supported locale
@@ -42,15 +42,22 @@ function getLocaleFromPathname(pathname: string | null): string {
     return segments[1];
   }
   
-  return DEFAULT_LOCALE;
+  return null;
 }
 
 // Create a provider component
-export function TranslationProvider({ children }: { children: ReactNode }) {
+export function TranslationProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale?: string;
+}) {
   const pathname = usePathname();
   
-  // Extract locale from pathname
-  const locale = getLocaleFromPathname(pathname);
+  // Extract locale from pathname or fallback to initialLocale (from SSR headers) or DEFAULT_LOCALE
+  const localeFromPath = pathname ? getLocaleFromPathname(pathname) : null;
+  const locale = localeFromPath || initialLocale || DEFAULT_LOCALE;
 
   // Create translation function
   const t = (key: string): string => {
@@ -60,7 +67,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     // Handle year replacement for copyright if the key is 'footer.copyright'
     if (key === 'footer.copyright') {
       const text = messages[key] || key;
-      return text.replace('{year}', new Date().getFullYear().toString());
+      return text.replace('{year}', new Date().getFullYear().toString()).replace('{currentYear}', new Date().getFullYear().toString());
     }
     
     // Return the translation or the key itself if no translation is found
@@ -77,4 +84,4 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 // Create a custom hook to use the translation context
 export function useTranslation() {
   return useContext(TranslationContext);
-} 
+}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef, MouseEvent } from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import ExploreButton from "./ExploreButton";
@@ -15,8 +15,6 @@ import { X } from "lucide-react";
 
 export function LawFirmLanding() {
   const { t, locale } = useTranslation();
-  const [isBookingBoxVisible, setBookingBoxVisible] = useState(false);
-  const bookingBoxRef = useRef<HTMLDivElement>(null);
 
   // Team slide state
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,36 +52,245 @@ export function LawFirmLanding() {
   const handlePrevHistory = () => {
     setCurrentHistoryIndex((prev) => (prev - 1 + historySlides.length) % historySlides.length);
   };
-  // NEW: Holiday Data Configuration
-  const upcomingHolidays = [
-    { date: "Feb 13, 2026 (Friday)", name: "Chinese New Year", note: "Closes at 1:00 PM" },
-    //{ date: "Dec 25, 2025 (Thu)", name: "Christmas Day" },
-    { year: "2026 Statutory Holidays" }, // Section Header
-    //{ date: "Jan 1, 2026 (Thu)", name: "New Year's Day" },
-    { date: "Feb 16, 2026 (Mon)", name: "Family Day" },
-    { date: "Apr 3, 2026 (Fri)", name: "Good Friday" },
-    { date: "May 18, 2026 (Mon)", name: "Victoria Day" },
-    { date: "Jul 1, 2026 (Wed)", name: "Canada Day" },
-    { date: "Aug 3, 2026 (Mon)", name: "B.C. Day" },
-    { date: "Sep 7, 2026 (Mon)", name: "Labour Day" },
-    { date: "Sep 30, 2026 (Wed)", name: "National Day for Truth and Reconciliation" },
-    { date: "Oct 12, 2026 (Mon)", name: "Thanksgiving Day" },
-    { date: "Nov 11, 2026 (Wed)", name: "Remembrance Day" },
-    { date: "Dec 25, 2026 (Fri)", name: "Christmas Day" },
+  const currentLang = (locale === 'zh-Hans' || locale === 'zh-Hant' ? locale : 'en') as 'en' | 'zh-Hans' | 'zh-Hant';
+
+  // Trilingual Holiday Data Configuration with Statutory Holidays & Early Closures
+  const holidaysData = [
+    {
+      yearTitle: {
+        en: "2026 Statutory Holidays",
+        "zh-Hans": "2026年法定节假日",
+        "zh-Hant": "2026年法定節假日",
+      },
+      items: [
+        {
+          isoDate: "2026-11-11",
+          date: {
+            en: "Nov 11, 2026 (Wed)",
+            "zh-Hans": "2026年11月11日 (周三)",
+            "zh-Hant": "2026年11月11日 (週三)",
+          },
+          name: {
+            en: "Remembrance Day",
+            "zh-Hans": "阵亡将士纪念日",
+            "zh-Hant": "陣亡將士紀念日",
+          },
+        },
+        {
+          isoDate: "2026-12-25",
+          date: {
+            en: "Dec 25, 2026 (Fri)",
+            "zh-Hans": "2026年12月25日 (周五)",
+            "zh-Hant": "2026年12月25日 (週五)",
+          },
+          name: {
+            en: "Christmas Day",
+            "zh-Hans": "圣诞节",
+            "zh-Hant": "聖誕節",
+          },
+        },
+      ],
+    },
+    {
+      yearTitle: {
+        en: "2027 Statutory Holidays",
+        "zh-Hans": "2027年法定节假日",
+        "zh-Hant": "2027年法定節假日",
+      },
+      items: [
+        {
+          isoDate: "2027-01-01",
+          date: {
+            en: "Jan 1, 2027 (Fri)",
+            "zh-Hans": "2027年1月1日 (周五)",
+            "zh-Hant": "2027年1月1日 (週五)",
+          },
+          name: {
+            en: "New Year's Day",
+            "zh-Hans": "元旦",
+            "zh-Hant": "元旦",
+          },
+        },
+        {
+          isoDate: "2027-02-05",
+          date: {
+            en: "Feb 5, 2027 (Fri)",
+            "zh-Hans": "2027年2月5日 (周五)",
+            "zh-Hant": "2027年2月5日 (週五)",
+          },
+          name: {
+            en: "Chinese New Year's Eve",
+            "zh-Hans": "农历除夕",
+            "zh-Hant": "農曆除夕",
+          },
+          note: {
+            en: "Closes early at 1:00 PM",
+            "zh-Hans": "下午 1:00 提前下班",
+            "zh-Hant": "下午 1:00 提前下班",
+          },
+        },
+        {
+          isoDate: "2027-02-15",
+          date: {
+            en: "Feb 15, 2027 (Mon)",
+            "zh-Hans": "2027年2月15日 (周一)",
+            "zh-Hant": "2027年2月15日 (週一)",
+          },
+          name: {
+            en: "Family Day",
+            "zh-Hans": "家庭日",
+            "zh-Hant": "家庭日",
+          },
+        },
+        {
+          isoDate: "2027-03-26",
+          date: {
+            en: "Mar 26, 2027 (Fri)",
+            "zh-Hans": "2027年3月26日 (周五)",
+            "zh-Hant": "2027年3月26日 (週五)",
+          },
+          name: {
+            en: "Good Friday",
+            "zh-Hans": "耶稣受难日",
+            "zh-Hant": "耶穌受難日",
+          },
+        },
+        {
+          isoDate: "2027-05-24",
+          date: {
+            en: "May 24, 2027 (Mon)",
+            "zh-Hans": "2027年5月24日 (周一)",
+            "zh-Hant": "2027年5月24日 (週一)",
+          },
+          name: {
+            en: "Victoria Day",
+            "zh-Hans": "维多利亚日",
+            "zh-Hant": "維多利亞日",
+          },
+        },
+        {
+          isoDate: "2027-07-01",
+          date: {
+            en: "Jul 1, 2027 (Thu)",
+            "zh-Hans": "2027年7月1日 (周四)",
+            "zh-Hant": "2027年7月1日 (週四)",
+          },
+          name: {
+            en: "Canada Day",
+            "zh-Hans": "加拿大国庆日",
+            "zh-Hant": "加拿大國慶日",
+          },
+        },
+        {
+          isoDate: "2027-08-02",
+          date: {
+            en: "Aug 2, 2027 (Mon)",
+            "zh-Hans": "2027年8月2日 (周一)",
+            "zh-Hant": "2027年8月2日 (週一)",
+          },
+          name: {
+            en: "B.C. Day",
+            "zh-Hans": "卑诗日",
+            "zh-Hant": "卑詩日",
+          },
+        },
+        {
+          isoDate: "2027-09-06",
+          date: {
+            en: "Sep 6, 2027 (Mon)",
+            "zh-Hans": "2027年9月6日 (周一)",
+            "zh-Hant": "2027年9月6日 (週一)",
+          },
+          name: {
+            en: "Labour Day",
+            "zh-Hans": "劳动节",
+            "zh-Hant": "勞動節",
+          },
+        },
+        {
+          isoDate: "2027-09-30",
+          date: {
+            en: "Sep 30, 2027 (Thu)",
+            "zh-Hans": "2027年9月30日 (周四)",
+            "zh-Hant": "2027年9月30日 (週四)",
+          },
+          name: {
+            en: "National Day for Truth and Reconciliation",
+            "zh-Hans": "全国真相与和解日",
+            "zh-Hant": "全國真相與和解日",
+          },
+        },
+        {
+          isoDate: "2027-10-11",
+          date: {
+            en: "Oct 11, 2027 (Mon)",
+            "zh-Hans": "2027年10月11日 (周一)",
+            "zh-Hant": "2027年10月11日 (週一)",
+          },
+          name: {
+            en: "Thanksgiving Day",
+            "zh-Hans": "感恩节",
+            "zh-Hant": "感恩節",
+          },
+        },
+        {
+          isoDate: "2027-11-11",
+          date: {
+            en: "Nov 11, 2027 (Thu)",
+            "zh-Hans": "2027年11月11日 (周四)",
+            "zh-Hant": "2027年11月11日 (週四)",
+          },
+          name: {
+            en: "Remembrance Day",
+            "zh-Hans": "阵亡将士纪念日",
+            "zh-Hant": "陣亡將士紀念日",
+          },
+        },
+        {
+          isoDate: "2027-12-27",
+          date: {
+            en: "Dec 27, 2027 (Mon)",
+            "zh-Hans": "2027年12月27日 (周一)",
+            "zh-Hant": "2027年12月27日 (週一)",
+          },
+          name: {
+            en: "Christmas Day (Observed)",
+            "zh-Hans": "圣诞节（补休）",
+            "zh-Hant": "聖誕節（補休）",
+          },
+        },
+      ],
+    },
   ];
 
-  // Helper to create locale-aware paths
+  // Automatic expiration filtering: keeps today and future dates, hides year group if all expired
+  const todayStr = new Date().toISOString().split('T')[0];
+  const activeHolidayGroups = holidaysData
+    .map((group) => ({
+      title: group.yearTitle[currentLang],
+      items: group.items.filter((item) => item.isoDate >= todayStr),
+    }))
+    .filter((group) => group.items.length > 0);
+
+  const officeHoursTitle = {
+    en: "⏰ Office Hours:",
+    "zh-Hans": "⏰ 办公时间：",
+    "zh-Hant": "⏰ 辦公時間：",
+  }[currentLang];
+
+  const closeBtnLabel = {
+    en: "Close",
+    "zh-Hans": "关闭",
+    "zh-Hant": "關閉",
+  }[currentLang];
+
+  // Helper to create locale-aware paths (always carries locale prefix to prevent 307 redirects)
   const localePath = (path: string) => {
-    // If path is already absolute with locale, return it
     if (path.startsWith(`/${locale}`)) return path;
-
-    // If path starts with /, add locale prefix
-    if (path.startsWith('/')) {
-      return locale === 'en' ? path : `/${locale}${path}`;
-    }
-
-    // For relative paths, return as is
-    return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
   };
 
   // Team members data
@@ -100,7 +307,6 @@ export function LawFirmLanding() {
     { id: 10, name: "Abiel Kwok", title: t("team.title.AbielKwok"), image: "/members/abiel1.JPG" },
     { id: 11, name: "Kun Dong", title: t("team.title.KunDong"), image: "/members/kun.jpg" },
     { id: 12, name: "Farrah Yang", title: t("team.title.FarrahYang"), image: "/members/8. Farrah Yang.jpg" },
-    { id: 13, name: "Ashley Wong", title: t("team.title.AshleyWong"), image: "/members/11. Ashley Wong.jpg" },
     { id: 14, name: "Jeannie Lee", title: t("team.title.JeannieLee"), image: "/members/10. Jeannie Lee.jpg" },
     { id: 16, name: "Sunny Zhang", title: t("team.title.SunnyZhang"), image: "/members/9. Sunny Zhang.jpg" },
   ];
@@ -114,21 +320,6 @@ export function LawFirmLanding() {
   
   const allSlides = totalSlides > 0 ? [...teamSlides, teamSlides[0]] : [];
   const effectiveTotalSlides = totalSlides > 1 ? totalSlides : (totalSlides === 1 ? 1 : 0);
-
-  // Handles closing the booking box when clicking outside of it
-  useEffect(() => {
-    function handleClickOutside(event: globalThis.MouseEvent) {
-      if (bookingBoxRef.current && !bookingBoxRef.current.contains(event.target as Node)) {
-        setBookingBoxVisible(false);
-      }
-    }
-    if (isBookingBoxVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isBookingBoxVisible, bookingBoxRef]);
 
   // Handles the auto-scroll timer for the team carousel
   useEffect(() => {
@@ -214,56 +405,18 @@ export function LawFirmLanding() {
                 {t("hero.subtitle")}
               </p>
               
-              {/* --- MODIFIED: Container for the button and the booking box --- */}
-              {/* Added the ref, removed hover events and fixed height */}
-              <div 
-                ref={bookingBoxRef}
-                className="relative flex flex-col items-center md:items-end mt-8 md:mt-12 lg:mt-16 w-full sm:w-auto"
-              >
-                {/* MODIFIED: Button now uses onClick to toggle visibility */}
+              <div className="flex flex-col items-center md:items-end mt-8 md:mt-12 lg:mt-16 w-full sm:w-auto">
                 <button
-                  onClick={() => setBookingBoxVisible(prevState => !prevState)}
-                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center"
+                  onClick={() => {
+                    const el = document.getElementById("contact");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center cursor-pointer"
                 >
                   {t("hero.bookButton")}
                 </button>
-
-                {/* MODIFIED: Box visibility is now controlled by click */}
-                {/* Re-introduced the visual gap with mt-4 */}
-                <div className={`absolute top-full mt-4 w-fit min-w-[420px] p-6 bg-black/70 backdrop-blur-sm border border-yellow-500/50 rounded-lg shadow-2xl transition-opacity duration-150 ${isBookingBoxVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <p className="text-white text-center text-sm mb-4 whitespace-nowrap">
-                      {t("hero.bookingBoxText")}
-                    </p>
-                    <div className="flex justify-center gap-6">
-                        {/* English QR Code */}
-                        <div className="flex flex-col items-center gap-2 text-center">
-                            <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                                <Image
-                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                                    alt="QR Code for English booking form"
-                                    width={100}
-                                    height={100}
-                                    className="rounded-md"
-                                />
-                            </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("hero.qrCodeEnglish")}</p>
-                        </div>
-
-                        {/* Chinese QR Code */}
-                        <div className="flex flex-col items-center gap-2 text-center">
-                            <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                                <Image
-                                    src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                                    alt="QR Code for Chinese booking form"
-                                    width={100}
-                                    height={100}
-                                    className="rounded-md"
-                                />
-                            </a>
-                            <p className="font-semibold text-xs text-white/90 mt-1">{t("hero.qrCodeChinese")}</p>
-                        </div>
-                    </div>
-                </div>
               </div>
             </div>
           </div>
@@ -621,7 +774,7 @@ export function LawFirmLanding() {
 
               {/* Office Hours Section */}
               <div className="mb-8">
-                <p className="font-semibold text-[16px] text-[#444444] mb-2">☕Office Hours:</p>
+                <p className="font-semibold text-[16px] text-[#444444] mb-2">{officeHoursTitle}</p>
                 <div className="text-black leading-relaxed">
                   <span>{t("contact.officeHoursPrefix")} </span>
                   {/* Clickable Link */}
@@ -637,38 +790,6 @@ export function LawFirmLanding() {
                 </div>
               </div>
 
-              {/* NEW: QR Code section */}
-              <div>
-              <p className="font-semibold text-[16px] text-[#444444] mb-4">{t("contact.bookConsultationTitle")}</p>
-              <div className="flex flex-row gap-6 justify-center md:justify-start">
-                  {/* English QR Code */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                        alt="QR Code for English booking form"
-                        width={120}
-                        height={120}
-                        className="rounded-lg shadow-md"
-                      />
-                    </a>
-                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("contact.qrCodeEnglish")}</p>
-                  </div>
-                  {/* Chinese QR Code */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                        alt="QR Code for Chinese booking form"
-                        width={120}
-                        height={120}
-                        className="rounded-lg shadow-md"
-                      />
-                    </a>
-                    <p className="font-semibold text-xs text-[#333333] mt-1">{t("contact.qrCodeChinese")}</p>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Right Column - Office Addresses */}
@@ -791,41 +912,40 @@ export function LawFirmLanding() {
 
             {/* Scrollable List */}
             <div className="overflow-y-auto p-0">
-              {upcomingHolidays.map((item, index) => {
-                // If it's a section header (has 'year' property)
-                if (item.year) {
-                  return (
-                    <div key={index} className="bg-gray-100 px-5 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider sticky top-0">
-                      {item.year}
-                    </div>
-                  );
-                }
-                // Regular Holiday Item
-                return (
-                  <div key={index} className="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex justify-between items-start group">
-                    <div>
-                      <p className="font-bold text-gray-800">{item.name}</p>
-                      {item.note && (
-                        <p className="text-xs font-semibold text-red-500 mt-1">
-                          {item.note}
-                        </p>
-                      )}
-                    </div>
-                    <span className="text-sm text-gray-500 group-hover:text-gray-900 text-right w-1/2">
-                      {item.date}
-                    </span>
+              {activeHolidayGroups.map((group, gIdx) => (
+                <div key={gIdx}>
+                  <div className="bg-gray-100 px-5 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider sticky top-0">
+                    {group.title}
                   </div>
-                );
-              })}
+                  {group.items.map((item, itemIdx) => (
+                    <div
+                      key={itemIdx}
+                      className="px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex justify-between items-start group"
+                    >
+                      <div>
+                        <p className="font-bold text-gray-800">{item.name[currentLang]}</p>
+                        {item.note && (
+                          <p className="text-xs font-semibold text-red-500 mt-1">
+                            {item.note[currentLang]}
+                          </p>
+                        )}
+                      </div>
+                      <span className="text-sm text-gray-500 group-hover:text-gray-900 text-right w-1/2">
+                        {item.date[currentLang]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
 
             {/* Footer */}
             <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
               <button 
                 onClick={() => setIsHolidayModalOpen(false)}
-                className="text-sm font-semibold text-gray-600 hover:text-gray-900"
+                className="text-sm font-semibold text-gray-600 hover:text-gray-900 px-6 py-2 rounded-md hover:bg-gray-100 transition-colors"
               >
-                Close
+                {closeBtnLabel}
               </button>
             </div>
           </div>

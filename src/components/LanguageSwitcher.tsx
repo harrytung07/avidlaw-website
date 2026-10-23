@@ -59,13 +59,12 @@ export default function LanguageSwitcher() {
   const getPathWithLocale = (newLocale: string) => {
     const basePath = getPathWithoutLocale();
     
-    // If path is just "/" then don't add another slash after the locale
-    if (basePath === "/") {
-      return newLocale === 'en' ? '/' : `/${newLocale}`;
+    if (basePath === "/" || basePath === "") {
+      return `/${newLocale}`;
     }
     
-    // For all other paths, add the locale prefix
-    return newLocale === 'en' ? basePath : `/${newLocale}${basePath}`;
+    const cleanPath = basePath.startsWith('/') ? basePath : `/${basePath}`;
+    return `/${newLocale}${cleanPath}`;
   };
   
   // Update language context when switching language

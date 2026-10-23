@@ -2,6 +2,7 @@
 
 import { useState, MouseEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -55,7 +56,15 @@ const TeamMemberCard = ({ member, onMemberClick, t }: { member: TeamMember, onMe
 );
 
 export default function TeamPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+
+  const localePath = (path: string) => {
+    if (path.startsWith(`/${locale}`)) return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
+  };
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   const teamMembers: TeamMember[] = [
@@ -72,7 +81,6 @@ export default function TeamPage() {
     { id: 9, nameKey: "team.name.OliviaNicolaides", image: "/members/olivia.JPG", titleKey: "team.title.OliviaNicolaides", descriptionKey: "" },
     { id: 10, nameKey: "team.name.RachelLi", image: "/members/7. Rachel Li.jpg", titleKey: "team.title.RachelLi", descriptionKey: "team.bio.RachelLi" },
     { id: 11, nameKey: "team.name.FarrahYang", image: "/members/8. Farrah Yang.jpg", titleKey: "team.title.FarrahYang", descriptionKey: "team.bio.FarrahYang" },
-    { id: 12, nameKey: "team.name.AshleyWong", image: "/members/11. Ashley Wong.jpg", titleKey: "team.title.AshleyWong", descriptionKey: "team.bio.AshleyWong" },
     { id: 13, nameKey: "team.name.JeannieLee", image: "/members/10. Jeannie Lee.jpg", titleKey: "team.title.JeannieLee", descriptionKey: "team.bio.JeannieLee" },
     { id: 14, nameKey: "team.name.MonaBai", image: "/members/ava.jpg", titleKey: "team.title.MonaBai", descriptionKey: "team.bio.MonaBai" },
     { id: 16, nameKey: "team.name.SunnyZhang", image: "/members/9. Sunny Zhang.jpg", titleKey: "team.title.SunnyZhang", descriptionKey: "team.bio.SunnyZhang" },
@@ -226,37 +234,13 @@ export default function TeamPage() {
             {t('team.eveDescription')}
           </p>
           
-          {/* --- NEW: QR Code Booking Section --- */}
-          <div className="flex flex-col sm:flex-row gap-8 justify-center mt-8">
-            {/* English QR Code */}
-            <div className="flex flex-col items-center gap-2 text-center">
-              <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                  alt="QR Code for English booking form"
-                  width={150}
-                  height={150}
-                  // Added a white background and padding to make the QR code scannable
-                  className="rounded-lg bg-white p-1 shadow-lg"
-                />
-              </a>
-              <p className="font-semibold text-sm text-white/90 mt-1">{t("team.qrCodeEnglish")}</p>
-            </div>
-
-            {/* Chinese QR Code */}
-            <div className="flex flex-col items-center gap-2 text-center">
-              <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                  alt="QR Code for Chinese booking form"
-                  width={150}
-                  height={150}
-                  // Added a white background and padding to make the QR code scannable
-                  className="rounded-lg bg-white p-1 shadow-lg"
-                />
-              </a>
-              <p className="font-semibold text-sm text-white/90 mt-1">{t("team.qrCodeChinese")}</p>
-            </div>
+          <div className="flex justify-center mt-8">
+            <Link
+              href={localePath('/#contact')}
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-lg focus:outline-none"
+            >
+              {t('hero.bookButton')}
+            </Link>
           </div>
         </div>
       </section>

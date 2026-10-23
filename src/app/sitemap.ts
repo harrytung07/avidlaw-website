@@ -4,6 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { siteConfig } from '@/config/site';
 import { practiceAreasData } from '@/lib/practiceAreasData';
+import { getSortedArticles } from '@/lib/articles';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
@@ -17,7 +18,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/articles', priority: 0.8, changeFrequency: 'weekly' as const },
     { path: '/news', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/forms', priority: 0.7, changeFrequency: 'monthly' as const },
   ];
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
@@ -111,6 +111,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     } catch (err) {
       console.error('Error reading news articles for sitemap:', err);
     }
+  }
+
+  // 4. Dedicated Legal Articles from getSortedArticles()
+  try {
+    const legalArticles = await getSortedArticles();
+    for (const article of legalArticles) {
+      const articlePath = `/articles/${article.id}`;
+      let articleDate = now;
+      if (article.date) {
+        const parsed = new Date(article.date);
+        if (!isNaN(parsed.getTime())) {
+          articleDate = parsed;
+        }
+      }
+
+      const languages: Record<string, string> = {
+        en: `${baseUrl}/en${articlePath}`,
+        'zh-Hans': `${baseUrl}/zh-Hans${articlePath}`,
+        'zh-Hant': `${baseUrl}/zh-Hant${articlePath}`,
+        'x-default': `${baseUrl}/en${articlePath}`,
+      };
+
+      for (const loc of locales) {
+        sitemapEntries.push({
+          url: `${baseUrl}/${loc}${articlePath}`,
+          lastModified: articleDate,
+          changeFrequency: 'monthly',
+          priority: 0.7,
+          alternates: {
+            languages,
+          },
+        });
+      }
+    }
+  } catch (err) {
+    console.error('Error reading legal articles for sitemap:', err);
   }
 
   return sitemapEntries;

@@ -26,10 +26,10 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
 
   const localePath = (path: string) => {
     if (path.startsWith(`/${locale}`)) return path;
-    if (path.startsWith('/')) {
-      return locale === 'en' ? path : `/${locale}${path}`;
-    }
-    return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
   };
   
   // Create autoplay plugin with options but don't store a reference to it

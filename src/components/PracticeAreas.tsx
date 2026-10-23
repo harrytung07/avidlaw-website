@@ -35,10 +35,10 @@ export default function PracticeAreas() {
 
   const localePath = (path: string) => {
     if (path.startsWith(`/${locale}`)) return path;
-    if (path.startsWith('/')) {
-      return locale === 'en' ? path : `/${locale}${path}`;
-    }
-    return path;
+    if (path === '/' || path === '') return `/${locale}`;
+    if (path === '/#contact' || path === '#contact') return `/${locale}#contact`;
+    if (path.startsWith('/')) return `/${locale}${path}`;
+    return `/${locale}/${path}`;
   };
 
   // Check scroll position for sticky nav
@@ -441,32 +441,13 @@ export default function PracticeAreas() {
             {t('practiceAreas.bookingDescription')}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-8 justify-center mt-8">
-            <div className="flex flex-col items-center gap-2 text-center">
-              <a href="https://form.jotform.com/252606090442249" target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252606090442249_1758317253_qrcode_muse.png"
-                  alt="QR Code for English booking form"
-                  width={150}
-                  height={150}
-                  className="rounded-lg shadow-lg hover:scale-105 transition-transform"
-                />
-              </a>
-              <p className="font-semibold text-sm text-gray-800 mt-1">{t("practiceAreas.qrCodeEnglish")}</p>
-            </div>
-
-            <div className="flex flex-col items-center gap-2 text-center">
-              <a href="https://form.jotform.com/252597283337063" target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="https://www.jotform.com/uploads/cnslawcorp/form_files/252597283337063_1758240491_qrcode_muse.png"
-                  alt="QR Code for Chinese booking form"
-                  width={150}
-                  height={150}
-                  className="rounded-lg shadow-lg hover:scale-105 transition-transform"
-                />
-              </a>
-              <p className="font-semibold text-sm text-gray-800 mt-1">{t("practiceAreas.qrCodeChinese")}</p>
-            </div>
+          <div className="flex justify-center mt-8">
+            <Link
+              href={localePath('/#contact')}
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-lg focus:outline-none"
+            >
+              {t('hero.bookButton')}
+            </Link>
           </div>
         </div>
       </section>

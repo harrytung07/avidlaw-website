@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildLocalizedMetadata({
     title: titles[locale],
     description: siteConfig.description[locale],
-    cleanPath: '/',
+    cleanPath: '',
     locale,
   });
 }
@@ -31,7 +31,13 @@ export default function Page() {
         '@type': 'LegalService',
         '@id': `${siteConfig.url}/#legalservice`,
         name: siteConfig.name,
-        alternateName: [siteConfig.chineseName, siteConfig.traditionalChineseName],
+        alternateName: [
+          siteConfig.chineseName,
+          siteConfig.traditionalChineseName,
+          "Avid Law",
+          "CNS Law Corporation",
+          "Redman Law",
+        ],
         url: `${siteConfig.url}/${locale}`,
         telephone: siteConfig.telephone,
         email: siteConfig.email,
