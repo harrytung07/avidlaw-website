@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Supported locales - hardcoded to match next.config.js
-// We can't directly import from next.config.js in middleware
 const locales = ['en', 'zh-Hans', 'zh-Hant'];
 const defaultLocale = 'en';
 
@@ -24,12 +23,14 @@ function removeLocaleFromPath(pathname: string, locale: string) {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip middleware for non-HTML routes
+  // Skip middleware for non-HTML routes, api, static files, robots.txt, and sitemap.xml
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname.includes('.') ||
-    pathname.startsWith('/favicon')
+    pathname.startsWith('/favicon') ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
   ) {
     return NextResponse.next();
   }
@@ -50,25 +51,28 @@ export function middleware(request: NextRequest) {
     
     // Clone the URL
     const newUrl = new URL(request.url);
-    
-    // Rewrite the path to the non-localized version
-    // This preserves the original URL in the browser but internally
-    // Next.js will route to the correct page
     newUrl.pathname = pathWithoutLocale;
     
-    return NextResponse.rewrite(newUrl);
+    // Forward locale and clean pathname via request headers for server components & metadata
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-locale', pathLocale);
+    requestHeaders.set('x-clean-pathname', pathWithoutLocale);
+
+    return NextResponse.rewrite(newUrl, {
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
   
   // For paths without a locale, redirect to add the default locale
-  // This ensures all URLs in the browser include the locale
   const url = new URL(`/${defaultLocale}${pathname}`, request.url);
   return NextResponse.redirect(url);
 }
 
-// Match all routes except files, images, static files
+// Match all routes except files, images, static files, robots.txt, and sitemap.xml
 export const config = {
   matcher: [
-    // Skip all internal Next.js paths
-    '/((?!_next/|api/|.*\\.|favicon.ico).*)',
+    '/((?!_next/|api/|.*\\.|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
-}; 
+};

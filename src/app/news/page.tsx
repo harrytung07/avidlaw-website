@@ -1,14 +1,12 @@
 // src/app/news/page.tsx
-// This is a SERVER COMPONENT. No "use client" here.
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import type { Metadata } from 'next';
+import NewsClient, { NewsPost } from './NewsClient';
+import { getRequestLocaleAndPath, buildLocalizedMetadata, generateBreadcrumbSchema } from '@/lib/seo';
+import { siteConfig } from '@/config/site';
 
-import fs from 'fs'; // OK here
-import path from 'path'; // OK here
-import matter from 'gray-matter'; // OK here
-import NewsClient, { NewsPost } from './NewsClient'; // Import the client component and type
-
-// --- Function to get news data (can be here or in a separate lib/utils file) ---
-// Ensure NewsPost interface is defined or imported if it's not in NewsClient.tsx
-// For this example, assuming NewsPost is exported from NewsClient.tsx
 function getNewsPosts(): NewsPost[] {
   const postsDirectory = path.join(process.cwd(), 'public/articles/news');
   let filenames: string[] = [];
@@ -26,7 +24,7 @@ function getNewsPosts(): NewsPost[] {
       const fullPath = path.join(postsDirectory, filename);
       try {
         const fileContents = fs.readFileSync(fullPath, 'utf8');
-        const { data, content } = matter(fileContents); // data is frontmatter
+        const { data, content } = matter(fileContents);
         return { slug, frontmatter: data, content };
       } catch (err) {
         console.error(`Error processing file ${filename}:`, err);
@@ -42,11 +40,52 @@ function getNewsPosts(): NewsPost[] {
   });
   return posts;
 }
-// --- End Function ---
 
-// The Page component itself (Server Component)
+export async function generateMetadata(): Promise<Metadata> {
+  const { locale } = getRequestLocaleAndPath();
+
+  const titles = {
+    en: 'Legal News & Case Updates | Avid Law Corporation',
+    'zh-Hans': '最新法律要闻与判例解析 | 安胜 · 弘人律师行',
+    'zh-Hant': '最新法律要聞與判例解析 | 安勝 · 弘人律師行',
+  };
+
+  const descriptions = {
+    en: 'Stay informed with recent British Columbia Court of Appeal decisions, statutory updates, and law firm announcements from Avid Law Corporation in Richmond, BC.',
+    'zh-Hans': '查阅安胜 · 弘人律师行整理的最新卑诗省上诉法院判例解析、法律法规前沿速递与律所动态。',
+    'zh-Hant': '查閱安勝 · 弘人律師行整理的最新卑詩省上訴法院判例解析、法律法規前沿速遞與律所動態。',
+  };
+
+  return buildLocalizedMetadata({
+    title: titles[locale],
+    description: descriptions[locale],
+    cleanPath: '/news',
+    locale,
+  });
+}
+
 export default async function NewsPage() {
-  const newsPosts = getNewsPosts(); // Fetch data on the server
+  const { locale } = getRequestLocaleAndPath();
+  const newsPosts = getNewsPosts();
 
-  return <NewsClient newsPosts={newsPosts} />; // Pass data to the Client Component
+  const breadcrumbLabels = {
+    en: { home: 'Home', news: 'News' },
+    'zh-Hans': { home: '首页', news: '最新要闻' },
+    'zh-Hant': { home: '首頁', news: '最新要聞' },
+  }[locale];
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: breadcrumbLabels.home, url: `${siteConfig.url}/${locale}` },
+    { name: breadcrumbLabels.news, url: `${siteConfig.url}/${locale}/news` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <NewsClient newsPosts={newsPosts} />
+    </>
+  );
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTranslation } from '@/context/TranslationContext';
 import { useModal } from '@/context/ModalContext';
 
@@ -12,9 +13,24 @@ interface PracticeAreasCarouselProps {
   onMouseLeave?: () => void;
 }
 
+const areaSlugMap: Record<string, string> = {
+  'practiceAreas.corporateCommercialLaw': 'business-purchase-sale',
+  'practiceAreas.conveyancing': 'commercial-real-estate',
+  'practiceAreas.civilLitigation': 'shareholder-commercial-disputes',
+  'practiceAreas.willsTrustEstates': 'wills-probate-estate-planning',
+};
+
 export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: PracticeAreasCarouselProps) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { setModalOpen } = useModal();
+
+  const localePath = (path: string) => {
+    if (path.startsWith(`/${locale}`)) return path;
+    if (path.startsWith('/')) {
+      return locale === 'en' ? path : `/${locale}${path}`;
+    }
+    return path;
+  };
   
   // Create autoplay plugin with options but don't store a reference to it
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -49,7 +65,6 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       'practiceAreas.commercialContractDrafting'
     ],
     'practiceAreas.corporateCommercialLaw': [
-
       'practiceAreas.employmentContract',
       'practiceAreas.shareholderAgreement',
       'practiceAreas.partnershipAgreement',
@@ -75,7 +90,6 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       'practiceAreas.representationAgreements'
     ],
     'practiceAreas.willsTrustEstates': [
-
       'practiceAreas.probateWithWithoutWill',
       'practiceAreas.estatePlanning',
       'practiceAreas.notarization',
@@ -105,9 +119,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   const handleAreaClick = (areaTitleKey: string) => {
     setSelectedArea(areaTitleKey);
     setShowModal(true);
-    // Update the modal context to indicate a modal is open
     setModalOpen(true);
-    // Ensure autoplay stops when modal is open
     if (emblaApi?.plugins()?.autoplay?.stop) {
       emblaApi.plugins().autoplay.stop();
     }
@@ -117,7 +129,6 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   const closeModal = () => {
     setShowModal(false);
     setSelectedArea(null);
-    // Update the modal context to indicate the modal is closed
     setModalOpen(false);
     if (emblaApi?.plugins()?.autoplay?.play) {
       emblaApi.plugins().autoplay.play();
@@ -127,10 +138,8 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (showModal) {
-      // Prevent scrolling on body when modal is open
       document.body.style.overflow = 'hidden';
     } else {
-      // Re-enable scrolling when modal is closed
       document.body.style.overflow = 'auto';
     }
     
@@ -148,7 +157,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
     };
     
     emblaApi.on('select', onSelect);
-    onSelect(); // Call once initially
+    onSelect();
     
     return () => {
       emblaApi.off('select', onSelect);
@@ -173,11 +182,13 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   useEffect(() => {
     return () => {
       if (showModal) {
-        // Ensure we reset modal state if component unmounts while modal is open
         setModalOpen(false);
       }
     };
   }, [showModal, setModalOpen]);
+
+  const viewAllText = locale === 'zh-Hans' ? '查看全部业务领域' : locale === 'zh-Hant' ? '查看全部業務領域' : 'View All Practice Areas';
+  const detailedGuideText = locale === 'zh-Hans' ? '阅读重点法定指南' : locale === 'zh-Hant' ? '閱讀重點法定指南' : 'Read In-Depth Statutory Guide';
 
   return (
     <div className="relative">
@@ -208,7 +219,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
           `}</style>
           <div 
             className="relative max-w-2xl w-full mx-4 overflow-hidden opacity-0"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            onClick={(e) => e.stopPropagation()}
             style={{
               animation: 'fadeInContent 0.4s ease 0.15s forwards'
             }}
@@ -225,9 +236,9 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
               <h2 className="text-2xl font-bold text-white mb-3">
                 {t(selectedArea)}
               </h2>
-              <div className="w-24 h-[2px] bg-[#FFC107] mb-10"></div>
+              <div className="w-24 h-[2px] bg-[#FFC107] mb-8"></div>
               
-              <div className="max-h-[70vh] overflow-y-auto pr-4 pl-2 pb-4">
+              <div className="max-h-[60vh] overflow-y-auto pr-4 pl-2 pb-4">
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {practiceAreaDetails[selectedArea].map((subareaKey, index) => (
                     <li 
@@ -239,6 +250,29 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Direct Crawlable Link in Modal Footer to Eliminate Orphan Pages */}
+              <div className="mt-6 pt-4 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3">
+                <Link
+                  href={localePath('/practice-areas')}
+                  onClick={closeModal}
+                  className="inline-flex items-center text-xs font-semibold text-zinc-300 hover:text-[#FFC107] transition-colors"
+                >
+                  <span>{viewAllText}</span>
+                  <span className="ml-1 font-bold">→</span>
+                </Link>
+
+                {areaSlugMap[selectedArea] && (
+                  <Link
+                    href={localePath(`/practice-areas/${areaSlugMap[selectedArea]}`)}
+                    onClick={closeModal}
+                    className="inline-flex items-center px-4 py-2 rounded bg-[#FFC107] text-zinc-950 text-xs font-bold hover:bg-[#e5ad06] transition-colors shadow-md"
+                  >
+                    <span>{detailedGuideText}</span>
+                    <span className="ml-1.5 font-bold">→</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -252,27 +286,41 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
         onMouseLeave={handleMouseLeave}
       >
         <div className="embla__container">
-          {practiceAreas.map((area) => (
-            <div className="embla__slide p-4 select-none" key={area.id}>
-              <div 
-                className="relative h-[350px] rounded-md overflow-hidden group cursor-pointer shadow-lg select-none"
-                onClick={() => handleAreaClick(area.titleKey)}
-              >
-                <Image 
-                  src={area.image}
-                  alt={t(area.titleKey)}
-                  fill
-                  draggable="false"
-                  className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
-                />
-                {/* <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10 pointer-events-none"></div> */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
-                  <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
-                  <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-all duration-300 group-hover:w-24"></div>
+          {practiceAreas.map((area) => {
+            const areaSlug = areaSlugMap[area.titleKey];
+            return (
+              <div className="embla__slide p-4 select-none" key={area.id}>
+                <div 
+                  className="relative h-[350px] rounded-md overflow-hidden group cursor-pointer shadow-lg select-none"
+                  onClick={() => handleAreaClick(area.titleKey)}
+                >
+                  <Image 
+                    src={area.image}
+                    alt={t(area.titleKey)}
+                    fill
+                    draggable="false"
+                    className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                    <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
+                    <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-all duration-300 group-hover:w-24"></div>
+
+                    {/* Crawlable link for search engine discovery and non-JS clients */}
+                    <div className="mt-3 pointer-events-auto">
+                      <Link
+                        href={localePath(areaSlug ? `/practice-areas/${areaSlug}` : '/practice-areas')}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center text-xs text-[#FFC107] hover:underline font-semibold"
+                      >
+                        <span>{detailedGuideText}</span>
+                        <span className="ml-1 font-bold">→</span>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       
@@ -334,4 +382,4 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       </div>
     </div>
   );
-} 
+}
