@@ -416,7 +416,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
 
                 <div className="space-y-3 pt-2">
                   <a
-                    href={`/${locale}#contact`}
+                    href={`/${locale}/forms?type=consultation`}
                     className="w-full inline-flex items-center justify-center px-5 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-semibold text-sm hover:bg-[#e5ad06] transition-colors shadow-lg shadow-[#FFC107]/10"
                   >
                     {labels.bookConsultation}

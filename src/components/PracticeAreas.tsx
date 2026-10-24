@@ -443,7 +443,7 @@ export default function PracticeAreas() {
           
           <div className="flex justify-center mt-8">
             <Link
-              href={localePath('/#contact')}
+              href={localePath('/forms?type=consultation')}
               className="inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-lg focus:outline-none"
             >
               {t('hero.bookButton')}

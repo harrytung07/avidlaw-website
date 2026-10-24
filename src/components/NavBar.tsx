@@ -203,6 +203,12 @@ export default function NavBar() {
                 >
                   {t("nav.articles")}
                 </Link>
+                <Link
+                  href={localePath("/forms")}
+                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                >
+                  {t("nav.forms")}
+                </Link>
               </div>
             </div>
 
@@ -218,14 +224,13 @@ export default function NavBar() {
               <LanguageSwitcher />
             </div>
 
-            {/* Direct Booking Button - Navigates directly to #contact */}
-            <a
-              href={isHomePage ? "#contact" : localePath("/#contact")}
-              onClick={handleBookClick}
+            {/* Direct Booking Button - Links to Consultation Intake Form */}
+            <Link
+              href={localePath("/forms?type=consultation")}
               className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] transition-all font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md"
             >
               {t("nav.bookButton")}
-            </a>
+            </Link>
           </nav>
 
           {/* Hamburger menu button */}
@@ -329,6 +334,13 @@ export default function NavBar() {
             >
               {t("nav.articles")}
             </Link>
+            <Link
+              href={localePath("/forms")}
+              onClick={toggleMenu}
+              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+            >
+              {t("nav.forms")}
+            </Link>
             <a
               href={isHomePage ? "#contact" : localePath("/#contact")}
               onClick={(e) => {
@@ -340,18 +352,15 @@ export default function NavBar() {
               {t("nav.contact")}
             </a>
 
-            {/* Direct Mobile Booking Button pointing to #contact */}
+            {/* Direct Mobile Booking Button pointing to Consultation Form */}
             <div className="pt-4 w-full max-w-xs">
-              <a
-                href={isHomePage ? "#contact" : localePath("/#contact")}
-                onClick={(e) => {
-                  toggleMenu();
-                  if (isHomePage) scrollToSection(e, 'contact');
-                }}
+              <Link
+                href={localePath("/forms?type=consultation")}
+                onClick={toggleMenu}
                 className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md"
               >
                 {t("nav.bookButton")}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

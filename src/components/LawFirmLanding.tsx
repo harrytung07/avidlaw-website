@@ -10,7 +10,7 @@ import "./embla.css";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { useTranslation } from "@/context/TranslationContext";
-import { X } from "lucide-react";
+import { X, CalendarCheck } from "lucide-react";
 
 
 export function LawFirmLanding() {
@@ -788,6 +788,21 @@ export function LawFirmLanding() {
                   <br />
                   
                 </div>
+              </div>
+
+              {/* Online Client Intake & Forms Portal Button */}
+              <div className="pt-2">
+                <Link
+                  href={localePath("/forms?type=consultation")}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#0B1B48] text-[#FFC107] hover:bg-[#132763] font-bold text-sm tracking-wide transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
+                >
+                  <CalendarCheck className="w-4 h-4" />
+                  <span>
+                    {locale === "zh-Hans" || locale === "zh-Hant"
+                      ? "在线预约法定咨询 / 填写问卷 →"
+                      : "Book a Consultation Online / Forms →"}
+                  </span>
+                </Link>
               </div>
 
             </div>
