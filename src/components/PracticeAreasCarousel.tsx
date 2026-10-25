@@ -213,27 +213,31 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
 
             {/* Modal dialog card */}
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="practice-area-modal-title"
               initial={{ y: 16, scale: 0.97 }}
               animate={{ y: 0, scale: 1 }}
               exit={{ y: 12, scale: 0.97 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative z-10 max-w-2xl w-full bg-white border border-zinc-200 text-zinc-900 rounded-2xl shadow-2xl p-6 sm:p-8 overflow-hidden"
+              className="relative z-10 max-w-2xl w-full bg-white border border-zinc-200 text-zinc-900 rounded-2xl shadow-2xl p-6 sm:p-8 overflow-hidden overscroll-contain"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-4 right-4 z-10 bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full text-zinc-600 hover:text-zinc-900 transition-colors"
+                type="button"
+                className="absolute top-4 right-4 z-10 bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full text-zinc-600 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none active:scale-[0.96] transition-[background-color,color,transform] duration-150"
                 onClick={closeModal}
-                aria-label={t("practiceAreas.closeModal") || "Close"}
+                aria-label={t("practiceAreas.closeModal") || "Close practice area modal"}
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
 
-              <h2 className="text-2xl font-serif font-bold text-[#0B1B48] mb-2">
+              <h2 id="practice-area-modal-title" className="text-2xl font-serif font-bold text-[#0B1B48] mb-2">
                 {t(selectedArea)}
               </h2>
               <div className="w-16 h-1 bg-[#FFC107] rounded-full mb-6"></div>
 
-              <div className="max-h-[55vh] overflow-y-auto pr-2 pb-2">
+              <div className="max-h-[55vh] overflow-y-auto pr-2 pb-2 overscroll-contain">
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {practiceAreaDetails[selectedArea]?.map((subareaKey, index) => (
                     <li

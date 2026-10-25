@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,29 +25,23 @@ const TeamMemberCard = ({
   onMemberClick: (member: TeamMember) => void; 
   t: (key: string) => string; 
 }) => (
-  <div
+  <button
+    type="button"
     key={member.id}
-    role="button"
-    tabIndex={0}
     onClick={() => onMemberClick(member)}
-    onKeyDown={(e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        onMemberClick(member);
-      }
-    }}
-    className="group relative bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-xl border border-zinc-200 hover:border-[#FFC107] hover:-translate-y-0.5 active:scale-[0.98] transition-[border-color,box-shadow,transform] duration-200 ease-out mx-auto max-w-[280px] w-full flex flex-col cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]"
+    className="group relative bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-xl border border-zinc-200 hover:border-[#FFC107] hover:-translate-y-0.5 active:scale-[0.98] transition-[border-color,box-shadow,transform] duration-200 ease-out mx-auto max-w-[280px] w-full flex flex-col cursor-pointer focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none text-left"
   >
     <div className="aspect-square overflow-hidden bg-zinc-100 relative outline outline-1 -outline-offset-1 outline-black/5">
       <Image
         src={member.image}
-        alt={t(member.nameKey)}
+        alt=""
+        aria-hidden="true"
         width={280}
         height={280}
         className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
-    <div className="p-4 text-center flex-grow flex flex-col justify-center bg-white">
+    <div className="p-4 text-center flex-grow flex flex-col justify-center bg-white w-full">
       <h3 className="font-serif font-bold text-zinc-900 text-lg group-hover:text-[#0B1B48] transition-colors text-balance">
         {t(member.nameKey)}
       </h3>
@@ -55,9 +49,9 @@ const TeamMemberCard = ({
         {t(member.titleKey)}
       </p>
     </div>
-    <div className="absolute inset-0 bg-[#0B1B48]/75 backdrop-blur-[2px] flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4">
+    <div aria-hidden="true" className="absolute inset-0 bg-[#0B1B48]/75 backdrop-blur-[2px] flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4 pointer-events-none">
       <span
-        className="group/btn relative inline-flex items-center gap-2 rounded-lg bg-[#FFC107] pl-5 pr-4 py-2.5 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-sm"
+        className="group/btn relative inline-flex items-center gap-2 rounded-lg bg-[#FFC107] pl-5 pr-4 py-2.5 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 text-sm"
       >
         <span>{t('team.viewProfile')}</span>
         <svg
@@ -73,7 +67,7 @@ const TeamMemberCard = ({
         </svg>
       </span>
     </div>
-  </div>
+  </button>
 );
 
 export default function TeamPage() {
@@ -119,6 +113,22 @@ export default function TeamPage() {
     setSelectedMember(null);
   };
 
+  useEffect(() => {
+    if (!selectedMember) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedMember(null);
+      }
+    };
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedMember]);
+
   const barristerSolicitorRoleString = t('team.title.AdeleSun'); // "Barrister & Solicitor"
   const articlingStudentRoleString = t('team.title.BrighamYang'); // "Articling Student"
 
@@ -148,6 +158,12 @@ export default function TeamPage() {
     !articlingStudents.some(as => as.id === member.id)
   );
 
+  const heroBadge = {
+    en: "Avid Law Corporation • Legal Team",
+    "zh-Hans": "安胜 · 弘人律师行 • 专业律师与法律团队",
+    "zh-Hant": "安勝 · 弘人律師行 • 專業律師與法律團隊",
+  }[activeLocale];
+
   const categoryTitles = {
     barristers: {
       en: "Barristers & Solicitors",
@@ -170,12 +186,14 @@ export default function TeamPage() {
     <div className="min-h-screen bg-zinc-100/70 text-zinc-900">
       <NavBar />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
+      <main id="main-content">
+        {/* Hero Section */}
+        <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
             src="/sideBG.png" 
-            alt="Background" 
+            alt="" 
+            aria-hidden="true"
             fill 
             className="object-cover opacity-20 brightness-110" 
             priority
@@ -185,7 +203,7 @@ export default function TeamPage() {
         
         <div className="container relative z-10 mx-auto px-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
-            Avid Law Corporation • Legal Team
+            {heroBadge}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide text-balance">
             {t('team.sectionTitle')}
@@ -255,10 +273,11 @@ export default function TeamPage() {
 
       {/* Ready to Schedule Section */}
       <section className="py-20 md:py-28 relative bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
             src="/sideBG.png" 
-            alt="Background" 
+            alt="" 
+            aria-hidden="true"
             fill 
             className="object-cover opacity-15 brightness-110" 
           />
@@ -277,7 +296,7 @@ export default function TeamPage() {
           <div className="flex justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1B48] focus-visible:outline-none text-base"
             >
               <span>{t('hero.bookButton')}</span>
               <svg 
@@ -295,10 +314,11 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-zinc-400">
           {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
         </p>
       </footer>
@@ -312,7 +332,7 @@ export default function TeamPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 overscroll-contain"
           >
             {/* Static Backdrop inside the single animated wrapper */}
             <div
@@ -322,19 +342,29 @@ export default function TeamPage() {
 
             {/* Modal Card */}
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="team-member-modal-title"
               initial={{ y: 16, scale: 0.97 }}
               animate={{ y: 0, scale: 1 }}
               exit={{ y: 12, scale: 0.97 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative z-10 w-full max-w-3xl bg-white border border-zinc-200 text-zinc-900 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 overflow-hidden"
+              className="relative z-10 w-full max-w-3xl bg-white border border-zinc-200 text-zinc-900 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 overflow-hidden overscroll-contain"
               onClick={(e) => e.stopPropagation()}
             >
               <button
+                type="button"
                 onClick={handleOutsideClick}
-                className="absolute right-4 top-4 z-10 min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 hover:text-zinc-900 active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]"
-                aria-label="Close modal"
+                className="absolute right-4 top-4 z-10 min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 hover:text-zinc-900 active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none cursor-pointer"
+                aria-label={
+                  activeLocale === 'zh-Hans'
+                    ? "关闭个人简介"
+                    : activeLocale === 'zh-Hant'
+                    ? "關閉個人簡介"
+                    : "Close team member profile"
+                }
               >
-                <X className="h-5 w-5 shrink-0" strokeWidth={2} />
+                <X className="h-5 w-5 shrink-0" strokeWidth={2} aria-hidden="true" />
               </button>
 
               <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-center">
@@ -351,7 +381,7 @@ export default function TeamPage() {
                 </div>
 
                 <div className="md:col-span-7 flex flex-col text-left">
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-2 text-balance">
+                  <h2 id="team-member-modal-title" className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-2 text-balance">
                     {t(selectedMember.nameKey)}
                   </h2>
                   <div className="mb-4">
@@ -360,7 +390,7 @@ export default function TeamPage() {
                     </span>
                   </div>
                   <div className="h-1 w-16 bg-[#FFC107] mb-6 rounded-full"></div>
-                  <div className="text-zinc-700 leading-relaxed text-sm sm:text-base space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                  <div className="text-zinc-700 leading-relaxed text-sm sm:text-base space-y-4 max-h-[300px] overflow-y-auto pr-2 overscroll-contain">
                     <p className="text-pretty">{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
                   </div>
                 </div>

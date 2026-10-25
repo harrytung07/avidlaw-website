@@ -154,7 +154,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         ? "Law Society of British Columbia Intake Notice: Submitting this consultation questionnaire is for conflict checking and consultation scheduling purposes only. It does not establish a solicitor-client relationship until a formal written Retainer Agreement is executed with Avid Law Corporation."
         : "卑诗省律师公会登记声明：提交本咨询表仅用于利益冲突检索与咨询安排，在正式签署聘用协议（Retainer Agreement）之前，本提交不构成律师与客户之间的正式委托代理关系。",
     submitBtn: lang === "en" ? "Submit Consultation Request" : "提交预约申请",
-    submittingBtn: lang === "en" ? "Submitting Request..." : "正在安全提交...",
+    submittingBtn: lang === "en" ? "Submitting Request…" : "正在安全提交…",
     successTitle:
       lang === "en"
         ? "Consultation Request Submitted"
@@ -388,7 +388,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
 
         <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-6 text-left mb-8 space-y-2 text-xs sm:text-sm text-zinc-700">
           <div className="flex justify-between border-b border-zinc-200 pb-2">
-            <span className="font-semibold text-zinc-500">
+            <span className="font-semibold text-zinc-600">
               {lang === "en" ? "Client:" : "客户主体："}
             </span>
             <span className="font-bold text-[#0B1B48]">
@@ -396,7 +396,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             </span>
           </div>
           <div className="flex justify-between border-b border-zinc-200 pb-2">
-            <span className="font-semibold text-zinc-500">
+            <span className="font-semibold text-zinc-600">
               {lang === "en" ? "Contact:" : "联系方式："}
             </span>
             <span className="font-mono tabular-nums">
@@ -404,7 +404,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="font-semibold text-zinc-500">
+            <span className="font-semibold text-zinc-600">
               {lang === "en" ? "Consultation Mode:" : "咨询方式："}
             </span>
             <span>{consultationMethod}</span>
@@ -544,139 +544,160 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           {entityType === "individual" ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-client-name" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.clientName} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-client-name"
                   type="text"
                   required
+                  autoComplete="name"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   placeholder="e.g. Michael Zhang / 张伟"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-address" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.address} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-address"
                   type="text"
                   required
+                  autoComplete="street-address"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Street, Unit, City, Province, Postal Code"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-phone" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.phone} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. (604) 123-4567"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-email" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.email} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-email"
                   type="email"
                   required
+                  autoComplete="email"
+                  spellCheck={false}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="client@example.com"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-occupation" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.occupation}
                 </label>
                 <input
+                  id="consult-occupation"
                   type="text"
+                  autoComplete="organization-title"
                   value={occupation}
                   onChange={(e) => setOccupation(e.target.value)}
                   placeholder="e.g. Software Engineer, Business Owner, Realtor"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-company-name" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.companyName} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-company-name"
                   type="text"
                   required
+                  autoComplete="organization"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="e.g. Pacific Holdings Ltd. / 加拿大太平洋控股有限公司"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-contact-person" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.contactPerson} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-contact-person"
                   type="text"
                   required
+                  autoComplete="name"
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
                   placeholder="e.g. John Chen (Director)"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-corporate-email" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.corporateEmail} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-corporate-email"
                   type="email"
                   required
+                  autoComplete="email"
+                  spellCheck={false}
                   value={corporateEmail}
                   onChange={(e) => setCorporateEmail(e.target.value)}
                   placeholder="corporate@company.com"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-registered-address" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.registeredAddress} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-registered-address"
                   type="text"
                   required
+                  autoComplete="street-address"
                   value={registeredAddress}
                   onChange={(e) => setRegisteredAddress(e.target.value)}
                   placeholder="Official Registered Office Address in BC Records"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div className="sm:col-span-2">
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-semibold text-zinc-700">
+                  <label htmlFor="consult-operating-address" className="text-xs font-semibold text-zinc-700">
                     {t.operatingAddress}
                   </label>
-                  <label className="inline-flex items-center gap-1.5 text-xs text-zinc-500 cursor-pointer">
+                  <label htmlFor="consult-same-address" className="inline-flex items-center gap-1.5 text-xs text-zinc-600 cursor-pointer">
                     <input
+                      id="consult-same-address"
                       type="checkbox"
                       checked={sameAsRegistered}
                       onChange={(e) => setSameAsRegistered(e.target.checked)}
@@ -687,40 +708,46 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                 </div>
                 {!sameAsRegistered && (
                   <input
+                    id="consult-operating-address"
                     type="text"
+                    autoComplete="street-address"
                     value={operatingAddress}
                     onChange={(e) => setOperatingAddress(e.target.value)}
                     placeholder="Operating Business Address if different from registered"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                   />
                 )}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-company-phone" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.companyPhone} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-company-phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={companyPhone}
                   onChange={(e) => setCompanyPhone(e.target.value)}
                   placeholder="e.g. (604) 987-6543"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label htmlFor="consult-contact-phone" className="block text-xs font-semibold text-zinc-700 mb-1">
                   {t.contactPersonPhone} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-contact-phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={contactPersonPhone}
                   onChange={(e) => setContactPersonPhone(e.target.value)}
                   placeholder="e.g. (778) 555-0199"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
             </div>
@@ -740,13 +767,14 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label htmlFor="consult-lang" className="block text-xs font-semibold text-zinc-700 mb-1">
                 {t.consultLangLabel} <span className="text-red-500">*</span>
               </label>
               <select
+                id="consult-lang"
                 value={consultationLang}
                 onChange={(e) => setConsultationLang(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="Mandarin 普通话">Mandarin 普通话</option>
                 <option value="Cantonese 粤语">Cantonese 粤语</option>
@@ -756,13 +784,14 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label htmlFor="consult-method" className="block text-xs font-semibold text-zinc-700 mb-1">
                 {t.methodLabel} <span className="text-red-500">*</span>
               </label>
               <select
+                id="consult-method"
                 value={consultationMethod}
                 onChange={(e) => setConsultationMethod(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="In-Person (Richmond Office) 面谈（列治文办公室）">
                   {t.methodInPerson}
@@ -775,30 +804,32 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label htmlFor="consult-availability" className="block text-xs font-semibold text-zinc-700 mb-1">
                 {t.availLabel} <span className="text-red-500">*</span>
               </label>
               <input
+                id="consult-availability"
                 type="text"
                 required
                 value={consultationAvailability}
                 onChange={(e) => setConsultationAvailability(e.target.value)}
                 placeholder={t.availPlaceholder}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label htmlFor="consult-inquiry" className="block text-xs font-semibold text-zinc-700 mb-1">
                 {t.inquiryLabel} <span className="text-red-500">*</span>
               </label>
               <textarea
+                id="consult-inquiry"
                 required
                 rows={4}
                 value={inquiryDescription}
                 onChange={(e) => setInquiryDescription(e.target.value)}
                 placeholder={t.inquiryPlaceholder}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out resize-y"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:border-[#0B1B48] focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out resize-y"
               />
             </div>
           </div>
@@ -848,28 +879,31 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           {hasOpposingParty === "yes" && (
             <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 space-y-4 animate-fadeIn">
               <div>
-                <label className="block text-xs font-semibold text-zinc-900 mb-1">
+                <label htmlFor="consult-opposing-name" className="block text-xs font-semibold text-zinc-900 mb-1">
                   {t.opposingName} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="consult-opposing-name"
                   type="text"
                   required
+                  autoComplete="off"
                   value={opposingPartyName}
                   onChange={(e) => setOpposingPartyName(e.target.value)}
                   placeholder="Full legal name of opposing person or business"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:border-amber-500 focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-900 mb-1">
+                <label htmlFor="consult-opposing-dob" className="block text-xs font-semibold text-zinc-900 mb-1">
                   {t.opposingDob}
                 </label>
                 <input
+                  id="consult-opposing-dob"
                   type="date"
                   value={opposingPartyDob}
                   onChange={(e) => setOpposingPartyDob(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out font-mono tabular-nums"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:border-amber-500 focus-visible:outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out font-mono tabular-nums"
                 />
               </div>
             </div>
@@ -893,19 +927,20 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               {t.filesLabel}
             </label>
             <div className="border border-zinc-300 rounded-xl p-4 bg-zinc-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] active:scale-[0.96] rounded-lg text-xs font-semibold text-zinc-800 transition-[background-color,border-color,transform] duration-150 ease-out shadow-xs">
+              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] focus-within:ring-2 focus-within:ring-[#0B1B48] active:scale-[0.96] rounded-lg text-xs font-semibold text-zinc-800 transition-[background-color,border-color,box-shadow,transform] duration-150 ease-out shadow-xs">
                 <Upload className="w-4 h-4 text-[#0B1B48] shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{lang === "en" ? "Select Files" : "选择文件"}</span>
                 <input
                   type="file"
                   multiple
+                  aria-label={t.filesLabel}
                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                   onChange={handleFileChange}
                   className="hidden"
                 />
               </label>
 
-              <div className="text-xs text-zinc-500 text-center sm:text-right text-pretty">
+              <div className="text-xs text-zinc-600 text-center sm:text-right text-pretty">
                 {files.length === 0
                   ? lang === "en"
                     ? "No files selected (Optional)"

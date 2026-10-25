@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import {
   getRequestLocaleAndPath,
   buildLocalizedMetadata,
-  generateBreadcrumbSchema,
+  generateContactPageSchema,
 } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 
@@ -40,21 +40,28 @@ export default function FormsPage() {
     "zh-Hant": { home: "首頁", forms: "客戶表格與問卷" },
   }[locale];
 
-  const breadcrumbSchema = generateBreadcrumbSchema([
+  const breadcrumbItems = [
     { name: breadcrumbLabels.home, url: `${siteConfig.url}/${locale}` },
     { name: breadcrumbLabels.forms, url: `${siteConfig.url}/${locale}/forms` },
-  ]);
+  ];
+
+  const formsSchema = generateContactPageSchema(locale, breadcrumbItems);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(formsSchema) }}
       />
       <Suspense
         fallback={
-          <div className="min-h-screen bg-zinc-900 flex items-center justify-center text-white">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FFC107]"></div>
+          <div
+            className="min-h-screen bg-zinc-900 flex items-center justify-center text-white"
+            role="status"
+            aria-label="Loading forms portal…"
+          >
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FFC107]" aria-hidden="true"></div>
+            <span className="sr-only">Loading forms portal…</span>
           </div>
         }
       >

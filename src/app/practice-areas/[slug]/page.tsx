@@ -497,7 +497,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
 
       {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center text-sm">
-        <p className="text-zinc-500 font-mono tabular-nums">
+        <p className="text-zinc-400 font-mono tabular-nums">
           {labels.copyright.replace('{currentYear}', new Date().getFullYear().toString())}
         </p>
       </footer>

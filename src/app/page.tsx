@@ -39,6 +39,8 @@ export default function Page() {
           "Redman Law",
         ],
         url: `${siteConfig.url}/${locale}`,
+        logo: `${siteConfig.url}/Logo.svg`,
+        image: `${siteConfig.url}/og-image.jpg`,
         telephone: siteConfig.telephone,
         email: siteConfig.email,
         priceRange: '$$',
@@ -119,6 +121,7 @@ export default function Page() {
         '@id': `${siteConfig.url}/#website`,
         url: siteConfig.url,
         name: siteConfig.name,
+        inLanguage: ['en', 'zh-Hans', 'zh-Hant'],
         publisher: {
           '@id': `${siteConfig.url}/#legalservice`,
         },

@@ -23,6 +23,21 @@ export function LawFirmLanding() {
   // Holiday Modal State
   const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
 
+  // Close holiday modal on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isHolidayModalOpen) {
+        setIsHolidayModalOpen(false);
+      }
+    };
+    if (isHolidayModalOpen) {
+      document.addEventListener("keydown", handleEscape);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isHolidayModalOpen]);
+
   // History Data Definitions
   const historySlides = [
     {
@@ -380,16 +395,16 @@ export function LawFirmLanding() {
       <header className="relative h-[100vh] bg-gray-900 pt-0">
         {/* ... (The Gradient overlay and Background Image divs remain the same) ... */}
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
-        <div className="absolute inset-0 z-0">
-        <Image
-             src="/Spring.png"
-             alt="Background"
-             fill
-             // CHANGE: replaced 'object-cover' with 'object-contain'
-             // Added 'object-center' to ensure it stays in the middle
-             className="object-contain object-center" 
-             priority
-           />
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image
+            src="/Spring.webp"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="100vw"
+            className="object-contain object-center" 
+            priority
+          />
         </div>
 
         {/* Content container */}
@@ -462,7 +477,8 @@ export function LawFirmLanding() {
         </div>
       </header>
 
-      {/* Introduction Section with Dual-Milestone Executive Layout */}
+      <main id="main-content">
+        {/* Introduction Section with Dual-Milestone Executive Layout */}
       <section id="about" className="py-20 md:py-28 relative bg-zinc-50 border-b border-zinc-200">
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 lg:items-stretch">
@@ -763,8 +779,9 @@ export function LawFirmLanding() {
                   <span>{t("contact.officeHoursPrefix")} </span>
                   {/* Clickable Link */}
                   <button 
+                    type="button"
                     onClick={() => setIsHolidayModalOpen(true)}
-                    className="text-[#0B1B48] font-bold underline hover:text-[#FFC107] focus:outline-none"
+                    className="text-[#0B1B48] font-bold underline hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:outline-none rounded px-1 transition-colors"
                   >
                     {t("contact.statutoryHolidaysLink")}
                   </button>
@@ -873,11 +890,12 @@ export function LawFirmLanding() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-400">
             {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
           </p>
         </div>
@@ -889,20 +907,28 @@ export function LawFirmLanding() {
           <div 
             className="absolute inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
             onClick={() => setIsHolidayModalOpen(false)}
+            aria-hidden="true"
           ></div>
 
           {/* Modal Content */}
-          <div className="relative bg-white rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-md max-h-[85vh] overflow-hidden flex flex-col animate-fadeIn">
+          <div 
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="holiday-modal-title"
+            className="relative bg-white rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-md max-h-[85vh] overflow-hidden flex flex-col overscroll-contain animate-fadeIn"
+          >
             {/* Header */}
             <div className="flex items-center justify-between p-5 bg-[#0B1B48] text-white">
-              <h3 className="font-serif font-bold text-lg text-white">
+              <h3 id="holiday-modal-title" className="font-serif font-bold text-lg text-white">
                 {t("contact.holidayModalTitle") || "Upcoming Holiday Closures"}
               </h3>
               <button 
+                type="button"
                 onClick={() => setIsHolidayModalOpen(false)}
-                className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full hover:bg-white/10 active:scale-[0.96] transition-[background-color,color,transform] duration-150 text-zinc-300 hover:text-white"
+                aria-label={t("contact.closeModal") || "Close holiday closures modal"}
+                className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full hover:bg-white/10 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none transition-[background-color,color,transform] duration-150 text-zinc-300 hover:text-white"
               >
-                <X size={22} />
+                <X size={22} aria-hidden="true" />
               </button>
             </div>
 

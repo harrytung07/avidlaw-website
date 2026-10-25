@@ -15,7 +15,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#0B1B48] text-white flex flex-col">
       <NavBar />
-      <div className="container mx-auto px-6 py-24 text-center flex flex-col items-center justify-center flex-grow">
+      <main id="main-content" className="container mx-auto px-6 py-24 text-center flex flex-col items-center justify-center flex-grow">
         <h1 className="text-6xl sm:text-7xl font-serif font-bold text-[#FFC107] mb-4">404</h1>
         <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-4 text-balance">
           Page Not Found / 页面未找到
@@ -31,7 +31,7 @@ export default function NotFound() {
         >
           Go to Homepage / 返回网站首页
         </Link>
-      </div>
+      </main>
     </div>
   );
 }

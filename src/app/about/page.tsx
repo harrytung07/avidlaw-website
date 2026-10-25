@@ -1,6 +1,6 @@
 import About from '@/components/About';
 import type { Metadata } from 'next';
-import { getRequestLocaleAndPath, buildLocalizedMetadata, generateBreadcrumbSchema } from '@/lib/seo';
+import { getRequestLocaleAndPath, buildLocalizedMetadata, generateAboutPageSchema } from '@/lib/seo';
 import { siteConfig } from '@/config/site';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -35,16 +35,18 @@ export default function AboutPage() {
     'zh-Hant': { home: '首頁', about: '關於我們' },
   }[locale];
 
-  const breadcrumbSchema = generateBreadcrumbSchema([
+  const breadcrumbItems = [
     { name: breadcrumbLabels.home, url: `${siteConfig.url}/${locale}` },
     { name: breadcrumbLabels.about, url: `${siteConfig.url}/${locale}/about` },
-  ]);
+  ];
+
+  const aboutSchema = generateAboutPageSchema(locale, breadcrumbItems);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
       />
       <About />
     </>

@@ -290,18 +290,20 @@ export default function PracticeAreas() {
       <NavBar />
       <Toaster />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/sideBG.png" 
-            alt="Background" 
-            fill 
-            className="object-cover opacity-20 brightness-110" 
-            priority
-          />
-          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
-        </div>
+      <main id="main-content">
+        {/* Hero Section */}
+        <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <Image 
+              src="/sideBG.png" 
+              alt="" 
+              aria-hidden="true"
+              fill 
+              className="object-cover opacity-20 brightness-110" 
+              priority
+            />
+            <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
+          </div>
         
         <div className="container relative z-10 mx-auto px-6 max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
@@ -344,7 +346,7 @@ export default function PracticeAreas() {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-2.5 py-1 rounded-md">
                       {item.category}
                     </span>
-                    <span className="text-xs text-zinc-400 font-mono tabular-nums">BC Law</span>
+                    <span className="text-xs text-zinc-600 font-mono tabular-nums">BC Law</span>
                   </div>
                   <h3 className="text-lg font-serif font-bold text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-2.5 text-balance">
                     {item.title[activeLocale]}
@@ -471,10 +473,11 @@ export default function PracticeAreas() {
           </div>
         </div>
       </section>
+      </main>
       
       {/* Copyright Footer */}
       <footer className="w-full py-8 bg-zinc-950 text-zinc-400 border-t border-zinc-800 text-center text-sm">
-        <p className="text-zinc-500">
+        <p className="text-zinc-400">
           {t('footer.copyright').replace('{currentYear}', new Date().getFullYear().toString())}
         </p>
       </footer>

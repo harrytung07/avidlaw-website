@@ -191,7 +191,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
       name: siteConfig.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteConfig.url}/A.png`,
+        url: `${siteConfig.url}/Logo.svg`,
       },
     },
     mainEntityOfPage: {
@@ -222,10 +222,11 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
 
       {/* Article Regal Navy Hero Header */}
       <header className="relative pt-32 pb-20 md:pt-36 md:pb-24 bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src="/sideBG.png"
-            alt="Hero Background"
+            alt=""
+            aria-hidden="true"
             fill
             className="object-cover opacity-15 brightness-110"
             priority
@@ -238,13 +239,19 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
           <nav aria-label="Breadcrumb" className="text-xs text-zinc-300 mb-6">
             <ol className="flex items-center justify-center space-x-2">
               <li>
-                <Link href={`/${locale}`} className="hover:text-[#FFC107] transition-colors">
+                <Link
+                  href={`/${locale}`}
+                  className="hover:text-[#FFC107] rounded focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-colors"
+                >
                   {labels.home}
                 </Link>
               </li>
               <li className="text-zinc-500"><span>/</span></li>
               <li>
-                <Link href={`/${locale}/articles`} className="hover:text-[#FFC107] transition-colors">
+                <Link
+                  href={`/${locale}/articles`}
+                  className="hover:text-[#FFC107] rounded focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-colors"
+                >
                   {labels.articles}
                 </Link>
               </li>
@@ -286,6 +293,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
                 src={article.image}
                 alt={title}
                 fill
+                sizes="(max-width: 768px) 100vw, 896px"
                 className="object-cover"
                 priority
               />
@@ -310,7 +318,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
             </div>
             <Link
               href={`/${locale}/forms?type=consultation`}
-              className="group/cta whitespace-nowrap rounded-lg bg-[#FFC107] pl-6 pr-5 py-3 font-bold text-[#0B1B48] shadow-md shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-sm shrink-0 inline-flex items-center gap-1.5"
+              className="group/cta whitespace-nowrap rounded-lg bg-[#FFC107] pl-6 pr-5 py-3 font-bold text-[#0B1B48] shadow-md shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1B48] focus-visible:outline-none transition-[background-color,box-shadow,transform] duration-150 ease-out text-sm shrink-0 inline-flex items-center gap-1.5"
             >
               <span>{labels.scheduleConsultation}</span>
               <span className="transition-transform duration-200 group-hover/cta:translate-x-1 shrink-0" aria-hidden="true">→</span>
@@ -321,7 +329,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
           <div className="mt-8 pt-6 border-t border-zinc-200 flex items-center justify-between">
             <Link
               href={`/${locale}/articles`}
-              className="group/back text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#b88600] inline-flex items-center gap-1.5 active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
+              className="group/back text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#b88600] inline-flex items-center gap-1.5 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:outline-none rounded px-1.5 py-0.5 transition-[color,transform] duration-150 ease-out"
             >
               <span className="transition-transform duration-200 group-hover/back:-translate-x-1 shrink-0" aria-hidden="true">←</span>
               <span>{labels.backToArticles}</span>
@@ -332,7 +340,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
 
       {/* Footer */}
       <footer className="mt-auto bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-zinc-400">
           {labels.copyright.replace('{currentYear}', new Date().getFullYear().toString())}
         </p>
       </footer>

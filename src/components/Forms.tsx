@@ -108,14 +108,15 @@ export default function Forms() {
       </div>
 
       {/* Main Container */}
-      <main className="container mx-auto px-4 sm:px-6 max-w-5xl -mt-8 relative z-20 flex-grow pb-24">
+      <main id="main-content" className="container mx-auto px-4 sm:px-6 max-w-5xl -mt-8 relative z-20 flex-grow pb-24">
         {/* Navigation Selector Bar */}
         <div className="bg-white rounded-2xl p-3 sm:p-4 shadow-lg border border-zinc-200 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Form Tabs */}
           <div className="grid grid-cols-2 gap-2 w-full md:w-auto">
             <button
+              type="button"
               onClick={() => handleTabChange("consultation")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 activeTab === "consultation"
                   ? "bg-[#0B1B48] text-[#FFC107] shadow-sm"
                   : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100"
@@ -126,8 +127,9 @@ export default function Forms() {
             </button>
 
             <button
+              type="button"
               onClick={() => handleTabChange("divorce")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 activeTab === "divorce"
                   ? "bg-[#0B1B48] text-[#FFC107] shadow-sm"
                   : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100"
@@ -140,14 +142,14 @@ export default function Forms() {
 
           {/* Language Selector */}
           <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-            <span className="text-xs font-semibold text-zinc-500 mr-1">
+            <span className="text-xs font-semibold text-zinc-600 mr-1">
               {isZh ? "表格语言：" : "Form Language:"}
             </span>
             <div className="inline-flex rounded-lg bg-zinc-100 p-1 border border-zinc-200">
               <button
                 type="button"
                 onClick={() => handleLangChange("en")}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   formLang === "en"
                     ? "bg-[#0B1B48] text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-900"
@@ -158,7 +160,7 @@ export default function Forms() {
               <button
                 type="button"
                 onClick={() => handleLangChange("zh")}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   formLang === "zh"
                     ? "bg-[#0B1B48] text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-900"
@@ -178,7 +180,7 @@ export default function Forms() {
         )}
 
         {/* Contact fallback footer */}
-        <div className="mt-12 text-center text-xs text-zinc-500 space-y-2">
+        <div className="mt-12 text-center text-xs text-zinc-600 space-y-2">
           <p className="text-pretty">
             {isZh
               ? "如果您在填写过程中遇到任何问题，欢迎随时致电我所办公室获取人工协助："

@@ -147,6 +147,8 @@ export default function SignaturePad({
       <div className="relative border-2 border-dashed border-zinc-300 hover:border-[#FFC107] focus-within:border-[#FFC107] transition-[border-color,box-shadow] duration-150 rounded-xl bg-white overflow-hidden shadow-inner outline outline-1 -outline-offset-1 outline-black/5">
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Digital signature canvas"
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
@@ -185,7 +187,7 @@ export default function SignaturePad({
           type="button"
           onClick={handleClear}
           disabled={!hasSignature}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-zinc-600 hover:text-red-600 hover:bg-red-50 active:scale-[0.96] transition-[color,background-color,transform] duration-150 ease-out disabled:opacity-30 disabled:pointer-events-none font-medium text-xs cursor-pointer select-none"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-zinc-600 hover:text-red-600 hover:bg-red-50 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none active:scale-[0.96] transition-[color,background-color,transform] duration-150 ease-out disabled:opacity-30 disabled:pointer-events-none font-medium text-xs cursor-pointer select-none"
         >
           <RotateCcw className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
           <span>{clearLabel}</span>

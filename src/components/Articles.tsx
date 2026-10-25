@@ -12,6 +12,11 @@ interface ArticlesProps {
 }
 
 const uiContent = {
+  eyebrow: {
+    en: "Avid Law Legal Knowledge Base",
+    'zh-Hans': "安胜 · 弘人法律智库与实务专栏",
+    'zh-Hant': "安勝 · 弘人法律智庫與實務專欄",
+  },
   heroTitle: {
     en: "Legal Insights & Articles",
     'zh-Hans': "法律见解与深度文章",
@@ -84,12 +89,14 @@ export default function Articles({ initialArticles }: ArticlesProps) {
     <div className="bg-zinc-100/70 text-zinc-900 min-h-screen">
       <NavBar />
       
-      {/* Hero section */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
+      <main id="main-content">
+        {/* Hero section */}
+        <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
             src="/sideBG.png" 
-            alt="Articles Background" 
+            alt="" 
+            aria-hidden="true"
             fill 
             className="object-cover opacity-20 brightness-110" 
             priority
@@ -99,7 +106,7 @@ export default function Articles({ initialArticles }: ArticlesProps) {
         
         <div className="relative z-10 container mx-auto px-6 max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
-            Avid Law Legal Knowledge Base
+            {getLocalizedContent(uiContent.eyebrow)}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {getLocalizedContent(uiContent.heroTitle)}
@@ -113,15 +120,18 @@ export default function Articles({ initialArticles }: ArticlesProps) {
       
       {/* Category filters & Article grid */}
       <section className="py-16 md:py-24">
+        <h2 className="sr-only">{getLocalizedContent(uiContent.heroTitle)}</h2>
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-center mb-10">
             <div className="w-full overflow-x-auto pb-4 md:pb-0 no-scrollbar">
-              <div className="flex space-x-2 md:space-x-3 min-w-max">
+              <div role="tablist" aria-label="Article categories" className="flex space-x-2 md:space-x-3 min-w-max">
                 {categories.map((category) => (
                   <button
                     key={category}
+                    role="tab"
+                    aria-selected={selectedCategory === category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold min-h-[40px] flex items-center active:scale-[0.96] transition-[background-color,color,border-color,box-shadow,transform] duration-150 ease-out ${
+                    className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold min-h-[40px] flex items-center active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:outline-none cursor-pointer transition-[background-color,color,border-color,box-shadow,transform] duration-150 ease-out ${
                       selectedCategory === category
                         ? 'bg-[#0B1B48] text-[#FFC107] shadow-sm'
                         : 'bg-white text-zinc-700 border border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 shadow-xs'
@@ -153,12 +163,13 @@ export default function Articles({ initialArticles }: ArticlesProps) {
                       src={article.image}
                       alt={getLocalizedContent(article.title)}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-[#0B1B48]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                       <Link
                         href={localePath(`/articles/${article.id}`)}
-                        className="bg-[#FFC107] text-[#0B1B48] font-bold py-2.5 px-5 rounded-lg shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-xs uppercase tracking-wider"
+                        className="bg-[#FFC107] text-[#0B1B48] font-bold py-2.5 px-5 rounded-lg shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:-translate-y-0.5 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:ring-offset-2 focus-visible:outline-none transition-[background-color,box-shadow,transform] duration-150 ease-out text-xs uppercase tracking-wider"
                       >
                         {getLocalizedContent(uiContent.readArticleBtn)}
                       </Link>
@@ -170,14 +181,14 @@ export default function Articles({ initialArticles }: ArticlesProps) {
                       <span className="bg-[#0B1B48]/10 text-[#0B1B48] text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
                         {getLocalizedContent(article.category)}
                       </span>
-                      <span className="text-zinc-400 text-xs font-medium font-mono tabular-nums">{article.date}</span>
+                      <span className="text-zinc-600 text-xs font-medium font-mono tabular-nums">{article.date}</span>
                     </div>
 
                     {/* Crawlable Title Link */}
                     <h3 className="font-serif font-bold text-lg text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-3 line-clamp-2 text-balance">
                       <Link
                         href={localePath(`/articles/${article.id}`)}
-                        className="hover:text-[#0B1B48] transition-colors"
+                        className="hover:text-[#0B1B48] rounded focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:outline-none transition-colors"
                       >
                         {getLocalizedContent(article.title)}
                       </Link>
@@ -189,7 +200,7 @@ export default function Articles({ initialArticles }: ArticlesProps) {
 
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-zinc-100">
                       <div className="flex items-center">
-                        <Image src="/chatbot1.png" alt="Author" width={32} height={32} className="rounded-full mr-2.5 bg-zinc-100 shrink-0" />
+                        <Image src="/chatbot1.png" alt="" aria-hidden="true" width={32} height={32} className="rounded-full mr-2.5 bg-zinc-100 shrink-0" />
                         <div>
                           <p className="font-semibold text-xs text-zinc-900">{article.author}</p>
                           <p className="text-[11px] text-zinc-500">{getLocalizedContent(article.role)}</p>
@@ -198,7 +209,7 @@ export default function Articles({ initialArticles }: ArticlesProps) {
 
                       <Link
                         href={localePath(`/articles/${article.id}`)}
-                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#b88600] inline-flex items-center gap-1 active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
+                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#b88600] inline-flex items-center gap-1 active:scale-[0.97] rounded px-1.5 py-0.5 focus-visible:ring-2 focus-visible:ring-[#0B1B48] focus-visible:outline-none transition-[color,transform] duration-150 ease-out"
                       >
                         <span>{getLocalizedContent(uiContent.readArticleBtn)}</span>
                         <span className="transition-transform duration-200 group-hover:translate-x-1 shrink-0" aria-hidden="true">→</span>
@@ -214,8 +225,8 @@ export default function Articles({ initialArticles }: ArticlesProps) {
       
       {/* Call to action section */}
       <section className="relative py-20 md:py-28 bg-[#0B1B48] text-white overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
-          <Image src="/sideBG.png" alt="Background" fill className="object-cover opacity-15 brightness-110" />
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image src="/sideBG.png" alt="" aria-hidden="true" fill className="object-cover opacity-15 brightness-110" />
           <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         
@@ -231,7 +242,7 @@ export default function Articles({ initialArticles }: ArticlesProps) {
           <div className="flex justify-center">
             <Link
               href={localePath("/forms?type=consultation")} 
-              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1B48] focus-visible:outline-none transition-[background-color,box-shadow,transform] duration-150 ease-out text-base"
             >
               <span>{getLocalizedContent(uiContent.contactBtn)}</span>
               <svg 
@@ -249,10 +260,11 @@ export default function Articles({ initialArticles }: ArticlesProps) {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-zinc-400">
           {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
         </p>
       </footer>

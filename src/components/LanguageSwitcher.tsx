@@ -86,13 +86,14 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger 
-        className={`flex items-center justify-center space-x-1 text-white ${isAnyModalOpen ? 'opacity-50 cursor-not-allowed' : 'hover:text-[#FFC107] cursor-pointer'} text-base font-medium uppercase tracking-wide focus:outline-none active:scale-[0.96] transition-transform`}
+        aria-label="Select language / 选择语言"
+        className={`flex items-center justify-center space-x-1 text-white ${isAnyModalOpen ? 'opacity-50 cursor-not-allowed' : 'hover:text-[#FFC107] cursor-pointer'} text-base font-medium uppercase tracking-wide focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-1.5 py-0.5 active:scale-[0.96] transition-[color,transform,box-shadow] duration-150`}
         onClick={(e) => {
           e.stopPropagation();
         }}
         disabled={isAnyModalOpen}
       >
-        <Globe className="h-5 w-5" />
+        <Globe className="h-5 w-5 shrink-0" aria-hidden="true" />
         <span className="ml-1">{localeLabels[locale] || 'ENG'}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-24 bg-black/70 backdrop-blur-md border-gray-800">
@@ -127,4 +128,4 @@ export default function LanguageSwitcher() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-} 
+}

@@ -63,12 +63,19 @@ export default function NavBar() {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setMenuOpen(false);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = 'auto';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     } else {
       document.body.style.overflow = 'auto';
     }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
   }, [menuOpen]);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -112,6 +119,12 @@ export default function NavBar() {
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2.5 focus:bg-[#FFC107] focus:text-[#0B1B48] focus:font-bold focus:rounded-md focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0B1B48] text-sm"
+      >
+        Skip to main content
+      </a>
       <header
         className={`fixed left-0 right-0 z-50 transition-[top,padding,background-color,box-shadow] duration-300 ease-out opacity-0 animate-fadeIn ${
           visible ? "top-0" : "-top-28"
@@ -144,19 +157,19 @@ export default function NavBar() {
           <nav aria-label="Main Navigation" className="hidden md:flex items-center space-x-8">
             <Link
               href={localePath("/practice-areas")}
-              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-1.5 py-0.5 transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.practiceAreas")}
             </Link>
             <Link
               href={localePath("/about")}
-              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-1.5 py-0.5 transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.about")}
             </Link>
             <Link
               href={localePath("/team")}
-              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-1.5 py-0.5 transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.ourTeam")}
             </Link>
@@ -168,7 +181,10 @@ export default function NavBar() {
               onMouseLeave={handleResourcesLeave}
             >
               <button 
-                className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide flex items-center gap-1.5 py-2"
+                type="button"
+                aria-expanded={resourcesOpen}
+                aria-haspopup="true"
+                className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded transition-colors font-medium text-base uppercase tracking-wide flex items-center gap-1.5 py-2 px-1"
                 onClick={() => setResourcesOpen(!resourcesOpen)}
               >
                 <span>{t("nav.resources")}</span>
@@ -178,6 +194,7 @@ export default function NavBar() {
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -193,19 +210,19 @@ export default function NavBar() {
               >
                 <Link
                   href={localePath("/news")}
-                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-colors"
                 >
                   {t("nav.news")}
                 </Link>
                 <Link
                   href={localePath("/articles")}
-                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-colors"
                 >
                   {t("nav.articles")}
                 </Link>
                 <Link
                   href={localePath("/forms")}
-                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none transition-colors"
                 >
                   {t("nav.forms")}
                 </Link>
@@ -215,7 +232,7 @@ export default function NavBar() {
             <a
               href={isHomePage ? "#contact" : localePath("/#contact")}
               onClick={handleContactClick}
-              className="text-white hover:text-[#FFC107] transition-colors font-medium text-base uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-1.5 py-0.5 transition-colors font-medium text-base uppercase tracking-wide"
             >
               {t("nav.contact")}
             </a>
@@ -227,7 +244,7 @@ export default function NavBar() {
             {/* Direct Booking Button - Links to Consultation Intake Form */}
             <Link
               href={localePath("/forms?type=consultation")}
-              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] active:scale-[0.96] transition-[background-color,border-color,transform,box-shadow] duration-150 ease-out font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md"
+              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] active:scale-[0.96] transition-[background-color,border-color,transform,box-shadow] duration-150 ease-out font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
             >
               {t("nav.bookButton")}
             </Link>
@@ -236,9 +253,11 @@ export default function NavBar() {
           {/* Hamburger menu button with 44x44px minimum hit area */}
           <div className="flex items-center space-x-4 md:hidden z-20">
             <button
+              type="button"
               onClick={toggleMenu}
-              className="w-11 h-11 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1.5 focus:outline-none active:scale-[0.96] transition-transform duration-150 ease-out"
+              aria-expanded={menuOpen}
               aria-label="Toggle menu"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded active:scale-[0.96] transition-[transform,box-shadow] duration-150 ease-out"
             >
               <span
                 className={`w-6 h-0.5 bg-white transition-[transform,opacity] duration-300 ease-out ${
@@ -262,7 +281,12 @@ export default function NavBar() {
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-black/95 flex flex-col justify-between py-12 px-6 md:hidden overflow-y-auto">
+        <div 
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile Navigation"
+          className="fixed inset-0 z-40 bg-black/95 flex flex-col justify-between py-12 px-6 md:hidden overflow-y-auto overscroll-contain"
+        >
           <div className="flex justify-between items-center w-full">
             <Link href={localePath("/")} onClick={toggleMenu}>
               <Image
@@ -276,8 +300,9 @@ export default function NavBar() {
             <div className="flex items-center space-x-4">
               <LanguageSwitcher />
               <button
+                type="button"
                 onClick={toggleMenu}
-                className="text-white hover:text-[#FFC107] focus:outline-none p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg active:scale-[0.96] transition-[color,transform] duration-150"
+                className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg active:scale-[0.96] transition-[color,transform] duration-150 cursor-pointer"
                 aria-label="Close menu"
               >
                 <svg
@@ -286,6 +311,7 @@ export default function NavBar() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -302,42 +328,42 @@ export default function NavBar() {
             <Link
               href={localePath("/practice-areas")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.practiceAreas")}
             </Link>
             <Link
               href={localePath("/about")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.about")}
             </Link>
             <Link
               href={localePath("/team")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.ourTeam")}
             </Link>
             <Link
               href={localePath("/news")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.news")}
             </Link>
             <Link
               href={localePath("/articles")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.articles")}
             </Link>
             <Link
               href={localePath("/forms")}
               onClick={toggleMenu}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.forms")}
             </Link>
@@ -347,7 +373,7 @@ export default function NavBar() {
                 toggleMenu();
                 if (isHomePage) scrollToSection(e, 'contact');
               }}
-              className="text-white hover:text-[#FFC107] text-xl font-medium uppercase tracking-wide"
+              className="text-white hover:text-[#FFC107] focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none rounded px-3 py-1 text-xl font-medium uppercase tracking-wide"
             >
               {t("nav.contact")}
             </a>
@@ -357,7 +383,7 @@ export default function NavBar() {
               <Link
                 href={localePath("/forms?type=consultation")}
                 onClick={toggleMenu}
-                className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md hover:bg-[#ffcb38] active:scale-[0.96] transition-[background-color,transform] duration-150 ease-out"
+                className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md hover:bg-[#ffcb38] active:scale-[0.96] transition-[background-color,transform] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
               >
                 {t("nav.bookButton")}
               </Link>

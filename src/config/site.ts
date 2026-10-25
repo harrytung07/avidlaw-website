@@ -3,7 +3,7 @@ export const siteConfig = {
   chineseName: "安胜 · 弘人律师行",
   traditionalChineseName: "安勝 · 弘人律師行",
   url: "https://www.avid-law.com",
-  ogImage: "https://www.avid-law.com/A.png",
+  ogImage: "https://www.avid-law.com/og-image.jpg",
   foundedYear: 2009,
   telephone: "+1-604-273-7565",
   email: "info@avid-law.com",

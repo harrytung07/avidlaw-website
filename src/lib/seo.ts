@@ -98,6 +98,17 @@ export function buildLocalizedMetadata({
       description,
       images: [image],
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
@@ -111,5 +122,115 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
       name: item.name,
       item: item.url,
     })),
+  };
+}
+
+export function generateAboutPageSchema(locale: Locale, breadcrumbItems: { name: string; url: string }[]) {
+  const canonicalUrl = `${siteConfig.url}/${locale}/about`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      generateBreadcrumbSchema(breadcrumbItems),
+      {
+        '@type': 'AboutPage',
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: `About Us | ${siteConfig.name}`,
+        description: siteConfig.description[locale],
+        inLanguage: locale,
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': `${siteConfig.url}/#website`,
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        mainEntity: {
+          '@type': 'LegalService',
+          '@id': `${siteConfig.url}/#legalservice`,
+          name: siteConfig.name,
+          telephone: siteConfig.telephone,
+          email: siteConfig.email,
+          url: siteConfig.url,
+          foundingDate: `${siteConfig.foundedYear}`,
+        },
+      },
+    ],
+  };
+}
+
+export function generateContactPageSchema(locale: Locale, breadcrumbItems: { name: string; url: string }[]) {
+  const canonicalUrl = `${siteConfig.url}/${locale}/forms`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      generateBreadcrumbSchema(breadcrumbItems),
+      {
+        '@type': 'ContactPage',
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: `Client Intake & Questionnaires | ${siteConfig.name}`,
+        inLanguage: locale,
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': `${siteConfig.url}/#website`,
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        mainEntity: {
+          '@type': 'LegalService',
+          '@id': `${siteConfig.url}/#legalservice`,
+          name: siteConfig.name,
+          telephone: siteConfig.telephone,
+          email: siteConfig.email,
+        },
+      },
+    ],
+  };
+}
+
+export function generateCollectionPageSchema({
+  name,
+  description,
+  url,
+  locale,
+  breadcrumbItems,
+  hasPart = [],
+}: {
+  name: string;
+  description: string;
+  url: string;
+  locale: Locale;
+  breadcrumbItems: { name: string; url: string }[];
+  hasPart?: { name: string; url: string; description?: string }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      generateBreadcrumbSchema(breadcrumbItems),
+      {
+        '@type': 'CollectionPage',
+        '@id': `${url}#webpage`,
+        url,
+        name,
+        description,
+        inLanguage: locale,
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': `${siteConfig.url}/#website`,
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        ...(hasPart.length > 0
+          ? {
+              hasPart: hasPart.map((item) => ({
+                '@type': 'WebPage',
+                name: item.name,
+                url: item.url,
+                ...(item.description ? { description: item.description } : {}),
+              })),
+            }
+          : {}),
+      },
+    ],
   };
 }

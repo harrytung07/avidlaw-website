@@ -51,10 +51,11 @@ export default function About() {
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
       
-      {/* Hero Section: About Avid Law */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image src="/sideBG.png" alt="Background" fill className="object-cover opacity-20 brightness-110" priority />
+      <main id="main-content">
+        {/* Hero Section: About Avid Law */}
+        <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image src="/sideBG.png" alt="" aria-hidden="true" fill className="object-cover opacity-20 brightness-110" priority />
           <div className="absolute inset-0 bg-[#0B1B48]/80 mix-blend-multiply"></div>
         </div>
         <div className="relative z-10 max-w-4xl w-full mx-auto px-6 md:px-8 text-center">
@@ -82,6 +83,7 @@ export default function About() {
                     src="/about1.jpg" 
                     alt={t('about.historyTag')} 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
@@ -114,6 +116,7 @@ export default function About() {
                     src="/about2.jpg" 
                     alt={t('about.expertiseTag')} 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
@@ -146,6 +149,7 @@ export default function About() {
                     src="/about3.png" 
                     alt={t('about.serviceTag')} 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
@@ -181,6 +185,7 @@ export default function About() {
                     src="/about4.png" 
                     alt={t('about.solicitorTag')} 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
@@ -207,8 +212,8 @@ export default function About() {
 
       {/* Section: Book Consultation CTA */}
       <section className="relative py-20 md:py-28 bg-[#0B1B48] text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image src="/sideBG.png" alt="Background" fill className="object-cover opacity-15 brightness-110" />
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image src="/sideBG.png" alt="" aria-hidden="true" fill className="object-cover opacity-15 brightness-110" />
           <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         <div className="relative z-10 max-w-4xl w-full mx-auto px-6 md:px-8 text-center">
@@ -223,7 +228,7 @@ export default function About() {
           <div className="flex flex-col items-center justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="group relative inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
+              className="group relative inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1B48] focus-visible:outline-none text-base"
             >
               <span>{t('hero.bookButton')}</span>
               <svg 
@@ -241,11 +246,12 @@ export default function About() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-400">
             {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
           </p>
         </div>

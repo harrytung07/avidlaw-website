@@ -11,20 +11,13 @@ export default function TeamScrollArrow() {
   };
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      aria-label="Scroll down team list"
-      className="flex justify-end pr-6 mt-1 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] rounded-full"
-      onClick={handleScrollDown}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleScrollDown();
-        }
-      }}
-    >
-      <div className="flex flex-col items-center p-2 rounded-full hover:bg-zinc-100 active:scale-[0.96] transition-[background-color,transform] duration-150 ease-out">
+    <div className="flex justify-end pr-6 mt-1">
+      <button
+        type="button"
+        aria-label="Scroll down team list"
+        onClick={handleScrollDown}
+        className="flex flex-col items-center p-2 rounded-full hover:bg-zinc-100 active:scale-[0.96] transition-[background-color,transform] duration-150 ease-out cursor-pointer focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:outline-none"
+      >
         <svg 
           className="w-6 h-6 text-[#FFC107] shrink-0" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -39,7 +32,7 @@ export default function TeamScrollArrow() {
           <polyline points="7 13 12 18 17 13"></polyline>
           <polyline points="7 6 12 11 17 6"></polyline>
         </svg>
-      </div>
+      </button>
     </div>
   );
 }
