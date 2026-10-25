@@ -40,11 +40,96 @@ export default function Team() {
     { name: breadcrumbLabels.team, url: `${siteConfig.url}/${locale}/team` },
   ]);
 
+  const lawyers = [
+    {
+      name: "David C. Chen",
+      role: "Barrister & Solicitor",
+      slug: "david-chen",
+      image: "/members/2. David Chen.jpg",
+      languages: ["English", "Mandarin", "Cantonese"],
+    },
+    {
+      name: "Adele Sun",
+      role: "Barrister & Solicitor",
+      slug: "adele-sun",
+      image: "/members/Adele1.JPG",
+      languages: ["English", "Mandarin"],
+    },
+    {
+      name: "Brent Desruisseaux",
+      role: "Barrister & Solicitor",
+      slug: "brent-desruisseaux",
+      image: "/members/3. Brent Desruisseaux.jpg",
+      languages: ["English"],
+    },
+    {
+      name: "Abiel Kwok",
+      role: "Barrister & Solicitor",
+      slug: "abiel-kwok",
+      image: "/members/abiel1.JPG",
+      languages: ["English", "Cantonese"],
+    },
+    {
+      name: "Kun Dong",
+      role: "Barrister & Solicitor",
+      slug: "kun-dong",
+      image: "/members/kun.jpg",
+      languages: ["English", "Mandarin"],
+    },
+    {
+      name: "Nicole Tam",
+      role: "Barrister & Solicitor",
+      slug: "nicole-tam",
+      image: "/members/nicole.jpg",
+      languages: ["English", "Cantonese"],
+    },
+    {
+      name: "Corey Poon",
+      role: "Barrister & Solicitor",
+      slug: "corey-poon",
+      image: "/members/4. Corey Poon.jpg",
+      languages: ["English", "Cantonese"],
+    },
+    {
+      name: "Howard Qu",
+      role: "Barrister & Solicitor",
+      slug: "howard-qu",
+      image: "/members/5. Howard Qu.jpg",
+      languages: ["English", "Mandarin"],
+    },
+    {
+      name: "Rachel Li",
+      role: "Barrister & Solicitor",
+      slug: "rachel-li",
+      image: "/members/7. Rachel Li.jpg",
+      languages: ["English", "Mandarin"],
+    },
+  ];
+
+  const attorneySchemas = lawyers.map((lawyer) => ({
+    '@type': 'Attorney',
+    '@id': `${siteConfig.url}/#attorney-${lawyer.slug}`,
+    name: lawyer.name,
+    jobTitle: lawyer.role,
+    image: `${siteConfig.url}${lawyer.image}`,
+    worksFor: {
+      '@type': 'LegalService',
+      '@id': `${siteConfig.url}/#legalservice`,
+      name: siteConfig.name,
+    },
+    knowsLanguage: lawyer.languages,
+  }));
+
+  const jsonLdGraph = {
+    '@context': 'https://schema.org',
+    '@graph': [breadcrumbSchema, ...attorneySchemas],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
       <TeamPage />
     </>

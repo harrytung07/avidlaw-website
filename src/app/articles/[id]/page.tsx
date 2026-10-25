@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 }
 
 const markdownComponents = {
-  h1: (props: any) => <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200 text-balance" {...props} />,
+  h1: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200 text-balance" {...props} />,
   h2: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200 text-balance" {...props} />,
   h3: (props: any) => <h3 className="text-lg sm:text-xl font-serif font-bold text-zinc-900 mt-8 mb-3 text-balance" {...props} />,
   p: (props: any) => <p className="text-base sm:text-[17px] text-zinc-700 leading-relaxed my-4 text-pretty" {...props} />,

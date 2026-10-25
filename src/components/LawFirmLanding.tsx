@@ -400,6 +400,18 @@ export function LawFirmLanding() {
               {/* Decorative vertical gold accent */}
               <div className="hidden md:block absolute left-[-30px] lg:left-[-50px] top-[-20px] lg:top-[-30px] bottom-[-2px] w-[3px] lg:w-[4px] bg-[#FFC107] z-20"></div>
               
+              {/* Keyword Entity Eyebrow */}
+              <div 
+                className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFC107]/20 border border-[#FFC107]/40 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-3 opacity-0 animate-fadeIn"
+                style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
+              >
+                {locale === 'zh-Hans'
+                  ? '卑诗省列治文综合性律师事务所'
+                  : locale === 'zh-Hant'
+                  ? '卑詩省列治文綜合性律師事務所'
+                  : 'Full-Service Law Firm in Richmond, BC'}
+              </div>
+
               <h1 
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white text-balance opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
@@ -408,10 +420,21 @@ export function LawFirmLanding() {
               </h1>
               
               <p 
-                className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-6 sm:mb-8 text-balance text-pretty opacity-0 animate-fadeIn"
+                className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-2 text-balance text-pretty opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
                 {t("hero.subtitle")}
+              </p>
+
+              <p
+                className="text-xs sm:text-sm text-zinc-300 font-light max-w-lg mb-6 sm:mb-8 text-balance text-pretty opacity-0 animate-fadeIn"
+                style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}
+              >
+                {locale === 'zh-Hans'
+                  ? '大温哥华资深出庭与事务律师团队，深耕公司商事、房产过户、民事诉讼、遗产规划及家庭法'
+                  : locale === 'zh-Hant'
+                  ? '大溫哥華資深出庭與事務律師團隊，深耕公司商事、房產過戶、民事訴訟、遺產規劃及家庭法'
+                  : 'Trusted barristers & solicitors serving Greater Vancouver across corporate, real estate conveyancing, civil litigation, estate planning, and family law'}
               </p>
               
               <div 

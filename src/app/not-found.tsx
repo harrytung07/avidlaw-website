@@ -1,5 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import NavBar from '@/components/NavBar';
+
+export const metadata: Metadata = {
+  title: '404 - Page Not Found | Avid Law Corporation',
+  description: 'The requested legal page could not be found.',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

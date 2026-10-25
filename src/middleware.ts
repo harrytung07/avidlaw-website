@@ -35,10 +35,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Redirect from / to /en/ (or default locale)
+  // Redirect from / to /en (or default locale) permanently (308) for SEO equity consolidation
   if (pathname === '/') {
     const url = new URL(`/${defaultLocale}`, request.url);
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(url, 308);
   }
   
   // Check if the pathname already has a supported locale
@@ -68,9 +68,9 @@ export function middleware(request: NextRequest) {
     });
   }
   
-  // For paths without a locale, redirect to add the default locale
+  // For paths without a locale, redirect permanently (308) to add the default locale
   const url = new URL(`/${defaultLocale}${pathname}`, request.url);
-  return NextResponse.redirect(url);
+  return NextResponse.redirect(url, 308);
 }
 
 // Match all routes except files, images, static files, robots.txt, and sitemap.xml

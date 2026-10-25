@@ -131,6 +131,15 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
       '@type': 'AdministrativeArea',
       name: siteConfig.areaServed,
     },
+    currenciesAccepted: 'CAD',
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '17:30',
+      },
+    ],
     address: [
       {
         '@type': 'PostalAddress',

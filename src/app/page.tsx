@@ -47,6 +47,54 @@ export default function Page() {
           '@type': 'AdministrativeArea',
           name: siteConfig.areaServed,
         },
+        currenciesAccepted: 'CAD',
+        paymentAccepted: 'Cash, Credit Card, Bank Draft, Wire Transfer',
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '17:30',
+          },
+        ],
+        location: [
+          {
+            '@type': 'Place',
+            name: siteConfig.primaryOffice.name,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: siteConfig.primaryOffice.streetAddress,
+              addressLocality: siteConfig.primaryOffice.addressLocality,
+              addressRegion: siteConfig.primaryOffice.addressRegion,
+              postalCode: siteConfig.primaryOffice.postalCode,
+              addressCountry: siteConfig.primaryOffice.addressCountry,
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 49.1691,
+              longitude: -123.1311,
+            },
+            hasMap: 'https://maps.google.com/?q=5811+Cooney+Road+Richmond+BC',
+          },
+          {
+            '@type': 'Place',
+            name: siteConfig.secondaryOffice.name,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: siteConfig.secondaryOffice.streetAddress,
+              addressLocality: siteConfig.secondaryOffice.addressLocality,
+              addressRegion: siteConfig.secondaryOffice.addressRegion,
+              postalCode: siteConfig.secondaryOffice.postalCode,
+              addressCountry: siteConfig.secondaryOffice.addressCountry,
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 49.1837,
+              longitude: -123.1362,
+            },
+            hasMap: 'https://maps.google.com/?q=4000+No+3+Road+Richmond+BC',
+          },
+        ],
         address: [
           {
             '@type': 'PostalAddress',
