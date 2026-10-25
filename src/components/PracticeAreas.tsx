@@ -189,18 +189,24 @@ export default function PracticeAreas() {
 
   const localizedText = {
     en: {
+      heroBadge: 'British Columbia Full-Service Law Firm',
+      guidesBadge: 'British Columbia Legal Resources',
       inDepthTitle: 'In-Depth Transactional Guides & Legal Analysis',
       inDepthSubtitle: 'Explore our comprehensive statutory breakdowns, comparative analyses, and procedural guides across core British Columbia legal fields.',
       readGuide: 'Read Detailed Legal Guide',
       relatedGuides: 'Specialized Transactional Sub-Pages & Statutory Guides:',
     },
     'zh-Hans': {
+      heroBadge: '卑诗省全方位综合性律师事务所',
+      guidesBadge: '卑诗省重点法律实务与专题指南',
       inDepthTitle: '卑诗省重点商业与法律事务专栏（深度实务指南）',
       inDepthSubtitle: '深入查阅符合卑诗成文法与司法判例的商业交易、公司治理、商事诉讼及遗产规划专题深度解析。',
       readGuide: '查阅完整法律与法规指南',
       relatedGuides: '重点细分法律业务与法定程序深度专栏：',
     },
     'zh-Hant': {
+      heroBadge: '卑詩省全方位綜合性律師事務所',
+      guidesBadge: '卑詩省重點法律實務與專題指南',
       inDepthTitle: '卑詩省重點商業與法律事務專欄（深度實務指南）',
       inDepthSubtitle: '深入查閱符合卑詩成文法與司法判例的商業交易、公司治理、商事訴訟及遺產規劃專題深度解析。',
       readGuide: '查閱完整法律與法規指南',
@@ -253,16 +259,20 @@ export default function PracticeAreas() {
                         {localizedText.relatedGuides}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        {area.detailedSubLinks.map((subLink) => (
-                          <Link
-                            key={subLink.slug}
-                            href={localePath(`/practice-areas/${subLink.slug}`)}
-                            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-50 border border-zinc-200 text-xs font-semibold text-zinc-800 hover:border-[#FFC107] hover:bg-[#FFC107]/10 active:scale-[0.96] transition-[background-color,border-color,color,transform] duration-150 ease-out shadow-xs"
-                          >
-                            <span>{subLink.defaultTitle}</span>
-                            <span className="text-[#0B1B48] font-bold" aria-hidden="true">→</span>
-                          </Link>
-                        ))}
+                        {area.detailedSubLinks.map((subLink) => {
+                          const matchedGuide = practiceAreasData.find((g) => g.slug === subLink.slug);
+                          const guideTitle = matchedGuide ? matchedGuide.title[activeLocale] : subLink.defaultTitle;
+                          return (
+                            <Link
+                              key={subLink.slug}
+                              href={localePath(`/practice-areas/${subLink.slug}`)}
+                              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-50 border border-zinc-200 text-xs font-semibold text-zinc-800 hover:border-[#FFC107] hover:bg-[#FFC107]/10 active:scale-[0.96] transition-[background-color,border-color,color,transform] duration-150 ease-out shadow-xs"
+                            >
+                              <span>{guideTitle}</span>
+                              <span className="text-[#0B1B48] font-bold" aria-hidden="true">→</span>
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -295,7 +305,7 @@ export default function PracticeAreas() {
         
         <div className="container relative z-10 mx-auto px-6 max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
-            British Columbia Full-Service Law Firm
+            {localizedText.heroBadge}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide text-balance">
             {t('practiceAreas.pageTitle')}
@@ -312,7 +322,7 @@ export default function PracticeAreas() {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-full border border-[#0B1B48]/20 mb-3">
-              British Columbia Legal Resources
+              {localizedText.guidesBadge}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-4 text-balance">
               {localizedText.inDepthTitle}

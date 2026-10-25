@@ -22,6 +22,31 @@ export default function About() {
     ? '創所歷程 • 發展沿革' 
     : 'OUR HERITAGE • ESTABLISHED IN 2009';
 
+  const activeLocale = (locale === 'zh-Hans' || locale === 'zh-Hant' ? locale : 'en') as 'en' | 'zh-Hans' | 'zh-Hant';
+
+  const sectionBadges = {
+    history: {
+      en: 'Avid Law • Richmond, BC',
+      'zh-Hans': '安胜 · 弘人 • 卑诗列治文',
+      'zh-Hant': '安勝 · 弘人 • 卑詩列治文',
+    },
+    expertise: {
+      en: 'Multilingual Legal Excellence',
+      'zh-Hans': '卓越多语种法律服务',
+      'zh-Hant': '卓越多語種法律服務',
+    },
+    litigation: {
+      en: 'Advocacy & Resolution',
+      'zh-Hans': '庭审辩护与争议解决',
+      'zh-Hant': '庭審辯護與爭議解決',
+    },
+    solicitor: {
+      en: 'Commercial & Advisory Practice',
+      'zh-Hans': '商业交易与法律顾问',
+      'zh-Hant': '商業交易與法律顧問',
+    },
+  };
+
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
@@ -64,7 +89,7 @@ export default function About() {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
-                Avid Law • Richmond, BC
+                {sectionBadges.history[activeLocale]}
               </div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.historyTag')}
@@ -96,7 +121,7 @@ export default function About() {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
-                Multilingual Legal Excellence
+                {sectionBadges.expertise[activeLocale]}
               </div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.expertiseTag')}
@@ -128,7 +153,7 @@ export default function About() {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
-                Advocacy & Resolution
+                {sectionBadges.litigation[activeLocale]}
               </div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.serviceTag')}
@@ -163,7 +188,7 @@ export default function About() {
             </div>
             <div className="w-full md:w-1/2 text-center md:text-left">
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
-                Commercial & Advisory Practice
+                {sectionBadges.solicitor[activeLocale]}
               </div>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.solicitorTag')}

@@ -55,6 +55,8 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
     en: {
       home: 'Home',
       practiceAreas: 'Practice Areas',
+      practiceBadge: 'British Columbia Law Practice',
+      sidebarDesc: 'Consult with experienced lawyers regarding your transaction, contract, or court matter in British Columbia.',
       executiveSummaryTitle: 'Executive Legal Summary (British Columbia)',
       statutoryHeading: 'Governing BC Statutory & Regulatory Framework',
       proceduresHeading: 'Key Transactional & Legal Procedures',
@@ -68,10 +70,13 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
       secondaryOffice: 'Richmond - No. 3 Road (Aberdeen Square)',
       lawSocietyDisclaimer:
         'Legal information presented is specific to the laws of British Columbia, Canada. Content is for informational purposes and does not constitute a solicitor-client relationship.',
+      copyright: '© {currentYear} Avid Law Corporation. All rights reserved.',
     },
     'zh-Hans': {
       home: '首页',
       practiceAreas: '业务领域',
+      practiceBadge: '卑诗省法律实务专页',
+      sidebarDesc: '就您在卑诗省的商业交易、合同起草或法庭诉讼事务，预约资深律师进行保密法律咨询。',
       executiveSummaryTitle: '卑诗省法律核心要点概述（BLUF Summary）',
       statutoryHeading: '卑诗省适用成文法与监管法规依据',
       proceduresHeading: '核心法律程序与交易交割实操',
@@ -85,10 +90,13 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
       secondaryOffice: '列治文时代坊 - 三号路办公室（时代广场）',
       lawSocietyDisclaimer:
         '本页法律资讯仅适用于加拿大卑诗省法律。内容仅供参考，不构成正式的律师与客户委托代理关系。',
+      copyright: '© {currentYear} 安胜 · 弘人律师行 版权所有。',
     },
     'zh-Hant': {
       home: '首頁',
       practiceAreas: '業務領域',
+      practiceBadge: '卑詩省法律實務專頁',
+      sidebarDesc: '就您在卑詩省的商業交易、合同起草或法庭訴訟事務，預約資深律師進行保密法律諮詢。',
       executiveSummaryTitle: '卑詩省法律核心要點概述（BLUF Summary）',
       statutoryHeading: '卑詩省適用成文法與監管法規依據',
       proceduresHeading: '核心法律程序與交易交割實操',
@@ -102,6 +110,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
       secondaryOffice: '列治文時代坊 - 三號路辦公室（時代廣場）',
       lawSocietyDisclaimer:
         '本頁法律資訊僅適用於加拿大卑詩省法律。內容僅供參考，不構成正式的律師與客戶委託代理關係。',
+      copyright: '© {currentYear} 安勝 · 弘人律師行 版權所有。',
     },
   }[locale];
 
@@ -214,7 +223,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
         <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b border-zinc-800">
           <div className="max-w-4xl">
             <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#FFC107] uppercase bg-[#FFC107]/10 rounded-full border border-[#FFC107]/20 mb-4">
-              British Columbia Law Practice
+              {labels.practiceBadge}
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight text-balance">
               {area.title[locale]}
@@ -410,7 +419,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                     {labels.bookConsultation}
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed text-pretty">
-                    Consult with experienced lawyers regarding your transaction, contract, or court matter in British Columbia.
+                    {labels.sidebarDesc}
                   </p>
                 </div>
 
@@ -476,6 +485,13 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center text-sm">
+        <p className="text-zinc-500 font-mono tabular-nums">
+          {labels.copyright.replace('{currentYear}', new Date().getFullYear().toString())}
+        </p>
+      </footer>
     </div>
   );
 }
