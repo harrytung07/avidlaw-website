@@ -56,12 +56,6 @@ export async function generateMetadata(): Promise<Metadata> {
     'zh-Hant': '最新法律要聞與判例解析 | 安勝 · 弘人律師行',
   };
 
-  const descriptions = {
-    en: 'Stay informed with recent British Columbia Court of Appeal decisions, statutory updates, and law firm announcements from Avid Law Corporation in Richmond, BC.',
-    'zh-Hans': '查阅安胜 · 弘人律师行整理的最新卑诗省上诉法院判例解析、法律法规前沿速递与律所动态。',
-    'zh-Hant': '查閱安勝 · 弘人律師行整理的最新卑詩省上訴法院判例解析、法律法規前沿速遞與律所動態。',
-  };
-
   return buildLocalizedMetadata({
     title: titles[locale],
     description: descriptions[locale],

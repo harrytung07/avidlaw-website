@@ -136,7 +136,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '09:00',
+        opens: '08:30',
         closes: '17:30',
       },
     ],
@@ -194,7 +194,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
 
       <NavBar />
 
-      <main className="pt-24 pb-20">
+      <main id="main-content" className="pt-24 pb-20">
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4">
           <nav aria-label="Breadcrumb" className="text-xs text-zinc-400">

@@ -98,11 +98,18 @@ export default function Team() {
       languages: ["English", "Mandarin"],
     },
     {
+      name: "Olivia Nicolaides",
+      role: "Barrister & Solicitor",
+      slug: "olivia-nicolaides",
+      image: "/members/olivia.JPG",
+      languages: ["English"],
+    },
+    {
       name: "Rachel Li",
       role: "Barrister & Solicitor",
       slug: "rachel-li",
       image: "/members/7. Rachel Li.jpg",
-      languages: ["English", "Mandarin"],
+      languages: ["English", "Mandarin", "Cantonese"],
     },
   ];
 

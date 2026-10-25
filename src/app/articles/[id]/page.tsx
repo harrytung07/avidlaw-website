@@ -285,7 +285,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
       </header>
 
       {/* Editorial Reading Card Container */}
-      <main className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10 -mt-10 mb-16 flex-grow">
+      <main id="main-content" className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10 -mt-10 mb-16 flex-grow">
         <div className="bg-white rounded-2xl shadow-lg border border-zinc-200 p-6 sm:p-10 md:p-14">
           {article.image && (
             <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-md border border-zinc-200 outline outline-1 -outline-offset-1 outline-black/10 mb-10">
