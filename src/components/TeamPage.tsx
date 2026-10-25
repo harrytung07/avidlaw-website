@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import NavBar from "./NavBar";
 import { useTranslation } from "@/context/TranslationContext";
 
@@ -17,30 +16,42 @@ type TeamMember = {
   descriptionKey: string;
 };
 
-const TeamMemberCard = ({ member, onMemberClick, t }: { member: TeamMember, onMemberClick: (member: TeamMember) => void, t: (key: string) => string }) => (
+const TeamMemberCard = ({ 
+  member, 
+  onMemberClick, 
+  t 
+}: { 
+  member: TeamMember; 
+  onMemberClick: (member: TeamMember) => void; 
+  t: (key: string) => string; 
+}) => (
   <div
     key={member.id}
-    className="group relative bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl mx-auto max-w-[260px] w-full"
+    className="group relative bg-white rounded-2xl overflow-hidden shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-xl transition-all duration-300 mx-auto max-w-[280px] w-full flex flex-col"
   >
-    <div className="aspect-square overflow-hidden">
+    <div className="aspect-square overflow-hidden bg-zinc-100 relative">
       <Image
         src={member.image}
         alt={t(member.nameKey)}
-        width={260}
-        height={260}
+        width={280}
+        height={280}
         className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
       />
     </div>
-    <div className="p-3 text-center">
-      <h3 className="font-semibold text-gray-900 text-base">{t(member.nameKey)}</h3>
-      <p className="text-xs text-gray-600">{t(member.titleKey)}</p>
+    <div className="p-4 text-center flex-grow flex flex-col justify-center bg-white">
+      <h3 className="font-serif font-bold text-zinc-900 text-lg group-hover:text-[#0B1B48] transition-colors">
+        {t(member.nameKey)}
+      </h3>
+      <p className="text-xs font-semibold uppercase tracking-wider text-[#0B1B48] mt-1">
+        {t(member.titleKey)}
+      </p>
     </div>
-    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+    <div className="absolute inset-0 bg-[#0B1B48]/75 backdrop-blur-[2px] flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4">
       <button
         onClick={() => onMemberClick(member)}
-        className="group relative inline-flex items-center gap-2 rounded-md bg-transparent px-5 py-2 font-semibold text-white border-2 border-[#FFC107] transition-all duration-300 hover:bg-[#FFC107] focus:outline-none text-sm"
+        className="group relative inline-flex items-center gap-2 rounded-lg bg-[#FFC107] px-5 py-2.5 font-bold text-[#0B1B48] shadow-lg transition-all duration-300 hover:bg-[#ffcb38] hover:scale-105 focus:outline-none text-sm"
       >
-        {t('team.viewProfile')}
+        <span>{t('team.viewProfile')}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -57,6 +68,7 @@ const TeamMemberCard = ({ member, onMemberClick, t }: { member: TeamMember, onMe
 
 export default function TeamPage() {
   const { t, locale } = useTranslation();
+  const activeLocale = (locale === 'zh-Hans' || locale === 'zh-Hant' ? locale : 'en') as 'en' | 'zh-Hans' | 'zh-Hant';
 
   const localePath = (path: string) => {
     if (path.startsWith(`/${locale}`)) return path;
@@ -76,7 +88,6 @@ export default function TeamPage() {
     { id: 21, nameKey: "team.name.BrighamYang", image: "/members/ava.jpg", titleKey: "team.title.BrighamYang", descriptionKey: "" },
     { id: 5, nameKey: "team.name.CoreyPoon", image: "/members/4. Corey Poon.jpg", titleKey: "team.title.CoreyPoon", descriptionKey: "team.bio.CoreyPoon" },
     { id: 6, nameKey: "team.name.HowardQu", image: "/members/5. Howard Qu.jpg", titleKey: "team.title.HowardQu", descriptionKey: "team.bio.HowardQu" },
-    //{ id: 7, nameKey: "team.name.FrejaLi", image: "/members/6. Freja Li.jpg", titleKey: "team.title.FrejaLi", descriptionKey: "team.bio.FrejaLi" },
     { id: 8, nameKey: "team.name.NicoleTam", image: "/members/nicole.jpg", titleKey: "team.title.NicoleTam", descriptionKey: "team.bio.NicoleTam" },
     { id: 9, nameKey: "team.name.OliviaNicolaides", image: "/members/olivia.JPG", titleKey: "team.title.OliviaNicolaides", descriptionKey: "" },
     { id: 10, nameKey: "team.name.RachelLi", image: "/members/7. Rachel Li.jpg", titleKey: "team.title.RachelLi", descriptionKey: "team.bio.RachelLi" },
@@ -98,207 +109,254 @@ export default function TeamPage() {
     setSelectedMember(null);
   };
 
-  const barristerSolicitorRoleString = t('team.title.AdeleSun'); // Gets "Barrister & Solicitor"
-  const articlingStudentRoleString = t('team.title.BrighamYang');   // Gets "Articling Student"
+  const barristerSolicitorRoleString = t('team.title.AdeleSun'); // "Barrister & Solicitor"
+  const articlingStudentRoleString = t('team.title.BrighamYang'); // "Articling Student"
 
-  // 2. Filter based on title ONLY, not by hardcoded names.
   const barristersAndSolicitors = teamMembers
-  .filter(member => t(member.titleKey) === barristerSolicitorRoleString)
-  .sort((a, b) => {
-    const nameA = t(a.nameKey);
-    const nameB = t(b.nameKey);
+    .filter(member => t(member.titleKey) === barristerSolicitorRoleString)
+    .sort((a, b) => {
+      const nameA = t(a.nameKey);
+      const nameB = t(b.nameKey);
 
-    const adeleName = t("team.name.AdeleSun");
-    const davidName = t("team.name.DavidChen");
+      const adeleName = t("team.name.AdeleSun");
+      const davidName = t("team.name.DavidChen");
 
-    // Pin Adele Sun to the top
-    if (nameA === adeleName) return -1;
-    if (nameB === adeleName) return 1;
+      if (nameA === adeleName) return -1;
+      if (nameB === adeleName) return 1;
+      if (nameA === davidName) return -1;
+      if (nameB === davidName) return 1;
 
-    // Pin David Chen second
-    if (nameA === davidName) return -1;
-    if (nameB === davidName) return 1;
-
-    // Sort all other members alphabetically by their full name
-    return nameA.localeCompare(nameB);
-  });
+      return nameA.localeCompare(nameB);
+    });
 
   const articlingStudents = teamMembers.filter(
     member => t(member.titleKey) === articlingStudentRoleString
   );
   
-  // 3. The support staff filter remains the same, as it correctly collects the rest.
   const supportStaff = teamMembers.filter(member =>
     !barristersAndSolicitors.some(bs => bs.id === member.id) &&
     !articlingStudents.some(as => as.id === member.id)
   );
 
+  const categoryTitles = {
+    barristers: {
+      en: "Barristers & Solicitors",
+      "zh-Hans": "执业律师与出庭大律师",
+      "zh-Hant": "執業律師與出庭大律師",
+    }[activeLocale],
+    students: {
+      en: "Articling Students",
+      "zh-Hans": "实习律师",
+      "zh-Hant": "實習律師",
+    }[activeLocale],
+    support: {
+      en: "Legal Support & Conveyancing Team",
+      "zh-Hans": "法律助理与过户团队",
+      "zh-Hant": "法律助理與過戶團隊",
+    }[activeLocale],
+  };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-zinc-100/70 text-zinc-900">
       <NavBar />
       
-      <section className="relative h-[80vh] flex items-center justify-center">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/bigBG.png" 
+            src="/sideBG.png" 
             alt="Background" 
             fill 
-            className="object-cover" 
+            className="object-cover opacity-20 brightness-110" 
             priority
           />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         
-        <div className="container relative z-10 mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold uppercase text-white mb-6 pt-16 mt-10">
+        <div className="container relative z-10 mx-auto px-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
+            Avid Law Corporation • Legal Team
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide">
             {t('team.sectionTitle')}
-            <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mt-8"></div>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 max-w-3xl mx-auto leading-relaxed font-light">
             {t('team.sectionDescription')}
           </p>
         </div>
       </section>
 
-      <section id="team-grid" className="py-20 relative">
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/bigBG.png" 
-            alt="Background" 
-            fill 
-            className="object-cover opacity-70" 
-          />
-        </div>
-        
-        <div className="container relative z-10 mx-auto px-6">
-          {/* Barristers & Solicitors */}
+      {/* Team Grid Section */}
+      <section id="team-grid" className="py-20 md:py-28 relative">
+        <div className="container relative z-10 mx-auto px-6 max-w-7xl">
+          {/* Category: Barristers & Solicitors */}
           {barristersAndSolicitors.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {barristersAndSolicitors.map((member) => (
-                <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
-              ))}
+            <div className="mb-20">
+              <div className="text-center md:text-left mb-10">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                  {categoryTitles.barristers}
+                </h2>
+                <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {barristersAndSolicitors.map((member) => (
+                  <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+                ))}
+              </div>
             </div>
           )}
           
-          {/* Separator 1: Between B&S and Articling Students, OR B&S and Support Staff if no Articling Students */}
-          {barristersAndSolicitors.length > 0 && (articlingStudents.length > 0 || supportStaff.length > 0) && (
-            <div className="my-14 md:my-24"> {/* Increased margin for better visual separation */}
-              <div className="h-[4px] w-full bg-gray-400"></div>
-            </div>
-          )}
-          
-          {/* Articling Students */}
+          {/* Category: Articling Students */}
           {articlingStudents.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
-              {articlingStudents.map((member) => (
-                 <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
-              ))}
+            <div className="mb-20">
+              <div className="text-center md:text-left mb-10">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                  {categoryTitles.students}
+                </h2>
+                <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {articlingStudents.map((member) => (
+                  <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+                ))}
+              </div>
             </div>
           )}
           
-          {/* Separator 2: Between Articling Students and Support Staff */}
-          {articlingStudents.length > 0 && supportStaff.length > 0 && (
-            <div className="my-12 md:my-24"> {/* Increased margin */}
-              <div className="h-[4px] w-full bg-gray-400"></div>
-            </div>
-          )}
-          
-          {/* Support Staff */}
+          {/* Category: Support Staff */}
           {supportStaff.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {supportStaff.map((member) => (
-                <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
-              ))}
+            <div>
+              <div className="text-center md:text-left mb-10">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                  {categoryTitles.support}
+                </h2>
+                <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {supportStaff.map((member) => (
+                  <TeamMemberCard key={member.id} member={member} onMemberClick={handleMemberClick} t={t} />
+                ))}
+              </div>
             </div>
           )}
         </div>
       </section>
 
-      {/* --- MODIFIED: Ready to Schedule Section --- */}
-      <section className="py-24 relative">
+      {/* Ready to Schedule Section */}
+      <section className="py-20 md:py-28 relative bg-[#0B1B48] text-white overflow-hidden text-center">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/bigBG.png" 
+            src="/sideBG.png" 
             alt="Background" 
             fill 
-            className="object-cover opacity-70" 
+            className="object-cover opacity-15 brightness-110" 
           />
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         
-        <div className="relative z-10 max-w-4xl mx-auto px-8 text-center">
-          <h2 className="text-4xl md:text-4xl font-bold text-[#FFC107] mb-8">{t('team.needHelpQuestion')}</h2>
-          <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mb-12"></div>
-          <p className="text-xl text-white leading-relaxed mb-16 max-w-2xl mx-auto">
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+            {t('team.needHelpQuestion')}
+          </h2>
+          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
             {t('team.eveDescription')}
           </p>
           
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-lg focus:outline-none"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
             >
-              {t('hero.bookButton')}
+              <span>{t('hero.bookButton')}</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Modal */}
+      {/* Footer */}
+      <footer className="bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
+        <p className="text-sm text-zinc-500">
+          {t("footer.copyright").replace("{currentYear}", new Date().getFullYear().toString())}
+        </p>
+      </footer>
+
+      {/* Detail Modal */}
       <AnimatePresence>
         {selectedMember && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.9 }}
-              exit={{ opacity: 0 }}
+          <motion.div
+            key={selectedMember.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
+          >
+            {/* Static Backdrop inside the single animated wrapper */}
+            <div
+              className="fixed inset-0 bg-[#0B1B48]/80 backdrop-blur-sm"
               onClick={handleOutsideClick}
-              className="fixed inset-0 bg-black z-40"
             />
+
+            {/* Modal Card */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-8 overflow-y-auto cursor-pointer"
-              onClick={handleOutsideClick}
+              initial={{ y: 16, scale: 0.97 }}
+              animate={{ y: 0, scale: 1 }}
+              exit={{ y: 12, scale: 0.97 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="relative z-10 w-full max-w-3xl bg-white border border-zinc-200 text-zinc-900 rounded-2xl shadow-2xl p-6 sm:p-10 md:p-12 overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full max-w-4xl overflow-hidden">
-                <button
-                  onClick={handleOutsideClick}
-                  className="absolute right-0 top-0 z-10 bg-gray-800 p-2 rounded-full text-gray-300 hover:bg-gray-700 transition-colors"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div className="mx-auto">
-                    <div className="relative w-[300px] overflow-hidden rounded-lg shadow-lg">
-                      <Image
-                        src={selectedMember.image}
-                        alt={t(selectedMember.nameKey)}
-                        //fill
-                        width={300}
-                        height={500}
-                        className="object-contain"
-                      />
-                    </div>
+              <button
+                onClick={handleOutsideClick}
+                className="absolute right-4 top-4 z-10 bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full text-zinc-600 hover:text-zinc-900 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-center">
+                <div className="md:col-span-5 flex justify-center">
+                  <div className="relative w-[240px] sm:w-[260px] aspect-square overflow-hidden rounded-2xl shadow-md border border-zinc-200 bg-zinc-100">
+                    <Image
+                      src={selectedMember.image}
+                      alt={t(selectedMember.nameKey)}
+                      width={280}
+                      height={280}
+                      className="h-full w-full object-cover object-top"
+                    />
                   </div>
-                  <div className="flex flex-col text-left">
-                    <h2 className="text-3xl font-bold text-white mb-3">{t(selectedMember.nameKey)}</h2>
-                    <div className="h-[3px] w-[80px] bg-[#FFC107] mb-6"></div>
-                    <p className="text-[#FFC107] font-medium text-xl mb-8">{t(selectedMember.titleKey)}</p>
-                    <div className="prose prose-lg prose-invert text-gray-300 max-w-none space-y-4 mb-8">
-                      <p>{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
-                    </div>
-                    
+                </div>
+
+                <div className="md:col-span-7 flex flex-col text-left">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-2">
+                    {t(selectedMember.nameKey)}
+                  </h2>
+                  <div className="mb-4">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-3 py-1 rounded-full inline-block">
+                      {t(selectedMember.titleKey)}
+                    </span>
+                  </div>
+                  <div className="h-1 w-16 bg-[#FFC107] mb-6 rounded-full"></div>
+                  <div className="text-zinc-700 leading-relaxed text-sm sm:text-base space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                    <p>{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
                   </div>
                 </div>
               </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
-} 
+}

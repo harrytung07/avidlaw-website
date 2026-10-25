@@ -29,6 +29,19 @@ function getLocalizedField(field: string | MultiLangContent | undefined, locale:
   return field[locale as keyof MultiLangContent] || field.en || '';
 }
 
+function cleanMarkdownBody(rawBody: string, title: string): string {
+  let body = rawBody.trimStart();
+  const firstParaMatch = body.match(/^(\*\*[^*]+\*\*\s*\n\s*\n|^[^\n]+\n\s*\n)/);
+  if (firstParaMatch) {
+    const firstPara = firstParaMatch[1].replace(/\*\*/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const cleanTitle = title.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (firstPara === cleanTitle || (cleanTitle.length > 10 && (cleanTitle.includes(firstPara) || firstPara.includes(cleanTitle)))) {
+      body = body.slice(firstParaMatch[0].length).trimStart();
+    }
+  }
+  return body;
+}
+
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const article = await getArticleById(params.id);
   if (!article) {
@@ -56,29 +69,37 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 }
 
 const markdownComponents = {
-  h1: (props: any) => <h1 className="text-3xl md:text-4xl font-bold mt-10 mb-6 border-b border-gray-200 pb-3 text-gray-900" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-semibold mt-8 mb-4 border-b border-gray-200 pb-2 text-gray-800" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-semibold mt-6 mb-3 text-gray-800" {...props} />,
-  p: (props: any) => <p className="leading-relaxed my-4 text-gray-700" {...props} />,
-  table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-gray-300 divide-y divide-gray-300" {...props} /></div>,
-  thead: (props: any) => <thead className="bg-gray-100" {...props} />,
-  th: (props: any) => <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider border-l border-gray-300 first:border-l-0" {...props} />,
-  tbody: (props: any) => <tbody className="bg-white divide-y divide-gray-200" {...props} />,
-  tr: (props: any) => <tr className="hover:bg-gray-50" {...props} />,
-  td: (props: any) => <td className="px-4 py-3 whitespace-normal text-sm text-gray-700 border-l border-gray-300 first:border-l-0" {...props} />,
-  blockquote: (props: any) => <blockquote className="border-l-4 border-[#FFC107] pl-4 italic text-gray-600 my-4 bg-yellow-50/50 py-2" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-inside my-4 pl-4 space-y-1 text-gray-700" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-inside my-4 pl-4 space-y-1 text-gray-700" {...props} />,
-  li: (props: any) => <li className="mb-1 text-gray-700" {...props} />,
-  a: (props: any) => <a className="text-blue-600 hover:text-blue-800 hover:underline font-medium" {...props} />,
+  h1: (props: any) => <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
+  h2: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
+  h3: (props: any) => <h3 className="text-lg sm:text-xl font-serif font-bold text-zinc-900 mt-8 mb-3" {...props} />,
+  p: (props: any) => <p className="text-base sm:text-[17px] text-zinc-700 leading-relaxed my-4" {...props} />,
+  strong: (props: any) => <strong className="font-bold text-zinc-900" {...props} />,
+  blockquote: (props: any) => <blockquote className="border-l-4 border-[#FFC107] bg-zinc-50 px-5 py-4 rounded-r-xl italic text-zinc-700 my-6 shadow-sm" {...props} />,
+  table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-zinc-200 rounded-lg overflow-hidden text-sm text-left" {...props} /></div>,
+  thead: (props: any) => <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-800 uppercase text-xs font-semibold" {...props} />,
+  th: (props: any) => <th className="px-4 py-3 border-r border-zinc-200 last:border-r-0" {...props} />,
+  tbody: (props: any) => <tbody className="bg-white divide-y divide-zinc-200" {...props} />,
+  tr: (props: any) => <tr className="hover:bg-zinc-50/70 transition-colors" {...props} />,
+  td: (props: any) => <td className="px-4 py-3 border-r border-zinc-200 last:border-r-0 text-zinc-700" {...props} />,
+  ul: (props: any) => <ul className="list-disc list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
+  ol: (props: any) => <ol className="list-decimal list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
+  li: (props: any) => <li className="leading-relaxed pl-1 marker:text-[#0B1B48] marker:font-bold" {...props} />,
+  a: (props: any) => (
+    <a
+      {...props}
+      target={props.href?.startsWith('http') ? '_blank' : undefined}
+      rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      className="text-[#0B1B48] font-semibold underline decoration-[#FFC107] underline-offset-4 hover:text-[#FFC107] transition-colors"
+    />
+  ),
   img: (props: any) => (
-    <div className="my-6">
+    <div className="my-8">
       <Image
         src={props.src || ''}
         alt={props.alt || 'Article visual'}
         width={800}
         height={450}
-        className="rounded-lg shadow-md object-cover mx-auto"
+        className="rounded-xl shadow-md object-cover mx-auto border border-zinc-200"
       />
     </div>
   ),
@@ -98,34 +119,55 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   const title = getLocalizedField(article.title, locale);
   const category = getLocalizedField(article.category, locale);
   const preview = getLocalizedField(article.preview, locale);
-  const content = getLocalizedField(article.content, locale);
+  const rawContent = getLocalizedField(article.content, locale);
+  const cleanedContent = cleanMarkdownBody(rawContent, title);
+  const role = getLocalizedField(article.role, locale);
 
   const labels = {
     en: {
       home: 'Home',
       articles: 'Articles',
       backToArticles: 'Back to All Articles',
-      scheduleConsultation: 'Schedule a Legal Consultation',
+      scheduleConsultation: 'Schedule a Consultation',
+      ctaTitle: 'Need Legal Counsel in British Columbia?',
+      ctaDesc: 'Our experienced legal team provides strategic counsel tailored to your specific matters.',
       published: 'Published:',
       authorBy: 'By',
+      copyright: '© {currentYear} Avid Law Corporation. All rights reserved.',
     },
     'zh-Hans': {
       home: '首页',
       articles: '法律文库',
       backToArticles: '返回所有文章',
       scheduleConsultation: '预约资深律师咨询',
+      ctaTitle: '需要卑诗省专业法律支持？',
+      ctaDesc: '安胜 · 弘人资深律师团队随时准备针对您的具体个案提供专业建议与诉讼代理。',
       published: '发布日期：',
       authorBy: '作者：',
+      copyright: '© {currentYear} 安胜 · 弘人律师行 版权所有。',
     },
     'zh-Hant': {
       home: '首頁',
       articles: '法律文庫',
       backToArticles: '返回所有文章',
       scheduleConsultation: '預約資深律師諮詢',
+      ctaTitle: '需要卑詩省專業法律支持？',
+      ctaDesc: '安勝 · 弘人資深律師團隊隨時準備針對您的具體個案提供專業建議與訴訟代理。',
       published: '發布日期：',
       authorBy: '作者：',
+      copyright: '© {currentYear} 安勝 · 弘人律師行 版權所有。',
     },
-  }[locale];
+  }[locale as 'en' | 'zh-Hans' | 'zh-Hant'] || {
+    home: 'Home',
+    articles: 'Articles',
+    backToArticles: 'Back to All Articles',
+    scheduleConsultation: 'Schedule a Consultation',
+    ctaTitle: 'Need Legal Counsel in British Columbia?',
+    ctaDesc: 'Our experienced legal team provides strategic counsel tailored to your specific matters.',
+    published: 'Published:',
+    authorBy: 'By',
+    copyright: '© {currentYear} Avid Law Corporation. All rights reserved.',
+  };
 
   const ogImg = article.image.startsWith('http')
     ? article.image
@@ -171,58 +213,75 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-zinc-100/70 text-zinc-900 flex flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
       <NavBar />
 
-      {/* Article Header Section */}
-      <header className="relative pt-28 pb-16 bg-gray-100 border-b border-gray-200">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
+      {/* Article Regal Navy Hero Header */}
+      <header className="relative pt-32 pb-20 md:pt-36 md:pb-24 bg-[#0B1B48] text-white overflow-hidden text-center">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/sideBG.png"
+            alt="Hero Background"
+            fill
+            className="object-cover opacity-15 brightness-110"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply" />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-6 max-w-4xl">
           {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="text-xs text-gray-500 mb-6">
+          <nav aria-label="Breadcrumb" className="text-xs text-zinc-300 mb-6">
             <ol className="flex items-center justify-center space-x-2">
               <li>
                 <Link href={`/${locale}`} className="hover:text-[#FFC107] transition-colors">
                   {labels.home}
                 </Link>
               </li>
-              <li><span>/</span></li>
+              <li className="text-zinc-500"><span>/</span></li>
               <li>
                 <Link href={`/${locale}/articles`} className="hover:text-[#FFC107] transition-colors">
                   {labels.articles}
                 </Link>
               </li>
-              <li><span>/</span></li>
-              <li className="text-gray-800 font-medium truncate max-w-xs sm:max-w-md" aria-current="page">
+              <li className="text-zinc-500"><span>/</span></li>
+              <li className="text-[#FFC107] font-medium truncate max-w-xs sm:max-w-md" aria-current="page">
                 {title}
               </li>
             </ol>
           </nav>
 
-          <div className="inline-block px-3 py-1 bg-[#FFC107] text-zinc-950 font-bold text-xs uppercase tracking-wider rounded mb-4">
+          {/* Category Pill */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-bold uppercase tracking-wider mb-4">
             {category}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-gray-900 mb-4 leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif text-white mb-6 leading-tight max-w-4xl mx-auto">
             {title}
           </h1>
 
-          <div className="flex flex-wrap justify-center items-center text-sm text-gray-500 gap-x-4 gap-y-1 mb-6">
+          <div className="flex flex-wrap justify-center items-center text-sm text-zinc-300 gap-x-4 gap-y-1">
             {article.date && (
               <span className="whitespace-nowrap">
                 📅 {article.date}
               </span>
             )}
             <span className="whitespace-nowrap">
-              👤 {labels.authorBy} {article.author} ({article.role})
+              👤 {labels.authorBy} {article.author} ({role})
             </span>
           </div>
+        </div>
+      </header>
 
+      {/* Editorial Reading Card Container */}
+      <main className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10 -mt-10 mb-16 flex-grow">
+        <div className="bg-white rounded-2xl shadow-lg border border-zinc-200 p-6 sm:p-10 md:p-14">
           {article.image && (
-            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-lg border border-gray-200">
+            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-md border border-zinc-200 mb-10">
               <Image
                 src={article.image}
                 alt={title}
@@ -232,36 +291,50 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
               />
             </div>
           )}
-        </div>
-      </header>
 
-      {/* Article Content Section */}
-      <main className="py-12 bg-white">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <article className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 hover:prose-a:text-blue-800">
+          <article className="prose prose-lg max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-              {content}
+              {cleanedContent}
             </ReactMarkdown>
           </article>
 
-          {/* Action Footer */}
-          <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Polished Executive Consultation CTA Banner */}
+          <div className="mt-12 bg-[#0B1B48] text-white rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+            <div>
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-white mb-1">
+                {labels.ctaTitle}
+              </h3>
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
+                {labels.ctaDesc}
+              </p>
+            </div>
             <Link
-              href={`/${locale}/articles`}
-              className="text-blue-600 hover:text-blue-800 hover:underline font-medium text-sm inline-flex items-center"
-            >
-              ← {labels.backToArticles}
-            </Link>
-
-            <a
-              href={`/${locale}/#contact`}
-              className="inline-flex items-center px-6 py-2.5 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-sm hover:bg-[#ffcb38] transition-colors shadow-sm"
+              href={`/${locale}/forms?type=consultation`}
+              className="whitespace-nowrap rounded-lg bg-[#FFC107] px-6 py-3 font-bold text-[#0B1B48] hover:bg-[#ffcb38] transition-all shadow text-sm shrink-0"
             >
               {labels.scheduleConsultation} →
-            </a>
+            </Link>
+          </div>
+
+          {/* Back Link */}
+          <div className="mt-8 pt-6 border-t border-zinc-200 flex items-center justify-between">
+            <Link
+              href={`/${locale}/articles`}
+              className="text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#FFC107] inline-flex items-center gap-1.5 transition-colors"
+            >
+              <span>←</span>
+              <span>{labels.backToArticles}</span>
+            </Link>
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="mt-auto bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
+        <p className="text-sm text-zinc-500">
+          {labels.copyright.replace('{currentYear}', new Date().getFullYear().toString())}
+        </p>
+      </footer>
     </div>
   );
 }

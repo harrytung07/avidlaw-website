@@ -5,6 +5,8 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useTranslation } from '@/context/TranslationContext';
 import { useModal } from '@/context/ModalContext';
 
@@ -193,71 +195,64 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   return (
     <div className="relative">
       {/* Modal for showing subareas */}
-      {showModal && selectedArea && (
-        <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/0 animate-fade-in"
-          onClick={closeModal}
-          style={{ 
-            position: 'fixed', 
-            top: 0, 
-            left: 0, 
-            right: 0, 
-            bottom: 0,
-            animation: 'fadeInBg 0.3s ease forwards'
-          }}
-        >
-          <style jsx>{`
-            @keyframes fadeInBg {
-              from { background-color: rgba(0, 0, 0, 0); }
-              to { background-color: rgba(0, 0, 0, 0.95); }
-            }
-            
-            @keyframes fadeInContent {
-              from { opacity: 0; transform: translateY(20px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
-          `}</style>
-          <div 
-            className="relative max-w-2xl w-full mx-4 overflow-hidden opacity-0"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              animation: 'fadeInContent 0.4s ease 0.15s forwards'
-            }}
+      <AnimatePresence>
+        {showModal && selectedArea && (
+          <motion.div
+            key={selectedArea}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
           >
-            <div className="p-6">
-              <button 
-                className="absolute top-4 right-4 text-white hover:text-[#FFC107] text-2xl"
+            {/* Static backdrop inside wrapper */}
+            <div
+              className="fixed inset-0 bg-[#0B1B48]/80 backdrop-blur-sm"
+              onClick={closeModal}
+            />
+
+            {/* Modal dialog card */}
+            <motion.div
+              initial={{ y: 16, scale: 0.97 }}
+              animate={{ y: 0, scale: 1 }}
+              exit={{ y: 12, scale: 0.97 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="relative z-10 max-w-2xl w-full bg-white border border-zinc-200 text-zinc-900 rounded-2xl shadow-2xl p-6 sm:p-8 overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-4 right-4 z-10 bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full text-zinc-600 hover:text-zinc-900 transition-colors"
                 onClick={closeModal}
-                aria-label={t("practiceAreas.closeModal")}
+                aria-label={t("practiceAreas.closeModal") || "Close"}
               >
-                &times;
+                <X className="h-5 w-5" />
               </button>
-              
-              <h2 className="text-2xl font-bold text-white mb-3">
+
+              <h2 className="text-2xl font-serif font-bold text-[#0B1B48] mb-2">
                 {t(selectedArea)}
               </h2>
-              <div className="w-24 h-[2px] bg-[#FFC107] mb-8"></div>
-              
-              <div className="max-h-[60vh] overflow-y-auto pr-4 pl-2 pb-4">
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {practiceAreaDetails[selectedArea].map((subareaKey, index) => (
-                    <li 
-                      key={index} 
-                      className="flex items-center text-white py-2 px-2 hover:bg-[#FFC107]/10 hover:text-[#FFC107] rounded transition-all"
+              <div className="w-16 h-1 bg-[#FFC107] rounded-full mb-6"></div>
+
+              <div className="max-h-[55vh] overflow-y-auto pr-2 pb-2">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {practiceAreaDetails[selectedArea]?.map((subareaKey, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center text-zinc-800 font-medium text-sm py-2.5 px-3 bg-zinc-50 hover:bg-[#FFC107]/15 border border-zinc-200/80 rounded-lg transition-colors"
                     >
-                      <span className="h-1.5 w-1.5 bg-white rounded-full mr-3"></span>
-                      {t(subareaKey)}
+                      <span className="h-2 w-2 bg-[#FFC107] rounded-full mr-3 shrink-0"></span>
+                      <span>{t(subareaKey)}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {/* Direct Crawlable Link in Modal Footer to Eliminate Orphan Pages */}
-              <div className="mt-6 pt-4 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="mt-6 pt-5 border-t border-zinc-100 flex flex-wrap items-center justify-between gap-3">
                 <Link
                   href={localePath('/practice-areas')}
                   onClick={closeModal}
-                  className="inline-flex items-center text-xs font-semibold text-zinc-300 hover:text-[#FFC107] transition-colors"
+                  className="inline-flex items-center text-xs font-bold text-zinc-600 hover:text-[#0B1B48] transition-colors"
                 >
                   <span>{viewAllText}</span>
                   <span className="ml-1 font-bold">→</span>
@@ -267,17 +262,17 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
                   <Link
                     href={localePath(`/practice-areas/${areaSlugMap[selectedArea]}`)}
                     onClick={closeModal}
-                    className="inline-flex items-center px-4 py-2 rounded bg-[#FFC107] text-zinc-950 text-xs font-bold hover:bg-[#e5ad06] transition-colors shadow-md"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#0B1B48] text-[#FFC107] hover:bg-[#132763] text-xs font-bold transition-all shadow-md"
                   >
                     <span>{detailedGuideText}</span>
-                    <span className="ml-1.5 font-bold">→</span>
+                    <span>→</span>
                   </Link>
                 )}
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div 
         className="embla select-none" 

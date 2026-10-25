@@ -213,67 +213,60 @@ export default function PracticeAreas() {
       <section 
         id={area.id}
         key={area.id} 
-        className={`py-20 relative ${index % 2 === 0 ? 'bg-gray-100/30' : 'bg-gray-200/30'}`}
+        className="py-10 md:py-14 bg-zinc-50"
       >
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/bigBG.png" 
-            alt="Background" 
-            fill 
-            className={`object-cover opacity-30 ${index % 2 === 0 ? 'brightness-100' : 'brightness-95'}`} 
-          />
-        </div>
-        
-        <div className="container relative z-10 mx-auto px-6">
-          <div className="ml-auto w-full md:w-4/5">
-            <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-16 items-center`}>
-              <div className="w-full md:w-2/5">
-                <div className="rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:border-2 hover:border-[#FFC107]">
-                  <div className="relative h-[300px] w-full">
-                    <Image 
-                      src={area.image}
-                      alt={t(area.titleKey)}
-                      fill
-                      className="object-cover"
-                    />
+        <div className="container relative z-10 mx-auto px-6 max-w-7xl">
+          <div className="ml-auto w-full md:w-[90%] lg:w-[86%]">
+            <div className="bg-white rounded-2xl p-6 sm:p-10 shadow-md border border-zinc-200 transition-all hover:shadow-lg">
+              <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-12 items-center`}>
+                <div className="w-full md:w-2/5">
+                  <div className="rounded-xl overflow-hidden shadow-md border border-zinc-100 group">
+                    <div className="relative h-[260px] sm:h-[300px] w-full">
+                      <Image 
+                        src={area.image}
+                        alt={t(area.titleKey)}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="w-full md:w-3/5">
-                <h2 className="text-3xl font-bold uppercase mb-4">{t(area.titleKey)}</h2>
-                <div className="h-[3px] w-[80px] bg-[#FFC107] mb-6"></div>
-                <p className="text-lg text-gray-700 italic mb-8">{t(area.descriptionKey)}</p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-                  {area.services.map((serviceKey: string, i: number) => (
-                    <div key={i} className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-[#FFC107] mr-2 shrink-0"></div>
-                      <span className="text-gray-800 text-sm">{t(serviceKey)}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Direct Crawlable Links to Detailed Practice Area Sub-Pages */}
-                {area.detailedSubLinks && area.detailedSubLinks.length > 0 && (
-                  <div className="pt-4 border-t border-gray-300">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                      {localizedText.relatedGuides}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {area.detailedSubLinks.map((subLink) => (
-                        <Link
-                          key={subLink.slug}
-                          href={localePath(`/practice-areas/${subLink.slug}`)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-gray-300 text-xs font-medium text-gray-900 hover:border-[#FFC107] hover:bg-[#FFC107]/10 transition-colors shadow-sm"
-                        >
-                          <span>{subLink.defaultTitle}</span>
-                          <span className="text-[#FFC107] font-bold">→</span>
-                        </Link>
-                      ))}
-                    </div>
+                <div className="w-full md:w-3/5">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">{t(area.titleKey)}</h2>
+                  <div className="h-1 w-16 bg-[#FFC107] mb-5 rounded-full"></div>
+                  <p className="text-base text-zinc-600 italic mb-6 leading-relaxed">{t(area.descriptionKey)}</p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    {area.services.map((serviceKey: string, i: number) => (
+                      <div key={i} className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-[#FFC107] mr-3 shrink-0"></div>
+                        <span className="text-zinc-800 font-medium text-sm">{t(serviceKey)}</span>
+                      </div>
+                    ))}
                   </div>
-                )}
+
+                  {/* Direct Crawlable Links to Detailed Practice Area Sub-Pages */}
+                  {area.detailedSubLinks && area.detailedSubLinks.length > 0 && (
+                    <div className="pt-5 border-t border-zinc-100">
+                      <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
+                        {localizedText.relatedGuides}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {area.detailedSubLinks.map((subLink) => (
+                          <Link
+                            key={subLink.slug}
+                            href={localePath(`/practice-areas/${subLink.slug}`)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 border border-zinc-200 text-xs font-semibold text-zinc-800 hover:border-[#FFC107] hover:bg-[#FFC107]/10 transition-colors shadow-sm"
+                          >
+                            <span>{subLink.defaultTitle}</span>
+                            <span className="text-[#0B1B48] font-bold">→</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -283,46 +276,49 @@ export default function PracticeAreas() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <NavBar />
       <Toaster />
       
       {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[480px] flex items-center justify-center">
+      <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-[#0B1B48] text-white overflow-hidden text-center">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/bigBG.png" 
+            src="/sideBG.png" 
             alt="Background" 
             fill 
-            className="object-cover" 
+            className="object-cover opacity-20 brightness-110" 
             priority
           />
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         
-        <div className="container relative z-10 mx-auto px-6 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold uppercase text-white mb-6 pt-16 mt-6">
+        <div className="container relative z-10 mx-auto px-6 max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
+            British Columbia Full-Service Law Firm
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide">
             {t('practiceAreas.pageTitle')}
-            <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mt-6"></div>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light">
             {t('practiceAreas.heroDescription')}
           </p>
         </div>
       </section>
       
       {/* Dedicated Section: In-Depth Practice Area Transactional Guides Hub */}
-      <section id="featured-guides" className="py-16 bg-zinc-950 text-white border-b border-zinc-800">
+      <section id="featured-guides" className="py-16 md:py-20 bg-zinc-100/80 border-b border-zinc-200">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#FFC107] uppercase bg-[#FFC107]/10 rounded-full border border-[#FFC107]/20 mb-3">
+            <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-full border border-[#0B1B48]/20 mb-3">
               British Columbia Legal Resources
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-4">
               {localizedText.inDepthTitle}
             </h2>
-            <div className="h-[2px] w-20 bg-[#FFC107] mx-auto mb-4"></div>
-            <p className="text-sm sm:text-base text-zinc-400">
+            <div className="h-1 w-20 bg-[#FFC107] mx-auto mb-5 rounded-full"></div>
+            <p className="text-sm sm:text-base text-zinc-600">
               {localizedText.inDepthSubtitle}
             </p>
           </div>
@@ -331,32 +327,32 @@ export default function PracticeAreas() {
             {practiceAreasData.map((item) => (
               <div
                 key={item.slug}
-                className="flex flex-col justify-between p-6 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-[#FFC107]/60 transition-all duration-300 shadow-lg group"
+                className="flex flex-col justify-between p-6 rounded-2xl bg-white border border-zinc-200 hover:border-[#FFC107] shadow-sm hover:shadow-xl transition-all duration-300 group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#FFC107] bg-[#FFC107]/10 px-2 py-0.5 rounded">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-2.5 py-1 rounded-md">
                       {item.category}
                     </span>
-                    <span className="text-xs text-zinc-500 font-mono">BC Law</span>
+                    <span className="text-xs text-zinc-400 font-mono">BC Law</span>
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-white group-hover:text-[#FFC107] transition-colors mb-2.5">
+                  <h3 className="text-lg font-serif font-bold text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-2.5">
                     {item.title[activeLocale]}
                   </h3>
-                  <p className="text-xs text-zinc-300 leading-relaxed line-clamp-3 mb-4">
+                  <p className="text-xs text-zinc-600 leading-relaxed line-clamp-3 mb-4">
                     {item.directAnswer[activeLocale]}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-zinc-800">
+                <div className="pt-4 border-t border-zinc-100">
                   <Link
                     href={localePath(`/practice-areas/${item.slug}`)}
-                    className="inline-flex items-center text-xs font-semibold text-[#FFC107] group-hover:translate-x-1 transition-transform"
+                    className="inline-flex items-center text-xs font-bold text-[#0B1B48] group-hover:text-[#FFC107] transition-colors"
                   >
                     <span>{localizedText.readGuide}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-3.5 w-3.5 ml-1.5"
+                      className="h-3.5 w-3.5 ml-1.5 transition-transform group-hover:translate-x-1"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -384,32 +380,32 @@ export default function PracticeAreas() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed left-0 top-1/3 z-50 hidden md:flex flex-col bg-white/90 backdrop-blur-sm border-r border-gray-200 rounded-r-lg shadow-md"
+            className="fixed left-0 top-1/3 z-50 hidden md:flex flex-col bg-white/95 backdrop-blur-md border border-zinc-200 border-l-0 rounded-r-xl shadow-xl overflow-hidden py-3 px-2 max-w-[210px]"
           >
-            <div className="py-4 px-2">
+            <div className="space-y-1">
               <a
                 href="#featured-guides"
                 onClick={(e) => scrollToSection(e, 'featured-guides')}
-                className={`group flex items-center py-2 px-3 text-xs font-semibold rounded-md transition-colors my-1 ${
+                className={`group flex items-center py-2 px-3 text-xs rounded-lg transition-all ${
                   activeSection === 'featured-guides'
-                    ? 'bg-[#FFC107] text-gray-900'
-                    : 'text-gray-800 hover:text-gray-900 hover:bg-gray-100/50'
+                    ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-medium'
                 }`}
               >
-                <span className="whitespace-nowrap">★ Guides Hub</span>
+                <span className="truncate">★ Guides Hub</span>
               </a>
               {practiceAreas.map((area) => (
                 <a
                   key={area.id}
                   href={`#${area.id}`}
                   onClick={(e) => scrollToSection(e, area.id)}
-                  className={`group flex items-center py-2 px-3 text-xs rounded-md transition-colors my-1 ${
+                  className={`group flex items-center py-2 px-3 text-xs rounded-lg transition-all ${
                     activeSection === area.id
-                      ? 'bg-[#FFC107] text-gray-900 hover:bg-[#FFC107]'
-                      : 'text-gray-800 hover:text-gray-900 hover:bg-gray-100/50'
+                      ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-sm'
+                      : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-medium'
                   }`}
                 >
-                  <span className="whitespace-nowrap">{t(area.titleKey)}</span>
+                  <span className="truncate">{t(area.titleKey)}</span>
                 </a>
               ))}
             </div>
@@ -418,56 +414,59 @@ export default function PracticeAreas() {
       </AnimatePresence>
       
       {/* Practice Area Blocks */}
-      {practiceAreas.map((area, index) => (
-        <PracticeAreaSection key={area.id} area={area} index={index} />
-      ))}
+      <div className="py-8 bg-zinc-50">
+        {practiceAreas.map((area, index) => (
+          <PracticeAreaSection key={area.id} area={area} index={index} />
+        ))}
+      </div>
       
       {/* Footer Booking Section */}
-      <section className="py-24 relative">
+      <section className="py-20 md:py-28 relative bg-[#0B1B48] text-white overflow-hidden text-center">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/bigBG.png" 
+            src="/sideBG.png" 
             alt="Background" 
             fill 
-            className="object-cover opacity-40" 
+            className="object-cover opacity-15 brightness-110" 
           />
-          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         
-        <div className="container relative z-10 mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{t('practiceAreas.eveTitle')}</h2>
-          <div className="h-[3px] w-[120px] bg-[#FFC107] mx-auto mb-10"></div>
-          <p className="text-lg text-gray-700 leading-relaxed mb-12 max-w-2xl mx-auto">
+        <div className="container relative z-10 mx-auto px-6 max-w-4xl">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+            {t('practiceAreas.eveTitle')}
+          </h2>
+          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
             {t('practiceAreas.bookingDescription')}
           </p>
           
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#FFC107] px-8 py-4 font-semibold text-gray-900 transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-lg focus:outline-none"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
             >
-              {t('hero.bookButton')}
+              <span>{t('hero.bookButton')}</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
         </div>
       </section>
       
       {/* Copyright Footer */}
-      <div className="w-full py-6 relative">
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/bigBG.png" 
-            alt="Background" 
-            fill 
-            className="object-cover opacity-40" 
-          />
-          <div className="absolute inset-0 bg-black/10"></div>
-        </div>
-        
-        <p className="relative z-10 text-gray-900 text-sm text-center">
+      <footer className="w-full py-8 bg-zinc-950 text-zinc-400 border-t border-zinc-800 text-center text-sm">
+        <p className="text-zinc-500">
           {t('footer.copyright').replace('{currentYear}', new Date().getFullYear().toString())}
         </p>
-      </div>
+      </footer>
     </div>
   );
 }

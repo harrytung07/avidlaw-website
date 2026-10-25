@@ -1,4 +1,3 @@
-// src/app/news/[slug]/page.tsx
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -32,12 +31,12 @@ export async function generateStaticParams() {
   try {
     filenames = fs.readdirSync(postsDirectory);
   } catch (error) {
-    console.error("Error reading news directory for static params:", postsDirectory, error);
+    console.error('Error reading news directory for static params:', postsDirectory, error);
     return [];
   }
 
   return filenames
-    .filter(filename => filename.endsWith('.md'))
+    .filter((filename) => filename.endsWith('.md'))
     .map((filename) => ({
       slug: filename.replace('.md', ''),
     }));
@@ -58,30 +57,52 @@ async function getPostData(slug: string): Promise<NewsPost | null> {
   }
 }
 
+function cleanMarkdownBody(rawBody: string, title?: string): string {
+  let body = rawBody.trimStart();
+  if (!title) return body;
+  const firstParaMatch = body.match(/^(\*\*[^*]+\*\*\s*\n\s*\n|^[^\n]+\n\s*\n)/);
+  if (firstParaMatch) {
+    const firstPara = firstParaMatch[1].replace(/\*\*/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const cleanTitle = title.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (firstPara === cleanTitle || (cleanTitle.length > 10 && (cleanTitle.includes(firstPara) || firstPara.includes(cleanTitle)))) {
+      body = body.slice(firstParaMatch[0].length).trimStart();
+    }
+  }
+  return body;
+}
+
 const markdownComponents = {
-  h1: (props: any) => <h1 className="text-3xl md:text-4xl font-bold mt-10 mb-6 border-b pb-3" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-semibold mt-8 mb-4 border-b pb-2" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-semibold mt-6 mb-3" {...props} />,
-  p: (props: any) => <p className="leading-relaxed my-4" {...props} />,
-  table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-gray-300 divide-y divide-gray-300" {...props} /></div>,
-  thead: (props: any) => <thead className="bg-gray-100" {...props} />,
-  th: (props: any) => <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider border-l border-gray-300 first:border-l-0" {...props} />,
-  tbody: (props: any) => <tbody className="bg-white divide-y divide-gray-200" {...props} />,
-  tr: (props: any) => <tr className="hover:bg-gray-50" {...props} />,
-  td: (props: any) => <td className="px-4 py-3 whitespace-normal text-sm text-gray-700 border-l border-gray-300 first:border-l-0" {...props} />,
-  blockquote: (props: any) => <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-inside my-4 pl-4 space-y-1" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-inside my-4 pl-4 space-y-1" {...props} />,
-  li: (props: any) => <li className="mb-1" {...props} />,
-  a: (props: any) => <a className="text-blue-600 hover:text-blue-800 hover:underline" {...props} />,
+  h1: (props: any) => <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
+  h2: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
+  h3: (props: any) => <h3 className="text-lg sm:text-xl font-serif font-bold text-zinc-900 mt-8 mb-3" {...props} />,
+  p: (props: any) => <p className="text-base sm:text-[17px] text-zinc-700 leading-relaxed my-4" {...props} />,
+  strong: (props: any) => <strong className="font-bold text-zinc-900" {...props} />,
+  blockquote: (props: any) => <blockquote className="border-l-4 border-[#FFC107] bg-zinc-50 px-5 py-4 rounded-r-xl italic text-zinc-700 my-6 shadow-sm" {...props} />,
+  table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-zinc-200 rounded-lg overflow-hidden text-sm text-left" {...props} /></div>,
+  thead: (props: any) => <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-800 uppercase text-xs font-semibold" {...props} />,
+  th: (props: any) => <th className="px-4 py-3 border-r border-zinc-200 last:border-r-0" {...props} />,
+  tbody: (props: any) => <tbody className="bg-white divide-y divide-zinc-200" {...props} />,
+  tr: (props: any) => <tr className="hover:bg-zinc-50/70 transition-colors" {...props} />,
+  td: (props: any) => <td className="px-4 py-3 border-r border-zinc-200 last:border-r-0 text-zinc-700" {...props} />,
+  ul: (props: any) => <ul className="list-disc list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
+  ol: (props: any) => <ol className="list-decimal list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
+  li: (props: any) => <li className="leading-relaxed pl-1 marker:text-[#0B1B48] marker:font-bold" {...props} />,
+  a: (props: any) => (
+    <a
+      {...props}
+      target={props.href?.startsWith('http') ? '_blank' : undefined}
+      rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      className="text-[#0B1B48] font-semibold underline decoration-[#FFC107] underline-offset-4 hover:text-[#FFC107] transition-colors"
+    />
+  ),
   img: (props: any) => (
-    <div className="my-6">
+    <div className="my-8">
       <Image
         src={props.src || ''}
-        alt={props.alt || 'Markdown image'}
+        alt={props.alt || 'News visual'}
         width={800}
         height={450}
-        className="rounded-lg shadow-md object-cover mx-auto"
+        className="rounded-xl shadow-md object-cover mx-auto border border-zinc-200"
       />
     </div>
   ),
@@ -130,11 +151,54 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
   const cleanPath = `/news/${params.slug}`;
   const canonicalUrl = `${siteConfig.url}/${locale}${cleanPath}`;
 
-  const breadcrumbLabels = {
-    en: { home: 'Home', news: 'News' },
-    'zh-Hans': { home: '首页', news: '最新要闻' },
-    'zh-Hant': { home: '首頁', news: '最新要聞' },
-  }[locale];
+  const labels = {
+    en: {
+      home: 'Home',
+      news: 'News',
+      backToNews: 'Back to All News',
+      scheduleConsultation: 'Schedule a Consultation',
+      ctaTitle: 'Need Legal Counsel on BC Law & Regulation?',
+      ctaDesc: 'Our experienced legal team provides comprehensive representation for businesses and individuals across British Columbia.',
+      published: 'Published:',
+      authorBy: 'By',
+      copyright: '© {currentYear} Avid Law Corporation. All rights reserved.',
+    },
+    'zh-Hans': {
+      home: '首页',
+      news: '最新要闻',
+      backToNews: '返回所有要闻',
+      scheduleConsultation: '预约资深律师咨询',
+      ctaTitle: '需要卑诗省法律事务专业指引？',
+      ctaDesc: '安胜 · 弘人律师团队为大温哥华地区企业及个人提供全面的诉讼代理与商业合规咨询。',
+      published: '发布日期：',
+      authorBy: '作者：',
+      copyright: '© {currentYear} 安胜 · 弘人律师行 版权所有。',
+    },
+    'zh-Hant': {
+      home: '首頁',
+      news: '最新要聞',
+      backToNews: '返回所有要聞',
+      scheduleConsultation: '預約資深律師諮詢',
+      ctaTitle: '需要卑詩省法律事務專業指引？',
+      ctaDesc: '安勝 · 弘人律師團隊為大溫哥華地區企業及個人提供全面的訴訟代理與商業合規諮詢。',
+      published: '發布日期：',
+      authorBy: '作者：',
+      copyright: '© {currentYear} 安勝 · 弘人律師行 版權所有。',
+    },
+  }[locale as 'en' | 'zh-Hans' | 'zh-Hant'] || {
+    home: 'Home',
+    news: 'News',
+    backToNews: 'Back to All News',
+    scheduleConsultation: 'Schedule a Consultation',
+    ctaTitle: 'Need Legal Counsel on BC Law & Regulation?',
+    ctaDesc: 'Our experienced legal team provides comprehensive representation for businesses and individuals across British Columbia.',
+    published: 'Published:',
+    authorBy: 'By',
+    copyright: '© {currentYear} Avid Law Corporation. All rights reserved.',
+  };
+
+  const title = post.frontmatter.title || 'Untitled News Post';
+  const cleanedContent = cleanMarkdownBody(post.content, title);
 
   const ogImg = post.frontmatter.featuredImage
     ? (post.frontmatter.featuredImage.startsWith('http')
@@ -146,7 +210,7 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
   const articleSchema = {
     '@type': 'Article',
     '@id': `${canonicalUrl}#article`,
-    headline: post.frontmatter.title,
+    headline: title,
     description: post.frontmatter.preview || '',
     image: ogImg,
     datePublished: post.frontmatter.date || new Date().toISOString(),
@@ -171,9 +235,9 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
 
   // JSON-LD Breadcrumb Schema
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: breadcrumbLabels.home, url: `${siteConfig.url}/${locale}` },
-    { name: breadcrumbLabels.news, url: `${siteConfig.url}/${locale}/news` },
-    { name: post.frontmatter.title || 'Article', url: canonicalUrl },
+    { name: labels.home, url: `${siteConfig.url}/${locale}` },
+    { name: labels.news, url: `${siteConfig.url}/${locale}/news` },
+    { name: title, url: canonicalUrl },
   ]);
 
   const jsonLdGraph = {
@@ -182,80 +246,129 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-zinc-100/70 text-zinc-900 flex flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
       <NavBar />
 
-      {/* Article Header Section */}
-      <div className="relative pt-28 pb-16 bg-gray-100">
-        <div className="container mx-auto px-6 max-w-3xl text-center">
+      {/* News Regal Navy Hero Header */}
+      <header className="relative pt-32 pb-20 md:pt-36 md:pb-24 bg-[#0B1B48] text-white overflow-hidden text-center">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/sideBG.png"
+            alt="Hero Background"
+            fill
+            className="object-cover opacity-15 brightness-110"
+            priority
+          />
+          <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply" />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-6 max-w-4xl">
           {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="text-xs text-gray-500 mb-6">
+          <nav aria-label="Breadcrumb" className="text-xs text-zinc-300 mb-6">
             <ol className="flex items-center justify-center space-x-2">
               <li>
                 <Link href={`/${locale}`} className="hover:text-[#FFC107] transition-colors">
-                  {breadcrumbLabels.home}
+                  {labels.home}
                 </Link>
               </li>
-              <li><span>/</span></li>
+              <li className="text-zinc-500"><span>/</span></li>
               <li>
                 <Link href={`/${locale}/news`} className="hover:text-[#FFC107] transition-colors">
-                  {breadcrumbLabels.news}
+                  {labels.news}
                 </Link>
               </li>
-              <li><span>/</span></li>
-              <li className="text-gray-800 font-medium truncate max-w-xs" aria-current="page">
-                {post.frontmatter.title}
+              <li className="text-zinc-500"><span>/</span></li>
+              <li className="text-[#FFC107] font-medium truncate max-w-xs sm:max-w-md" aria-current="page">
+                {title}
               </li>
             </ol>
           </nav>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
-            {post.frontmatter.title || 'Untitled News Post'}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-bold uppercase tracking-wider mb-4">
+            Avid Law • News & Updates
+          </div>
+
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif text-white mb-6 leading-tight max-w-4xl mx-auto">
+            {title}
           </h1>
-          <div className="flex flex-wrap justify-center items-center text-sm text-gray-500 gap-x-4 gap-y-1 mb-6">
+
+          <div className="flex flex-wrap justify-center items-center text-sm text-zinc-300 gap-x-4 gap-y-1">
             {post.frontmatter.date && (
               <span className="whitespace-nowrap">
                 📅 {new Date(post.frontmatter.date).toLocaleDateString(locale === 'zh-Hans' ? 'zh-CN' : locale === 'zh-Hant' ? 'zh-TW' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
               </span>
             )}
             {post.frontmatter.author && (
-              <span className="whitespace-nowrap">👤 By {post.frontmatter.author}</span>
+              <span className="whitespace-nowrap">
+                👤 {labels.authorBy} {post.frontmatter.author}
+              </span>
             )}
           </div>
+        </div>
+      </header>
+
+      {/* Editorial Reading Card Container */}
+      <main className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10 -mt-10 mb-16 flex-grow">
+        <div className="bg-white rounded-2xl shadow-lg border border-zinc-200 p-6 sm:p-10 md:p-14">
           {post.frontmatter.featuredImage && (
-            <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-md border border-zinc-200 mb-10">
               <Image
                 src={post.frontmatter.featuredImage}
-                alt={post.frontmatter.title || 'Featured Image'}
+                alt={title}
                 fill
                 className="object-cover"
                 priority
               />
             </div>
           )}
-        </div>
-      </div>
 
-      {/* Article Content Section */}
-      <div className="py-12 bg-white">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <article className="prose prose-lg max-w-none prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic">
+          <article className="prose prose-lg max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-              {post.content}
+              {cleanedContent}
             </ReactMarkdown>
           </article>
 
-          <div className="mt-12 pt-8 border-t border-gray-200 text-center">
-            <Link href={`/${locale}/news`} className="text-blue-600 hover:text-blue-800 hover:underline font-medium">
-              ← {locale === 'zh-Hans' ? '返回所有要闻' : locale === 'zh-Hant' ? '返回所有要聞' : 'Back to All News'}
+          {/* Polished Executive Consultation CTA Banner */}
+          <div className="mt-12 bg-[#0B1B48] text-white rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+            <div>
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-white mb-1">
+                {labels.ctaTitle}
+              </h3>
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
+                {labels.ctaDesc}
+              </p>
+            </div>
+            <Link
+              href={`/${locale}/forms?type=consultation`}
+              className="whitespace-nowrap rounded-lg bg-[#FFC107] px-6 py-3 font-bold text-[#0B1B48] hover:bg-[#ffcb38] transition-all shadow text-sm shrink-0"
+            >
+              {labels.scheduleConsultation} →
+            </Link>
+          </div>
+
+          {/* Back Link */}
+          <div className="mt-8 pt-6 border-t border-zinc-200 flex items-center justify-between">
+            <Link
+              href={`/${locale}/news`}
+              className="text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#FFC107] inline-flex items-center gap-1.5 transition-colors"
+            >
+              <span>←</span>
+              <span>{labels.backToNews}</span>
             </Link>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-auto bg-zinc-950 text-zinc-400 py-10 border-t border-zinc-800 text-center">
+        <p className="text-sm text-zinc-500">
+          {labels.copyright.replace('{currentYear}', new Date().getFullYear().toString())}
+        </p>
+      </footer>
     </div>
   );
 }
