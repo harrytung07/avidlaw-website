@@ -394,7 +394,7 @@ export function LawFirmLanding() {
       {/* Hero Section */}
       <header className="relative h-[100vh] bg-gray-900 pt-0">
         {/* ... (The Gradient overlay and Background Image divs remain the same) ... */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-gray-800/50 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/35 via-gray-950/60 to-gray-950/85 z-10" />
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src="/Spring.webp"
@@ -417,7 +417,7 @@ export function LawFirmLanding() {
               
               {/* Keyword Entity Eyebrow */}
               <div 
-                className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFC107]/20 border border-[#FFC107]/40 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-3 opacity-0 animate-fadeIn"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-950/75 backdrop-blur-md border border-[#FFC107]/60 text-[#FFC107] text-xs font-bold uppercase tracking-wider mb-4 shadow-lg opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
               >
                 {locale === 'zh-Hans'
@@ -428,21 +428,21 @@ export function LawFirmLanding() {
               </div>
 
               <h1 
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white text-balance opacity-0 animate-fadeIn"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] text-balance opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
               >
                 {t("hero.title")}
               </h1>
               
               <p 
-                className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-2 text-balance text-pretty opacity-0 animate-fadeIn"
+                className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] text-balance text-pretty opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
                 {t("hero.subtitle")}
               </p>
 
               <p
-                className="text-xs sm:text-sm text-zinc-300 font-light max-w-lg mb-6 sm:mb-8 text-balance text-pretty opacity-0 animate-fadeIn"
+                className="text-sm sm:text-base text-white/95 font-normal max-w-lg md:ml-auto mb-6 sm:mb-8 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] text-balance text-pretty opacity-0 animate-fadeIn"
                 style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}
               >
                 {locale === 'zh-Hans'
@@ -463,7 +463,7 @@ export function LawFirmLanding() {
                       el.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-gray-950 active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center cursor-pointer shadow-sm"
+                  className="bg-gray-950/75 backdrop-blur-md border-2 border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-gray-950 active:scale-[0.96] transition-[background-color,color,transform,box-shadow] duration-150 ease-out font-bold px-8 py-3.5 rounded-lg w-full sm:w-auto justify-center cursor-pointer shadow-xl"
                 >
                   {t("hero.bookButton")}
                 </button>
