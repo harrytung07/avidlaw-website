@@ -21,7 +21,7 @@ export default function RootLayout({
   const { locale } = getRequestLocaleAndPath();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className="antialiased">
       <body>
         <TranslationProvider initialLocale={locale}>
           <LanguageProvider>

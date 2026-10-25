@@ -86,7 +86,7 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger 
-        className={`flex items-center justify-center space-x-1 text-white ${isAnyModalOpen ? 'opacity-50 cursor-not-allowed' : 'hover:text-[#FFC107] cursor-pointer'} text-base font-medium uppercase tracking-wide focus:outline-none`}
+        className={`flex items-center justify-center space-x-1 text-white ${isAnyModalOpen ? 'opacity-50 cursor-not-allowed' : 'hover:text-[#FFC107] cursor-pointer'} text-base font-medium uppercase tracking-wide focus:outline-none active:scale-[0.96] transition-transform`}
         onClick={(e) => {
           e.stopPropagation();
         }}

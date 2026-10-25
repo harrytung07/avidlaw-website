@@ -17,7 +17,7 @@ export default function ExploreButton() {
     <a 
       href="#about" 
       onClick={handleClick}
-      className="group flex items-center px-6 py-3 border border-white/30 backdrop-blur-sm transition-all duration-150 hover:bg-black/80 rounded-md"
+      className="group flex items-center pl-5 pr-6 py-3 border border-white/30 backdrop-blur-sm active:scale-[0.96] transition-[background-color,border-color,transform] duration-150 ease-out hover:bg-black/80 rounded-md"
     >
       <svg 
         className="w-5 h-5 mr-3 text-[#FFC107]" 

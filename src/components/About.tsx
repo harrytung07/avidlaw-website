@@ -36,11 +36,11 @@ export default function About() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
             {heritageTag}
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-wide">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-wide text-balance">
             {t('about.sectionTitle')}
           </h1>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 max-w-3xl mx-auto leading-relaxed font-light text-pretty">
             {t('about.sectionText')}
           </p>
         </div>
@@ -51,13 +51,13 @@ export default function About() {
         <div className="relative z-10 max-w-6xl w-full mx-auto px-6 md:px-8">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div className="w-full md:w-1/2">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white p-1.5 group">
-                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200/90 bg-white p-1.5 group">
+                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden outline outline-1 -outline-offset-1 outline-black/10">
                   <Image 
                     src="/about1.jpg" 
                     alt={t('about.historyTag')} 
                     fill 
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
               </div>
@@ -66,11 +66,11 @@ export default function About() {
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
                 Avid Law • Richmond, BC
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.historyTag')}
               </h2>
               <div className="h-1 w-16 bg-[#FFC107] mb-6 mx-auto md:mx-0 rounded-full"></div>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed text-pretty">
                 {t('about.historyText')}
               </p>
             </div>
@@ -83,13 +83,13 @@ export default function About() {
         <div className="relative z-10 max-w-6xl w-full mx-auto px-6 md:px-8">
           <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
             <div className="w-full md:w-1/2">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white p-1.5 group">
-                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200/90 bg-white p-1.5 group">
+                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden outline outline-1 -outline-offset-1 outline-black/10">
                   <Image 
                     src="/about2.jpg" 
                     alt={t('about.expertiseTag')} 
                     fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
               </div>
@@ -98,11 +98,11 @@ export default function About() {
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
                 Multilingual Legal Excellence
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.expertiseTag')}
               </h2>
               <div className="h-1 w-16 bg-[#FFC107] mb-6 mx-auto md:mx-0 rounded-full"></div>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed text-pretty">
                 {t('about.expertiseText')}
               </p>
             </div>
@@ -115,13 +115,13 @@ export default function About() {
         <div className="relative z-10 max-w-6xl w-full mx-auto px-6 md:px-8">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16 lg:gap-20">
             <div className="w-full md:w-1/2">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white p-1.5 group">
-                <div className="relative h-[320px] md:h-[460px] w-full rounded-xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200/90 bg-white p-1.5 group">
+                <div className="relative h-[320px] md:h-[460px] w-full rounded-xl overflow-hidden outline outline-1 -outline-offset-1 outline-black/10">
                   <Image 
                     src="/about3.png" 
                     alt={t('about.serviceTag')} 
                     fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
               </div>
@@ -130,14 +130,14 @@ export default function About() {
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
                 Advocacy & Resolution
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.serviceTag')}
               </h2>
               <div className="h-1 w-16 bg-[#FFC107] mb-6 mx-auto md:mx-0 rounded-full"></div>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed mb-4">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed mb-4 text-pretty">
                 {t('about.serviceText1')}
               </p>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed text-pretty">
                 {t('about.serviceText2')}
               </p>
             </div>
@@ -150,13 +150,13 @@ export default function About() {
         <div className="relative z-10 max-w-6xl w-full mx-auto px-6 md:px-8">
           <div className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
             <div className="w-full md:w-1/2">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white p-1.5 group">
-                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-zinc-200/90 bg-white p-1.5 group">
+                <div className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden outline outline-1 -outline-offset-1 outline-black/10">
                   <Image 
                     src="/about4.png" 
                     alt={t('about.solicitorTag')} 
                     fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
                 </div>
               </div>
@@ -165,14 +165,14 @@ export default function About() {
               <div className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-md mb-3">
                 Commercial & Advisory Practice
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-6 text-balance">
                 {t('about.solicitorTag')}
               </h2>
               <div className="h-1 w-16 bg-[#FFC107] mb-6 mx-auto md:mx-0 rounded-full"></div>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed mb-4">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed mb-4 text-pretty">
                 {t('about.solicitorText1')}
               </p>
-              <p className="text-base md:text-lg text-zinc-700 leading-relaxed">
+              <p className="text-base md:text-lg text-zinc-700 leading-relaxed text-pretty">
                 {t('about.solicitorText2')}
               </p>
             </div>
@@ -187,28 +187,30 @@ export default function About() {
           <div className="absolute inset-0 bg-[#0B1B48]/85 mix-blend-multiply"></div>
         </div>
         <div className="relative z-10 max-w-4xl w-full mx-auto px-6 md:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {t('about.eveTitle')}
           </h2>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light text-pretty">
             {t('about.eveText')}
           </p>
           
           <div className="flex flex-col items-center justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="group relative inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
+              className="group relative inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
             >
               <span>{t('hero.bookButton')}</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 shrink-0" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
           </div>

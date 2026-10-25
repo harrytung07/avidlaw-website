@@ -195,7 +195,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   return (
     <div className="relative">
       {/* Modal for showing subareas */}
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {showModal && selectedArea && (
           <motion.div
             key={selectedArea}
@@ -298,7 +298,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
                     <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
-                    <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-all duration-300 group-hover:w-24"></div>
+                    <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-[width] duration-300 ease-out group-hover:w-24"></div>
 
                     {/* Crawlable link for search engine discovery and non-JS clients */}
                     <div className="mt-3 pointer-events-auto">
@@ -321,7 +321,7 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
       
       {/* Navigation buttons */}
       <button 
-        className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] transition-all duration-300 group"
+        className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] active:scale-[0.96] transition-[background-color,border-color,transform] duration-200 ease-out group"
         onClick={() => emblaApi?.scrollPrev()}
         aria-label="Previous slide"
       >
@@ -335,14 +335,14 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
           strokeWidth="2" 
           strokeLinecap="round" 
           strokeLinejoin="round"
-          className="text-white group-hover:text-black transition-colors duration-300"
+          className="text-white group-hover:text-black transition-colors duration-200"
         >
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
       
       <button 
-        className="absolute top-1/2 right-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] transition-all duration-300 group"
+        className="absolute top-1/2 right-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] active:scale-[0.96] transition-[background-color,border-color,transform] duration-200 ease-out group"
         onClick={() => emblaApi?.scrollNext()}
         aria-label="Next slide"
       >
@@ -356,23 +356,27 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
           strokeWidth="2" 
           strokeLinecap="round" 
           strokeLinejoin="round"
-          className="text-white group-hover:text-black transition-colors duration-300"
+          className="text-white group-hover:text-black transition-colors duration-200"
         >
           <path d="M9 18l6-6-6-6" />
         </svg>
       </button>
       
-      {/* Navigation dots */}
-      <div className="flex justify-center mt-6 space-x-2">
+      {/* Navigation dots with expanded 40px hit area */}
+      <div className="flex justify-center items-center mt-6 space-x-1">
         {practiceAreas.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === selectedIndex ? 'bg-[#FFC107] w-6' : 'bg-gray-400'
-            }`}
+            className="relative p-2 flex items-center justify-center focus:outline-none"
             onClick={() => emblaApi?.scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}
-          />
+          >
+            <span
+              className={`block h-2 rounded-full transition-[width,background-color] duration-300 ease-out ${
+                index === selectedIndex ? 'bg-[#FFC107] w-6' : 'bg-gray-400 w-2 hover:bg-gray-300'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

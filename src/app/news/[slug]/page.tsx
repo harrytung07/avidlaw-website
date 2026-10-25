@@ -72,20 +72,20 @@ function cleanMarkdownBody(rawBody: string, title?: string): string {
 }
 
 const markdownComponents = {
-  h1: (props: any) => <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
-  h2: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200" {...props} />,
-  h3: (props: any) => <h3 className="text-lg sm:text-xl font-serif font-bold text-zinc-900 mt-8 mb-3" {...props} />,
-  p: (props: any) => <p className="text-base sm:text-[17px] text-zinc-700 leading-relaxed my-4" {...props} />,
+  h1: (props: any) => <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200 text-balance" {...props} />,
+  h2: (props: any) => <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1B48] mt-10 mb-4 pb-2 border-b border-zinc-200 text-balance" {...props} />,
+  h3: (props: any) => <h3 className="text-lg sm:text-xl font-serif font-bold text-zinc-900 mt-8 mb-3 text-balance" {...props} />,
+  p: (props: any) => <p className="text-base sm:text-[17px] text-zinc-700 leading-relaxed my-4 text-pretty" {...props} />,
   strong: (props: any) => <strong className="font-bold text-zinc-900" {...props} />,
-  blockquote: (props: any) => <blockquote className="border-l-4 border-[#FFC107] bg-zinc-50 px-5 py-4 rounded-r-xl italic text-zinc-700 my-6 shadow-sm" {...props} />,
-  table: (props: any) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-zinc-200 rounded-lg overflow-hidden text-sm text-left" {...props} /></div>,
+  blockquote: (props: any) => <blockquote className="border-l-4 border-[#FFC107] bg-zinc-50 px-5 py-4 rounded-r-xl italic text-zinc-700 my-6 shadow-xs text-pretty" {...props} />,
+  table: (props: any) => <div className="overflow-x-auto my-6 rounded-xl border border-zinc-200 shadow-sm"><table className="min-w-full text-sm text-left" {...props} /></div>,
   thead: (props: any) => <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-800 uppercase text-xs font-semibold" {...props} />,
   th: (props: any) => <th className="px-4 py-3 border-r border-zinc-200 last:border-r-0" {...props} />,
   tbody: (props: any) => <tbody className="bg-white divide-y divide-zinc-200" {...props} />,
   tr: (props: any) => <tr className="hover:bg-zinc-50/70 transition-colors" {...props} />,
-  td: (props: any) => <td className="px-4 py-3 border-r border-zinc-200 last:border-r-0 text-zinc-700" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-outside my-5 pl-6 space-y-2.5 text-zinc-700" {...props} />,
+  td: (props: any) => <td className="px-4 py-3 border-r border-zinc-200 last:border-r-0 text-zinc-700 text-pretty" {...props} />,
+  ul: (props: any) => <ul className="list-disc list-outside my-5 pl-6 space-y-2.5 text-zinc-700 text-pretty" {...props} />,
+  ol: (props: any) => <ol className="list-decimal list-outside my-5 pl-6 space-y-2.5 text-zinc-700 text-pretty" {...props} />,
   li: (props: any) => <li className="leading-relaxed pl-1 marker:text-[#0B1B48] marker:font-bold" {...props} />,
   a: (props: any) => (
     <a
@@ -96,13 +96,13 @@ const markdownComponents = {
     />
   ),
   img: (props: any) => (
-    <div className="my-8">
+    <div className="my-8 rounded-xl overflow-hidden shadow-md border border-zinc-200 outline outline-1 -outline-offset-1 outline-black/10">
       <Image
         src={props.src || ''}
         alt={props.alt || 'News visual'}
         width={800}
         height={450}
-        className="rounded-xl shadow-md object-cover mx-auto border border-zinc-200"
+        className="object-cover mx-auto"
       />
     </div>
   ),
@@ -292,13 +292,13 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
             Avid Law • News & Updates
           </div>
 
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif text-white mb-6 leading-tight max-w-4xl mx-auto">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-serif text-white mb-6 leading-tight max-w-4xl mx-auto text-balance">
             {title}
           </h1>
 
           <div className="flex flex-wrap justify-center items-center text-sm text-zinc-300 gap-x-4 gap-y-1">
             {post.frontmatter.date && (
-              <span className="whitespace-nowrap">
+              <span className="whitespace-nowrap font-mono tabular-nums">
                 📅 {new Date(post.frontmatter.date).toLocaleDateString(locale === 'zh-Hans' ? 'zh-CN' : locale === 'zh-Hant' ? 'zh-TW' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
               </span>
             )}
@@ -315,7 +315,7 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
       <main className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10 -mt-10 mb-16 flex-grow">
         <div className="bg-white rounded-2xl shadow-lg border border-zinc-200 p-6 sm:p-10 md:p-14">
           {post.frontmatter.featuredImage && (
-            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-md border border-zinc-200 mb-10">
+            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-md border border-zinc-200 outline outline-1 -outline-offset-1 outline-black/10 mb-10">
               <Image
                 src={post.frontmatter.featuredImage}
                 alt={title}
@@ -335,18 +335,19 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
           {/* Polished Executive Consultation CTA Banner */}
           <div className="mt-12 bg-[#0B1B48] text-white rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
             <div>
-              <h3 className="text-lg sm:text-xl font-serif font-bold text-white mb-1">
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-white mb-1 text-balance">
                 {labels.ctaTitle}
               </h3>
-              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed text-pretty">
                 {labels.ctaDesc}
               </p>
             </div>
             <Link
               href={`/${locale}/forms?type=consultation`}
-              className="whitespace-nowrap rounded-lg bg-[#FFC107] px-6 py-3 font-bold text-[#0B1B48] hover:bg-[#ffcb38] transition-all shadow text-sm shrink-0"
+              className="group/cta whitespace-nowrap rounded-lg bg-[#FFC107] pl-6 pr-5 py-3 font-bold text-[#0B1B48] shadow-md shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-sm shrink-0 inline-flex items-center gap-1.5"
             >
-              {labels.scheduleConsultation} →
+              <span>{labels.scheduleConsultation}</span>
+              <span className="transition-transform duration-200 group-hover/cta:translate-x-1 shrink-0" aria-hidden="true">→</span>
             </Link>
           </div>
 
@@ -354,9 +355,9 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
           <div className="mt-8 pt-6 border-t border-zinc-200 flex items-center justify-between">
             <Link
               href={`/${locale}/news`}
-              className="text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#FFC107] inline-flex items-center gap-1.5 transition-colors"
+              className="group/back text-xs sm:text-sm font-bold text-[#0B1B48] hover:text-[#b88600] inline-flex items-center gap-1.5 active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
             >
-              <span>←</span>
+              <span className="transition-transform duration-200 group-hover/back:-translate-x-1 shrink-0" aria-hidden="true">←</span>
               <span>{labels.backToNews}</span>
             </Link>
           </div>

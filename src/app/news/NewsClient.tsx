@@ -69,11 +69,11 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
             Avid Law Corporation • Press & Updates
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {content.heroTitle}
           </h1>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light text-pretty max-w-3xl mx-auto">
             {content.heroDescription}
           </p>
         </div>
@@ -83,33 +83,33 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
       <section className="relative py-16 md:py-24">
         <div className="container relative z-10 mx-auto px-6 max-w-6xl">
           {newsPosts.length === 0 ? (
-            <div className="bg-white rounded-2xl p-12 text-center shadow-sm border border-zinc-200">
-              <p className="text-zinc-600 text-lg">{content.noNews}</p>
+            <div className="bg-white rounded-2xl p-12 text-center shadow-xs border border-zinc-200">
+              <p className="text-zinc-600 text-lg text-pretty">{content.noNews}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {newsPosts.map((post) => (
                 <article 
                   key={post.slug} 
-                  className="bg-white rounded-2xl shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group"
+                  className="bg-white rounded-2xl shadow-xs hover:shadow-xl border border-zinc-200 hover:border-[#FFC107] hover:-translate-y-0.5 transition-[border-color,box-shadow,transform] duration-200 ease-out overflow-hidden flex flex-col group"
                 >
                   {post.frontmatter.featuredImage && (
                     <Link
                       href={`/${locale}/news/${post.slug}`}
-                      className="block relative h-48 w-full bg-zinc-100 overflow-hidden"
+                      className="block relative h-48 w-full bg-zinc-100 overflow-hidden outline outline-1 -outline-offset-1 outline-black/10"
                     >
                       <Image
                         src={post.frontmatter.featuredImage}
                         alt={post.frontmatter.title || 'Article image'}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       />
                     </Link>
                   )}
                   <div className="p-6 flex flex-col flex-grow">
                     <div className="flex flex-wrap items-center text-xs text-zinc-400 gap-x-3 gap-y-1 mb-3">
                       {post.frontmatter.date && (
-                        <span className="whitespace-nowrap font-medium">
+                        <span className="whitespace-nowrap font-medium font-mono tabular-nums">
                           📅 {new Date(post.frontmatter.date).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
                       )}
@@ -118,7 +118,7 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
                       )}
                     </div>
 
-                    <h2 className="text-lg font-serif font-bold mb-3 text-zinc-900 group-hover:text-[#0B1B48] transition-colors line-clamp-2">
+                    <h2 className="text-lg font-serif font-bold mb-3 text-zinc-900 group-hover:text-[#0B1B48] transition-colors line-clamp-2 text-balance">
                       <Link
                         href={`/${locale}/news/${post.slug}`}
                         className="hover:text-[#0B1B48] transition-colors"
@@ -128,7 +128,7 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
                     </h2>
 
                     {post.frontmatter.preview && (
-                      <p className="text-sm text-zinc-600 mb-5 flex-grow line-clamp-3 leading-relaxed">
+                      <p className="text-sm text-zinc-600 mb-5 flex-grow line-clamp-3 leading-relaxed text-pretty">
                         {post.frontmatter.preview}
                       </p>
                     )}
@@ -136,7 +136,7 @@ export default function NewsClient({ newsPosts }: NewsClientProps) {
                     <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
                       <Link
                         href={`/${locale}/news/${post.slug}`}
-                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#FFC107] inline-flex items-center gap-1 transition-colors"
+                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#b88600] inline-flex items-center gap-1 active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
                       >
                         <span>{content.readMore}</span>
                       </Link>

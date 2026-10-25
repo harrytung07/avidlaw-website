@@ -396,17 +396,28 @@ export function LawFirmLanding() {
         <div className="container relative z-20 mx-auto px-6 py-4 h-full flex flex-col">
           <div className="flex-1 flex items-center justify-center text-center md:justify-end md:text-right max-w-xl mx-auto md:ml-auto md:mx-0">
             {/* Slogan container */}
-            <div className="text-right relative opacity-0 animate-fadeIn w-full md:w-auto" style={{ animationDelay: '1.5s' }}>
-              {/* ... (Decorative line, h1, and p tags remain the same) ... */}
+            <div className="text-right relative w-full md:w-auto">
+              {/* Decorative vertical gold accent */}
               <div className="hidden md:block absolute left-[-30px] lg:left-[-50px] top-[-20px] lg:top-[-30px] bottom-[-2px] w-[3px] lg:w-[4px] bg-[#FFC107] z-20"></div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white">
+              
+              <h1 
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase mb-3 sm:mb-4 text-white text-balance opacity-0 animate-fadeIn"
+                style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+              >
                 {t("hero.title")}
               </h1>
-              <p className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-6 sm:mb-8">
+              
+              <p 
+                className="text-lg sm:text-xl lg:text-2xl text-white font-medium mb-6 sm:mb-8 text-balance text-pretty opacity-0 animate-fadeIn"
+                style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
+              >
                 {t("hero.subtitle")}
               </p>
               
-              <div className="flex flex-col items-center md:items-end mt-8 md:mt-12 lg:mt-16 w-full sm:w-auto">
+              <div 
+                className="flex flex-col items-center md:items-end mt-8 md:mt-12 lg:mt-16 w-full sm:w-auto opacity-0 animate-fadeIn"
+                style={{ animationDelay: '1.0s', animationFillMode: 'forwards' }}
+              >
                 <button
                   onClick={() => {
                     const el = document.getElementById("contact");
@@ -414,7 +425,7 @@ export function LawFirmLanding() {
                       el.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-white transition-colors font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center cursor-pointer"
+                  className="border border-[#FFC107] text-[#FFC107] hover:bg-[#FFC107] hover:text-gray-950 active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out font-semibold px-8 py-3 rounded w-full sm:w-auto justify-center cursor-pointer shadow-sm"
                 >
                   {t("hero.bookButton")}
                 </button>
@@ -423,7 +434,7 @@ export function LawFirmLanding() {
           </div>
         </div>
         {/* ... (Explore button remains the same) ... */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30 opacity-0 animate-fadeIn" style={{ animationDelay: '2.2s' }}>
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30 opacity-0 animate-fadeIn" style={{ animationDelay: '1.2s', animationFillMode: 'forwards' }}>
           <ExploreButton />
         </div>
       </header>
@@ -438,15 +449,15 @@ export function LawFirmLanding() {
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0B1B48]/10 text-[#0B1B48] border border-[#0B1B48]/20 text-xs font-bold uppercase tracking-wider mb-5">
                   ESTABLISHED 2009 • RICHMOND, BC
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] tracking-tight">
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] tracking-tight text-balance">
                   {t("intro.companyName")}
                 </h2>
                 <div className="h-1 w-20 bg-[#FFC107] rounded-full my-5"></div>
                 
-                <h3 className="text-xl font-serif font-bold text-zinc-900 mb-3">
+                <h3 className="text-xl font-serif font-bold text-zinc-900 mb-3 text-balance">
                   {historySlides[0].title}
                 </h3>
-                <p className="text-base text-zinc-700 leading-relaxed mb-8">
+                <p className="text-base text-zinc-700 leading-relaxed mb-8 text-pretty">
                   {historySlides[0].text}
                 </p>
 
@@ -483,7 +494,7 @@ export function LawFirmLanding() {
 
               <div className="relative inline-block group">
                 <Link href={localePath("/about")}>
-                  <button className="h-[44px] px-6 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] transition-all duration-300 whitespace-nowrap flex items-center gap-2">
+                  <button className="h-[44px] pl-6 pr-5 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] active:scale-[0.96] transition-[background-color,transform,box-shadow] duration-150 ease-out whitespace-nowrap flex items-center gap-2">
                     <span>{t("intro.readMore")}</span>
                     <span>→</span>
                   </button>
@@ -496,9 +507,9 @@ export function LawFirmLanding() {
               {historySlides.map((slide) => (
                 <div
                   key={slide.id}
-                  className="flex-1 bg-white rounded-2xl p-5 shadow-md border border-zinc-200 hover:border-[#FFC107] transition-all flex flex-col sm:flex-row gap-5 items-center group"
+                  className="flex-1 bg-white rounded-2xl p-5 shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-[border-color,box-shadow] duration-200 ease-out flex flex-col sm:flex-row gap-5 items-center group"
                 >
-                  <div className="w-full sm:w-40 h-36 sm:h-full sm:min-h-[136px] max-h-[165px] relative rounded-xl overflow-hidden shrink-0 bg-zinc-100 border border-zinc-100">
+                  <div className="w-full sm:w-40 h-36 sm:h-full sm:min-h-[136px] max-h-[165px] relative rounded-lg overflow-hidden shrink-0 bg-zinc-100 outline outline-1 -outline-offset-1 outline-black/10 border border-zinc-100">
                     <Image
                       src={slide.image}
                       alt={slide.title}
@@ -516,7 +527,7 @@ export function LawFirmLanding() {
                     <h4 className="text-base font-serif font-bold text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-1.5">
                       {slide.title}
                     </h4>
-                    <p className="text-xs sm:text-[13px] text-zinc-600 leading-relaxed">
+                    <p className="text-xs sm:text-[13px] text-zinc-600 leading-relaxed text-pretty">
                       {slide.summary[currentLang]}
                     </p>
                   </div>
@@ -533,28 +544,28 @@ export function LawFirmLanding() {
           <div className="flex flex-col md:flex-row gap-16 items-center">
             <div className="md:w-2/5">
               <div className="relative">
-                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] uppercase mb-3">
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] uppercase mb-3 text-balance">
                   {t("attorneys.sectionTitle")}
                 </h2>
                 <div className="h-1 w-20 bg-[#FFC107] rounded-full mb-6"></div>
 
                 <div className="h-[420px] overflow-y-auto pr-6 text-sm text-zinc-700 leading-relaxed mb-8 scrollbar-container">
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("attorneys.sectionText1")}
                   </p>
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("attorneys.sectionText2")}
                   </p>
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("attorneys.sectionText3")}
                   </p>
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("attorneys.sectionText4")}
                   </p>
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("attorneys.sectionText5")}
                   </p>
-                  <p className="leading-relaxed">
+                  <p className="leading-relaxed text-pretty">
                     {t("attorneys.sectionText6")}
                   </p>
                 </div>
@@ -565,7 +576,7 @@ export function LawFirmLanding() {
 
               <div className="relative inline-block group">
                 <Link href={localePath("/team")}>
-                  <button className="h-[44px] px-6 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] transition-all duration-300 whitespace-nowrap flex items-center gap-2">
+                  <button className="h-[44px] pl-6 pr-5 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] active:scale-[0.96] transition-[background-color,transform,box-shadow] duration-150 ease-out whitespace-nowrap flex items-center gap-2">
                     <span>{t("attorneys.meetTeam")}</span>
                     <span>→</span>
                   </button>
@@ -580,7 +591,7 @@ export function LawFirmLanding() {
                 onMouseLeave={() => setIsAutoScrollPaused(false)}
               >
                 <div
-                  className="absolute inset-0 transition-transform duration-1000 ease-in-out z-10"
+                  className="absolute inset-0 transition-transform duration-1000 ease-in-out z-10 will-change-transform"
                   style={{
                     transform: `translateX(-${currentSlide * 100}%)`,
                     transition: isResetting ? 'none' : 'transform 1000ms ease-in-out'
@@ -597,9 +608,9 @@ export function LawFirmLanding() {
                       {slide.map((member) => (
                         <div
                           key={member.id}
-                          className="bg-white rounded-xl overflow-hidden shadow-md border border-zinc-200 hover:border-[#FFC107] transition-all p-2.5 flex flex-col justify-between group h-full"
+                          className="bg-white rounded-xl overflow-hidden shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-[border-color,box-shadow] duration-200 ease-out p-2.5 flex flex-col justify-between group h-full"
                         >
-                          <div className="relative w-full flex-1 min-h-0 overflow-hidden rounded-lg bg-zinc-100">
+                          <div className="relative w-full flex-1 min-h-0 overflow-hidden rounded-lg bg-zinc-100 outline outline-1 -outline-offset-1 outline-black/10">
                             <Image
                               src={member.image}
                               alt={member.name}
@@ -643,18 +654,18 @@ export function LawFirmLanding() {
                 </h2>
                 <div className="h-1 w-20 bg-[#FFC107] rounded-full mb-6"></div>
 
-                <h3 className="text-xl font-serif font-bold text-zinc-900 mb-6">
+                <h3 className="text-xl font-serif font-bold text-zinc-900 mb-6 text-balance">
                   {t("practiceAreas.sectionSubtitle")}
                 </h3>
 
                 <div className="h-[360px] overflow-y-auto pr-6 text-sm text-zinc-700 leading-relaxed mb-8 scrollbar-container">
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("practiceAreas.sectionText1")}
                   </p>
-                  <p className="mb-5 leading-relaxed">
+                  <p className="mb-5 leading-relaxed text-pretty">
                     {t("practiceAreas.sectionText2")}
                   </p>
-                  <p className="leading-relaxed">
+                  <p className="leading-relaxed text-pretty">
                     {t("practiceAreas.sectionText3")}
                   </p>
                 </div>
@@ -665,7 +676,7 @@ export function LawFirmLanding() {
 
               <div className="relative inline-block group">
                 <Link href={localePath("/practice-areas")}>
-                  <button className="h-[44px] px-6 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] transition-all duration-300 whitespace-nowrap flex items-center gap-2">
+                  <button className="h-[44px] pl-6 pr-5 bg-[#0B1B48] text-[#FFC107] uppercase text-xs font-bold tracking-wider rounded-lg shadow-md hover:bg-[#132763] active:scale-[0.96] transition-[background-color,transform,box-shadow] duration-150 ease-out whitespace-nowrap flex items-center gap-2">
                     <span>{t("practiceAreas.viewAll")}</span>
                     <span>→</span>
                   </button>
@@ -684,11 +695,11 @@ export function LawFirmLanding() {
             {/* --- Left Column - Contact Information --- */}
             <div className="w-full md:w-[calc(50%-28px)] text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start mb-6">
-                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] mr-3">
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0B1B48] mr-3 text-balance">
                   {t("contact.sectionTitle")}
                 </h2>
                 <div className="relative w-10 h-10 flex items-center justify-center text-[#FFC107]">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
@@ -700,7 +711,7 @@ export function LawFirmLanding() {
                   <p className="font-semibold text-xs uppercase tracking-wider text-zinc-500 mb-1">{t("contact.phoneLabel")}</p>
                   <button
                     onClick={() => copyToClipboard('+16042737565', t("contact.copyLabelPhone"))}
-                    className="text-[#0B1B48] font-bold text-base hover:text-[#FFC107] transition-colors cursor-pointer flex items-center justify-center sm:justify-start"
+                    className="text-[#0B1B48] font-bold text-base hover:text-[#FFC107] active:scale-[0.96] transition-[color,transform] duration-150 ease-out cursor-pointer flex items-center justify-center sm:justify-start"
                   >
                     +1 (604) 273-7565
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -712,7 +723,7 @@ export function LawFirmLanding() {
                   <p className="font-semibold text-xs uppercase tracking-wider text-zinc-500 mb-1">{t("contact.emailLabel")}</p>
                   <button
                     onClick={() => copyToClipboard('info@avid-law.com', t("contact.copyLabelEmail"))}
-                    className="text-[#0B1B48] font-bold text-base hover:text-[#FFC107] transition-colors cursor-pointer flex items-center justify-center sm:justify-start"
+                    className="text-[#0B1B48] font-bold text-base hover:text-[#FFC107] active:scale-[0.96] transition-[color,transform] duration-150 ease-out cursor-pointer flex items-center justify-center sm:justify-start"
                   >
                     info@avid-law.com
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -741,7 +752,7 @@ export function LawFirmLanding() {
               <div className="pt-2">
                 <Link
                   href={localePath("/forms?type=consultation")}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0B1B48] text-[#FFC107] hover:bg-[#132763] font-bold text-sm tracking-wide transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0B1B48] text-[#FFC107] hover:bg-[#132763] active:scale-[0.96] font-bold text-sm tracking-wide transition-[background-color,transform,box-shadow] duration-150 ease-out shadow-md hover:shadow-lg w-full sm:w-auto"
                 >
                   <CalendarCheck className="w-4 h-4" />
                   <span>
@@ -757,9 +768,9 @@ export function LawFirmLanding() {
             {/* Right Column - Office Addresses */}
             <div className="w-full md:w-[calc(50%-28px)] flex flex-col gap-6">
               {/* Pacific Business Centre Address Card */}
-              <div className="bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-all max-w-[500px] mx-auto md:mx-0 w-full relative">
+              <div className="bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-[border-color,box-shadow] duration-200 ease-out max-w-[500px] mx-auto md:mx-0 w-full relative">
                 <button
-                  className="absolute top-4 right-4 p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-400 hover:text-[#0B1B48]"
+                  className="absolute top-4 right-4 p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-zinc-100 rounded-lg active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out text-zinc-400 hover:text-[#0B1B48]"
                   onClick={() => copyToClipboard('5811 Cooney Road, Suite 602 North Tower, Richmond, British Columbia V6X 3M1, Canada', 'Pacific Business Centre address')}
                   aria-label="Copy address"
                 >
@@ -769,7 +780,7 @@ export function LawFirmLanding() {
                 </button>
                 <div className="absolute top-4 right-14 group">
                   <button
-                    className="p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-400 hover:text-[#0B1B48]"
+                    className="p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-zinc-100 rounded-lg active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out text-zinc-400 hover:text-[#0B1B48]"
                     onClick={() => openInMaps('5811 Cooney Road, Suite 602 North Tower, Richmond, British Columbia V6X 3M1, Canada')}
                     aria-label="View in map"
                   >
@@ -797,9 +808,9 @@ export function LawFirmLanding() {
               </div>
 
               {/* Aberdeen Square Address Card */}
-              <div className="bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-all max-w-[500px] mx-auto md:mx-0 w-full relative">
+              <div className="bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-lg transition-[border-color,box-shadow] duration-200 ease-out max-w-[500px] mx-auto md:mx-0 w-full relative">
                 <button
-                  className="absolute top-4 right-4 p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-400 hover:text-[#0B1B48]"
+                  className="absolute top-4 right-4 p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-zinc-100 rounded-lg active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out text-zinc-400 hover:text-[#0B1B48]"
                   onClick={() => copyToClipboard('4000 No. 3 Road, Unit 5235, Richmond, British Columbia V6X 0J8, Canada', 'Aberdeen Square address')}
                   aria-label="Copy address"
                 >
@@ -809,7 +820,7 @@ export function LawFirmLanding() {
                 </button>
                 <div className="absolute top-4 right-14 group">
                   <button
-                    className="p-2 hover:bg-zinc-100 rounded-lg transition-colors text-zinc-400 hover:text-[#0B1B48]"
+                    className="p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-zinc-100 rounded-lg active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out text-zinc-400 hover:text-[#0B1B48]"
                     onClick={() => openInMaps('4000 No. 3 Road, Unit 5235, Richmond, British Columbia V6X 0J8, Canada')}
                     aria-label="View in map"
                   >
@@ -866,7 +877,7 @@ export function LawFirmLanding() {
               </h3>
               <button 
                 onClick={() => setIsHolidayModalOpen(false)}
-                className="p-1 rounded-full hover:bg-white/10 transition-colors text-zinc-300 hover:text-white"
+                className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full hover:bg-white/10 active:scale-[0.96] transition-[background-color,color,transform] duration-150 text-zinc-300 hover:text-white"
               >
                 <X size={22} />
               </button>
@@ -905,7 +916,7 @@ export function LawFirmLanding() {
             <div className="p-4 bg-zinc-50 border-t border-zinc-100 text-center">
               <button 
                 onClick={() => setIsHolidayModalOpen(false)}
-                className="text-sm font-semibold text-zinc-700 hover:text-[#0B1B48] px-6 py-2 rounded-lg hover:bg-zinc-200/60 transition-colors"
+                className="text-sm font-semibold text-zinc-700 hover:text-[#0B1B48] px-6 py-2 rounded-lg hover:bg-zinc-200/60 active:scale-[0.96] transition-[background-color,color,transform] duration-150"
               >
                 {closeBtnLabel}
               </button>

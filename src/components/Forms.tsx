@@ -70,20 +70,20 @@ export default function Forms() {
         </div>
 
         <div className="container relative z-10 mx-auto px-6 max-w-5xl text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-[#FFC107] uppercase tracking-wider mb-4 border border-white/10">
-            <Shield className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-[#FFC107] uppercase tracking-wider mb-4 border border-white/10 shadow-xs">
+            <Shield className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
             <span>
               {isZh ? "官方直营 • 严格保密" : "Official Portal • Attorney-Client Privileged"}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white mb-4">
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white mb-4 text-balance">
             {isZh
               ? "客户登记与法定问卷中心"
               : "Client Intake & Legal Questionnaires"}
           </h1>
-          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-6"></div>
-          <p className="text-zinc-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-6 rounded-full"></div>
+          <p className="text-zinc-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed text-pretty font-light">
             {isZh
               ? "在线填写保密预约表格或法庭调查问卷，由安胜 · 弘人律师行资深律师团队直接跟进并安排专属咨询。"
               : "Securely submit your consultation booking or family law intake questionnaire directly to Avid Law Corporation lawyers in Richmond, BC."}
@@ -92,15 +92,15 @@ export default function Forms() {
           {/* Quick Assurance Badges */}
           <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-zinc-300">
             <div className="flex items-center gap-1.5">
-              <CheckCircle className="w-4 h-4 text-[#FFC107]" />
+              <CheckCircle className="w-4 h-4 text-[#FFC107] shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>Law Society of BC Compliant</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-[#FFC107]" />
-              <span>1 Business Day Response</span>
+              <Clock className="w-4 h-4 text-[#FFC107] shrink-0" strokeWidth={2} aria-hidden="true" />
+              <span className="tabular-nums">1 Business Day Response</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-[#FFC107]" />
+              <MapPin className="w-4 h-4 text-[#FFC107] shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>Richmond Central Office</span>
             </div>
           </div>
@@ -115,25 +115,25 @@ export default function Forms() {
           <div className="grid grid-cols-2 gap-2 w-full md:w-auto">
             <button
               onClick={() => handleTabChange("consultation")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 activeTab === "consultation"
-                  ? "bg-[#0B1B48] text-[#FFC107] shadow-md"
+                  ? "bg-[#0B1B48] text-[#FFC107] shadow-sm"
                   : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100"
               }`}
             >
-              <CalendarCheck className="w-4 h-4" />
+              <CalendarCheck className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>{isZh ? "咨询服务预约表" : "Consultation Booking"}</span>
             </button>
 
             <button
               onClick={() => handleTabChange("divorce")}
-              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 activeTab === "divorce"
-                  ? "bg-[#0B1B48] text-[#FFC107] shadow-md"
+                  ? "bg-[#0B1B48] text-[#FFC107] shadow-sm"
                   : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100"
               }`}
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />
               <span>{isZh ? "离婚/家事法问卷" : "Divorce Questionnaire"}</span>
             </button>
           </div>
@@ -147,9 +147,9 @@ export default function Forms() {
               <button
                 type="button"
                 onClick={() => handleLangChange("en")}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   formLang === "en"
-                    ? "bg-[#0B1B48] text-white shadow-sm"
+                    ? "bg-[#0B1B48] text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-900"
                 }`}
               >
@@ -158,9 +158,9 @@ export default function Forms() {
               <button
                 type="button"
                 onClick={() => handleLangChange("zh")}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   formLang === "zh"
-                    ? "bg-[#0B1B48] text-white shadow-sm"
+                    ? "bg-[#0B1B48] text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-900"
                 }`}
               >
@@ -179,17 +179,17 @@ export default function Forms() {
 
         {/* Contact fallback footer */}
         <div className="mt-12 text-center text-xs text-zinc-500 space-y-2">
-          <p>
+          <p className="text-pretty">
             {isZh
               ? "如果您在填写过程中遇到任何问题，欢迎随时致电我所办公室获取人工协助："
               : "Need assistance completing this form? Contact our client services team:"}
           </p>
-          <div className="flex items-center justify-center gap-4 text-zinc-800 font-semibold">
-            <a href="tel:+16042737565" className="hover:text-[#FFC107] transition-colors flex items-center gap-1">
-              <Phone className="w-3.5 h-3.5" /> (604) 273-7565
+          <div className="flex items-center justify-center gap-4 text-zinc-800 font-semibold font-mono tabular-nums">
+            <a href="tel:+16042737565" className="hover:text-[#FFC107] active:scale-[0.97] transition-[color,transform] duration-150 ease-out flex items-center gap-1">
+              <Phone className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" /> (604) 273-7565
             </a>
-            <span>•</span>
-            <a href="mailto:info@avid-law.com" className="hover:text-[#FFC107] transition-colors">
+            <span aria-hidden="true">•</span>
+            <a href="mailto:info@avid-law.com" className="hover:text-[#FFC107] active:scale-[0.97] transition-[color,transform] duration-150 ease-out">
               info@avid-law.com
             </a>
           </div>

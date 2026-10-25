@@ -217,25 +217,25 @@ export default function PracticeAreas() {
       >
         <div className="container relative z-10 mx-auto px-6 max-w-7xl">
           <div className="ml-auto w-full md:w-[90%] lg:w-[86%]">
-            <div className="bg-white rounded-2xl p-6 sm:p-10 shadow-md border border-zinc-200 transition-all hover:shadow-lg">
+            <div className="bg-white rounded-2xl p-6 sm:p-10 shadow-sm hover:shadow-lg border border-zinc-200 hover:border-zinc-300 transition-[box-shadow,border-color] duration-200 ease-out">
               <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-12 items-center`}>
                 <div className="w-full md:w-2/5">
-                  <div className="rounded-xl overflow-hidden shadow-md border border-zinc-100 group">
+                  <div className="rounded-xl overflow-hidden shadow-sm border border-zinc-200/80 outline outline-1 -outline-offset-1 outline-black/5 group">
                     <div className="relative h-[260px] sm:h-[300px] w-full">
                       <Image 
                         src={area.image}
                         alt={t(area.titleKey)}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       />
                     </div>
                   </div>
                 </div>
                 
                 <div className="w-full md:w-3/5">
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">{t(area.titleKey)}</h2>
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3 text-balance">{t(area.titleKey)}</h2>
                   <div className="h-1 w-16 bg-[#FFC107] mb-5 rounded-full"></div>
-                  <p className="text-base text-zinc-600 italic mb-6 leading-relaxed">{t(area.descriptionKey)}</p>
+                  <p className="text-base text-zinc-600 italic mb-6 leading-relaxed text-pretty">{t(area.descriptionKey)}</p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                     {area.services.map((serviceKey: string, i: number) => (
@@ -257,10 +257,10 @@ export default function PracticeAreas() {
                           <Link
                             key={subLink.slug}
                             href={localePath(`/practice-areas/${subLink.slug}`)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 border border-zinc-200 text-xs font-semibold text-zinc-800 hover:border-[#FFC107] hover:bg-[#FFC107]/10 transition-colors shadow-sm"
+                            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-50 border border-zinc-200 text-xs font-semibold text-zinc-800 hover:border-[#FFC107] hover:bg-[#FFC107]/10 active:scale-[0.96] transition-[background-color,border-color,color,transform] duration-150 ease-out shadow-xs"
                           >
                             <span>{subLink.defaultTitle}</span>
-                            <span className="text-[#0B1B48] font-bold">→</span>
+                            <span className="text-[#0B1B48] font-bold" aria-hidden="true">→</span>
                           </Link>
                         ))}
                       </div>
@@ -297,11 +297,11 @@ export default function PracticeAreas() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
             British Columbia Full-Service Law Firm
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide text-balance">
             {t('practiceAreas.pageTitle')}
           </h1>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light text-pretty max-w-3xl mx-auto">
             {t('practiceAreas.heroDescription')}
           </p>
         </div>
@@ -314,11 +314,11 @@ export default function PracticeAreas() {
             <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#0B1B48] uppercase bg-[#0B1B48]/10 rounded-full border border-[#0B1B48]/20 mb-3">
               British Columbia Legal Resources
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#0B1B48] mb-4 text-balance">
               {localizedText.inDepthTitle}
             </h2>
             <div className="h-1 w-20 bg-[#FFC107] mx-auto mb-5 rounded-full"></div>
-            <p className="text-sm sm:text-base text-zinc-600">
+            <p className="text-sm sm:text-base text-zinc-600 text-pretty">
               {localizedText.inDepthSubtitle}
             </p>
           </div>
@@ -327,19 +327,19 @@ export default function PracticeAreas() {
             {practiceAreasData.map((item) => (
               <div
                 key={item.slug}
-                className="flex flex-col justify-between p-6 rounded-2xl bg-white border border-zinc-200 hover:border-[#FFC107] shadow-sm hover:shadow-xl transition-all duration-300 group"
+                className="flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-white border border-zinc-200 hover:border-[#FFC107] shadow-xs hover:shadow-xl hover:-translate-y-0.5 transition-[border-color,box-shadow,transform] duration-200 ease-out group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-2.5 py-1 rounded-md">
                       {item.category}
                     </span>
-                    <span className="text-xs text-zinc-400 font-mono">BC Law</span>
+                    <span className="text-xs text-zinc-400 font-mono tabular-nums">BC Law</span>
                   </div>
-                  <h3 className="text-lg font-serif font-bold text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-2.5">
+                  <h3 className="text-lg font-serif font-bold text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-2.5 text-balance">
                     {item.title[activeLocale]}
                   </h3>
-                  <p className="text-xs text-zinc-600 leading-relaxed line-clamp-3 mb-4">
+                  <p className="text-xs text-zinc-600 leading-relaxed line-clamp-3 mb-4 text-pretty">
                     {item.directAnswer[activeLocale]}
                   </p>
                 </div>
@@ -347,20 +347,20 @@ export default function PracticeAreas() {
                 <div className="pt-4 border-t border-zinc-100">
                   <Link
                     href={localePath(`/practice-areas/${item.slug}`)}
-                    className="inline-flex items-center text-xs font-bold text-[#0B1B48] group-hover:text-[#FFC107] transition-colors"
+                    className="inline-flex items-center text-xs font-bold text-[#0B1B48] group-hover:text-[#b88600] active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
                   >
                     <span>{localizedText.readGuide}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-3.5 w-3.5 ml-1.5 transition-transform group-hover:translate-x-1"
+                      className="h-3.5 w-3.5 ml-1.5 transition-transform duration-200 group-hover:translate-x-1 shrink-0"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      strokeWidth={2}
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
                         d="M14 5l7 7m0 0l-7 7m7-7H3"
                       />
                     </svg>
@@ -373,22 +373,22 @@ export default function PracticeAreas() {
       </section>
 
       {/* Side Navigation */}
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isNavSticky && (
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="fixed left-0 top-1/3 z-50 hidden md:flex flex-col bg-white/95 backdrop-blur-md border border-zinc-200 border-l-0 rounded-r-xl shadow-xl overflow-hidden py-3 px-2 max-w-[210px]"
           >
             <div className="space-y-1">
               <a
                 href="#featured-guides"
                 onClick={(e) => scrollToSection(e, 'featured-guides')}
-                className={`group flex items-center py-2 px-3 text-xs rounded-lg transition-all ${
+                className={`group flex items-center py-2 px-3 text-xs rounded-lg active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out ${
                   activeSection === 'featured-guides'
-                    ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-sm'
+                    ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-xs'
                     : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-medium'
                 }`}
               >
@@ -399,9 +399,9 @@ export default function PracticeAreas() {
                   key={area.id}
                   href={`#${area.id}`}
                   onClick={(e) => scrollToSection(e, area.id)}
-                  className={`group flex items-center py-2 px-3 text-xs rounded-lg transition-all ${
+                  className={`group flex items-center py-2 px-3 text-xs rounded-lg active:scale-[0.98] transition-[background-color,color,box-shadow,transform] duration-150 ease-out ${
                     activeSection === area.id
-                      ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-sm'
+                      ? 'bg-[#0B1B48] text-[#FFC107] font-bold shadow-xs'
                       : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 font-medium'
                   }`}
                 >
@@ -433,28 +433,29 @@ export default function PracticeAreas() {
         </div>
         
         <div className="container relative z-10 mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {t('practiceAreas.eveTitle')}
           </h2>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light text-pretty">
             {t('practiceAreas.bookingDescription')}
           </p>
           
           <div className="flex justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
+              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.97] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
             >
               <span>{t('hero.bookButton')}</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 shrink-0" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
+                strokeWidth={2}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
           </div>

@@ -393,10 +393,10 @@ export default function DivorceQuestionnaireForm({
         <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 className="w-10 h-10" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-4">
+        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-4 text-balance">
           {t.successTitle}
         </h2>
-        <p className="text-zinc-600 leading-relaxed mb-8 text-sm sm:text-base">
+        <p className="text-zinc-600 leading-relaxed mb-8 text-sm sm:text-base text-pretty">
           {t.successMsg}
         </p>
 
@@ -407,7 +407,7 @@ export default function DivorceQuestionnaireForm({
           </div>
           <div className="flex justify-between border-b border-zinc-200 pb-2">
             <span className="font-semibold text-zinc-500">Contact / 联系方式:</span>
-            <span>{clientPhone} • {clientEmail}</span>
+            <span className="font-mono tabular-nums">{clientPhone} • {clientEmail}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-semibold text-zinc-500">Spouse / 对方:</span>
@@ -418,13 +418,13 @@ export default function DivorceQuestionnaireForm({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleReset}
-            className="px-6 py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 font-medium text-sm transition-colors cursor-pointer"
+            className="px-6 py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 font-medium text-sm active:scale-[0.97] transition-[background-color,border-color,transform] duration-150 ease-out cursor-pointer"
           >
             {t.submitAnother}
           </button>
           <a
             href={`/${lang === "en" ? "en" : "zh-Hans"}`}
-            className="px-6 py-3 rounded-lg bg-[#0B1B48] text-white hover:bg-[#132763] font-medium text-sm transition-colors inline-block"
+            className="px-6 py-3 rounded-lg bg-[#0B1B48] text-white hover:bg-[#132763] font-medium text-sm active:scale-[0.97] transition-[background-color,transform] duration-150 ease-out inline-block"
           >
             {lang === "en" ? "Return to Homepage" : "返回网站首页"}
           </a>
@@ -439,7 +439,7 @@ export default function DivorceQuestionnaireForm({
       <div className="bg-[#0B1B48] p-6 sm:p-8 text-white relative">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-[#FFC107] uppercase tracking-wider">
-            <HeartCrack className="w-3.5 h-3.5" />
+            <HeartCrack className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
             <span>BC Family Law Act • Confidential Intake</span>
           </div>
 
@@ -447,9 +447,9 @@ export default function DivorceQuestionnaireForm({
             <button
               type="button"
               onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 lang === "en"
-                  ? "bg-[#FFC107] text-zinc-950 shadow"
+                  ? "bg-[#FFC107] text-zinc-950 shadow-xs"
                   : "text-white/80 hover:text-white"
               }`}
             >
@@ -458,9 +458,9 @@ export default function DivorceQuestionnaireForm({
             <button
               type="button"
               onClick={() => setLang("zh")}
-              className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 lang === "zh"
-                  ? "bg-[#FFC107] text-zinc-950 shadow"
+                  ? "bg-[#FFC107] text-zinc-950 shadow-xs"
                   : "text-white/80 hover:text-white"
               }`}
             >
@@ -469,10 +469,10 @@ export default function DivorceQuestionnaireForm({
           </div>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2 text-balance">
           {t.title}
         </h1>
-        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
+        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed max-w-2xl text-pretty font-light">
           {t.subtitle}
         </p>
       </div>
@@ -492,10 +492,10 @@ export default function DivorceQuestionnaireForm({
 
         {errorMsg && (
           <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" strokeWidth={2} aria-hidden="true" />
             <div>
               <p className="font-semibold">{lang === "en" ? "Action Required" : "请完善以下信息"}</p>
-              <p>{errorMsg}</p>
+              <p className="text-pretty">{errorMsg}</p>
             </div>
           </div>
         )}
@@ -503,8 +503,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 1: Client Information */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 1
               </span>
               {t.sec1}
@@ -735,8 +735,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 2: Spouse Information */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 2
               </span>
               {t.sec2}
@@ -895,8 +895,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 3: Marriage & Separation Particulars */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 3
               </span>
               {t.sec3}
@@ -1064,8 +1064,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 4: Children of the Marriage */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 4
               </span>
               {t.sec4}
@@ -1077,7 +1077,7 @@ export default function DivorceQuestionnaireForm({
               Are there dependent children? / 是否有未成年或经济未独立的子女？
             </label>
             <div className="flex gap-4">
-              <label className="inline-flex items-center gap-2 cursor-pointer text-sm font-semibold text-zinc-800">
+              <label className="inline-flex items-center gap-2 cursor-pointer text-sm font-semibold text-zinc-800 py-1 px-2.5 rounded-lg border border-zinc-200 hover:border-zinc-300 active:scale-[0.98] transition-all">
                 <input
                   type="radio"
                   name="childrenToggle"
@@ -1087,7 +1087,7 @@ export default function DivorceQuestionnaireForm({
                 />
                 <span>No 无子女</span>
               </label>
-              <label className="inline-flex items-center gap-2 cursor-pointer text-sm font-semibold text-zinc-800">
+              <label className="inline-flex items-center gap-2 cursor-pointer text-sm font-semibold text-zinc-800 py-1 px-2.5 rounded-lg border border-zinc-200 hover:border-zinc-300 active:scale-[0.98] transition-all">
                 <input
                   type="radio"
                   name="childrenToggle"
@@ -1108,16 +1108,16 @@ export default function DivorceQuestionnaireForm({
                   className="p-4 rounded-lg bg-white border border-zinc-200 relative space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#0B1B48] uppercase tracking-wider">
+                    <span className="text-xs font-bold text-[#0B1B48] uppercase tracking-wider font-mono tabular-nums">
                       Child {idx + 1} / 子女 {idx + 1}
                     </span>
                     {children.length > 1 && (
                       <button
                         type="button"
                         onClick={() => handleRemoveChild(idx)}
-                        className="text-red-500 hover:text-red-700 text-xs flex items-center gap-1 cursor-pointer"
+                        className="text-red-500 hover:text-red-700 active:scale-[0.96] transition-[color,transform] duration-150 ease-out text-xs flex items-center gap-1 cursor-pointer p-1"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <Trash2 className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
                         <span>{t.removeChild}</span>
                       </button>
                     )}
@@ -1144,7 +1144,7 @@ export default function DivorceQuestionnaireForm({
                         type="date"
                         value={child.dob}
                         onChange={(e) => handleChildChange(idx, "dob", e.target.value)}
-                        className="w-full px-3 py-1.5 rounded border border-zinc-300 text-sm outline-none"
+                        className="w-full px-3 py-1.5 rounded border border-zinc-300 text-sm outline-none font-mono tabular-nums"
                       />
                     </div>
                     <div>
@@ -1166,9 +1166,9 @@ export default function DivorceQuestionnaireForm({
               <button
                 type="button"
                 onClick={handleAddChild}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-zinc-300 text-xs font-semibold text-[#0B1B48] hover:bg-zinc-100 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white border border-zinc-300 text-xs font-semibold text-[#0B1B48] hover:bg-zinc-50 active:scale-[0.96] transition-[background-color,border-color,transform] duration-150 ease-out shadow-xs cursor-pointer"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{t.addChild}</span>
               </button>
 
@@ -1205,8 +1205,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 5: Property, Excluded Property & Debts */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 5
               </span>
               {t.sec5}
@@ -1223,7 +1223,7 @@ export default function DivorceQuestionnaireForm({
                 value={realEstateInfo}
                 onChange={(e) => setRealEstateInfo(e.target.value)}
                 placeholder="e.g. 123 Main St, Richmond (Joint tenancy, ~$1.8M, mortgage $600k)"
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
@@ -1236,7 +1236,7 @@ export default function DivorceQuestionnaireForm({
                 value={bankAccountsInfo}
                 onChange={(e) => setBankAccountsInfo(e.target.value)}
                 placeholder="e.g. TD Savings, RBC RRSP accounts, BC Public Service Pension..."
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
@@ -1249,7 +1249,7 @@ export default function DivorceQuestionnaireForm({
                 value={corporateInterests}
                 onChange={(e) => setCorporateInterests(e.target.value)}
                 placeholder="e.g. 50% shares in ABC Trading Ltd., private holding company..."
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
@@ -1262,7 +1262,7 @@ export default function DivorceQuestionnaireForm({
                 value={excludedPropertyClaims}
                 onChange={(e) => setExcludedPropertyClaims(e.target.value)}
                 placeholder="e.g. $200k gift from parents towards home purchase, pre-marriage condo in China..."
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
@@ -1275,7 +1275,7 @@ export default function DivorceQuestionnaireForm({
                 value={familyDebts}
                 onChange={(e) => setFamilyDebts(e.target.value)}
                 placeholder="e.g. Line of credit $50k at BMO, vehicle loan $25k..."
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
           </div>
@@ -1284,8 +1284,8 @@ export default function DivorceQuestionnaireForm({
         {/* SECTION 6: Spousal Support, Protection & Signature */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 6
               </span>
               {t.sec6}
@@ -1300,7 +1300,7 @@ export default function DivorceQuestionnaireForm({
               <select
                 value={spousalSupportClaim}
                 onChange={(e) => setSpousalSupportClaim(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-zinc-900 text-sm bg-white"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-zinc-900 text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="Undecided 待律师评估">Undecided 待律师评估</option>
                 <option value="Yes (I am seeking spousal support) 主张要求对方支付">
@@ -1319,7 +1319,7 @@ export default function DivorceQuestionnaireForm({
               <select
                 value={urgentProtectionOrder}
                 onChange={(e) => setUrgentProtectionOrder(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-zinc-900 text-sm bg-white"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-zinc-900 text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="No 否（常规协商/诉讼）">No 否（常规协商/诉讼）</option>
                 <option value="Yes 是（存在转移财产或人身安全紧急风险）">
@@ -1337,7 +1337,7 @@ export default function DivorceQuestionnaireForm({
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
                 placeholder="What are your main goals (e.g., amicable uncontested divorce, child custody focus, protecting business assets)?"
-                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none"
+                className="w-full px-3.5 py-2 rounded-lg border border-zinc-300 text-sm outline-none transition-[border-color,box-shadow] duration-150 ease-out resize-y text-pretty"
               />
             </div>
           </div>
@@ -1348,8 +1348,8 @@ export default function DivorceQuestionnaireForm({
               Supporting Documents / 相关文件（结婚证复印件、协议草案、判决书等，选填）
             </label>
             <div className="border border-zinc-300 rounded-xl p-4 bg-zinc-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] rounded-lg text-xs font-semibold text-zinc-800 shadow-sm">
-                <Upload className="w-4 h-4 text-[#0B1B48]" />
+              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] active:scale-[0.96] rounded-lg text-xs font-semibold text-zinc-800 transition-[background-color,border-color,transform] duration-150 ease-out shadow-xs">
+                <Upload className="w-4 h-4 text-[#0B1B48] shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{lang === "en" ? "Select Documents" : "选择文件"}</span>
                 <input
                   type="file"
@@ -1359,7 +1359,7 @@ export default function DivorceQuestionnaireForm({
                   className="hidden"
                 />
               </label>
-              <div className="text-xs text-zinc-500 text-center sm:text-right">
+              <div className="text-xs text-zinc-500 text-center sm:text-right text-pretty">
                 {files.length === 0
                   ? lang === "en"
                     ? "No files selected (Optional)"
@@ -1382,7 +1382,7 @@ export default function DivorceQuestionnaireForm({
             />
           </div>
 
-          <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200 text-xs text-zinc-600 leading-relaxed">
+          <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200 text-xs text-zinc-600 leading-relaxed text-pretty">
             <p className="font-semibold text-zinc-800 mb-1">
               ⚖️ Solicitor-Client Privilege Notice / 律师保密特权说明
             </p>
@@ -1397,11 +1397,11 @@ export default function DivorceQuestionnaireForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 px-6 rounded-xl bg-[#0B1B48] text-[#FFC107] font-bold text-base hover:bg-[#132763] transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+            className="w-full py-4 px-6 rounded-xl bg-[#0B1B48] text-[#FFC107] font-bold text-base shadow-lg shadow-[#0B1B48]/20 hover:bg-[#132763] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] transition-[background-color,box-shadow,transform] duration-150 ease-out flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{t.submittingBtn}</span>
               </>
             ) : (

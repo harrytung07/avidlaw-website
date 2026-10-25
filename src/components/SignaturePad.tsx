@@ -144,7 +144,7 @@ export default function SignaturePad({
 
   return (
     <div className="w-full space-y-2">
-      <div className="relative border-2 border-dashed border-zinc-300 hover:border-[#FFC107] focus-within:border-[#FFC107] transition-colors rounded-xl bg-white overflow-hidden shadow-inner">
+      <div className="relative border-2 border-dashed border-zinc-300 hover:border-[#FFC107] focus-within:border-[#FFC107] transition-[border-color,box-shadow] duration-150 rounded-xl bg-white overflow-hidden shadow-inner outline outline-1 -outline-offset-1 outline-black/5">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -159,7 +159,7 @@ export default function SignaturePad({
         />
 
         {/* Baseline guideline */}
-        <div className="pointer-events-none absolute bottom-8 left-8 right-8 border-b border-zinc-200 flex items-center justify-between text-[11px] text-zinc-400 select-none pb-1">
+        <div className="pointer-events-none absolute bottom-8 left-8 right-8 border-b border-zinc-200 flex items-center justify-between text-[11px] text-zinc-400 select-none pb-1 font-mono tabular-nums">
           <span>✕ Sign above this line / 在横线上方签字</span>
           <span>Avid Law E-Sign</span>
         </div>
@@ -167,17 +167,17 @@ export default function SignaturePad({
         {/* Placeholder helper when blank */}
         {!hasSignature && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 text-center">
-            <p className="text-xs sm:text-sm text-zinc-400 font-medium">
+            <p className="text-xs sm:text-sm text-zinc-400 font-medium text-balance">
               {placeholder}
             </p>
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-between text-xs">
+      <div className="flex items-center justify-between text-xs gap-2 flex-wrap">
         <div className="flex items-center gap-1.5 text-zinc-500">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Legally binding electronic signature under BC ETA</span>
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
+          <span className="text-pretty">Legally binding electronic signature under BC ETA</span>
           {required && <span className="text-red-500 font-bold">*</span>}
         </div>
 
@@ -185,9 +185,9 @@ export default function SignaturePad({
           type="button"
           onClick={handleClear}
           disabled={!hasSignature}
-          className="inline-flex items-center gap-1 px-3 py-1 rounded text-zinc-600 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-30 disabled:pointer-events-none font-medium text-xs cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-zinc-600 hover:text-red-600 hover:bg-red-50 active:scale-[0.96] transition-[color,background-color,transform] duration-150 ease-out disabled:opacity-30 disabled:pointer-events-none font-medium text-xs cursor-pointer select-none"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
           <span>{clearLabel}</span>
         </button>
       </div>

@@ -216,10 +216,10 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
             <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-[#FFC107] uppercase bg-[#FFC107]/10 rounded-full border border-[#FFC107]/20 mb-4">
               British Columbia Law Practice
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight text-balance">
               {area.title[locale]}
             </h1>
-            <p className="mt-4 text-lg text-zinc-300 leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty max-w-3xl">
               {area.heroDescription[locale]}
             </p>
           </div>
@@ -227,26 +227,26 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
           {/* Bottom-Line-Up-Front (BLUF) Direct Answer Summary Box for AI Overviews / Google Snippets */}
           <div
             id="executive-summary"
-            className="mt-8 p-6 rounded-xl bg-zinc-900 border-l-4 border-l-[#FFC107] border-zinc-800 shadow-xl"
+            className="mt-8 p-6 sm:p-7 rounded-2xl bg-zinc-900/90 border border-zinc-800 border-l-4 border-l-[#FFC107] outline outline-1 -outline-offset-1 outline-white/5 shadow-xl"
           >
             <div className="flex items-center space-x-2 text-xs font-semibold text-[#FFC107] uppercase tracking-wider mb-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-4 w-4 shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
               <span>{labels.executiveSummaryTitle}</span>
             </div>
-            <p className="text-base md:text-lg text-zinc-100 font-sans font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-zinc-100 font-sans font-medium leading-relaxed text-pretty">
               {area.directAnswer[locale]}
             </p>
           </div>
@@ -261,7 +261,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
               <section aria-labelledby="statutory-framework-heading" className="space-y-4">
                 <h2
                   id="statutory-framework-heading"
-                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2"
+                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2 text-balance"
                 >
                   <span className="w-2 h-6 bg-[#FFC107] inline-block rounded-sm"></span>
                   {labels.statutoryHeading}
@@ -270,7 +270,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                   {area.statutoryFramework[locale].map((statute, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-lg bg-zinc-900/80 border border-zinc-800/80 flex items-start space-x-3"
+                      className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800/80 outline outline-1 -outline-offset-1 outline-white/5 flex items-start space-x-3 hover:border-zinc-700/80 transition-colors"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -278,15 +278,15 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
+                        strokeWidth={2}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={2}
                           d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                         />
                       </svg>
-                      <span className="text-sm text-zinc-300 font-mono leading-snug">
+                      <span className="text-xs sm:text-sm text-zinc-300 font-mono leading-snug tabular-nums">
                         {statute}
                       </span>
                     </div>
@@ -298,7 +298,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
               <section aria-labelledby="key-procedures-heading" className="space-y-4">
                 <h2
                   id="key-procedures-heading"
-                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2"
+                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2 text-balance"
                 >
                   <span className="w-2 h-6 bg-[#FFC107] inline-block rounded-sm"></span>
                   {labels.proceduresHeading}
@@ -307,17 +307,17 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                   {area.keyProcedures[locale].map((proc, idx) => (
                     <div
                       key={idx}
-                      className="p-5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-colors"
+                      className="p-5 sm:p-6 rounded-xl bg-zinc-900 border border-zinc-800 outline outline-1 -outline-offset-1 outline-white/5 hover:border-zinc-700/90 transition-[border-color] duration-150 ease-out"
                     >
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#FFC107]/10 text-[#FFC107] text-xs font-bold font-mono border border-[#FFC107]/30">
+                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#FFC107]/15 text-[#FFC107] text-xs font-bold font-mono border border-[#FFC107]/30 tabular-nums shrink-0">
                           {idx + 1}
                         </span>
-                        <h3 className="text-base font-semibold text-white">
+                        <h3 className="text-base font-semibold text-white text-balance">
                           {proc.title}
                         </h3>
                       </div>
-                      <p className="text-sm text-zinc-300 pl-10 leading-relaxed">
+                      <p className="text-sm text-zinc-300 pl-10 leading-relaxed text-pretty">
                         {proc.desc}
                       </p>
                     </div>
@@ -329,17 +329,17 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
               <section aria-labelledby="comparison-table-heading" className="space-y-4">
                 <h2
                   id="comparison-table-heading"
-                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2"
+                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2 text-balance"
                 >
                   <span className="w-2 h-6 bg-[#FFC107] inline-block rounded-sm"></span>
                   {area.comparisonTable.title[locale]}
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-400 text-pretty">
                   {labels.comparisonHeading}
                 </p>
-                <div className="overflow-x-auto rounded-lg border border-zinc-800 shadow-md">
+                <div className="overflow-x-auto rounded-xl border border-zinc-800 outline outline-1 -outline-offset-1 outline-white/5 shadow-xl">
                   <table className="w-full text-left text-sm text-zinc-200">
-                    <thead className="bg-zinc-900 text-xs uppercase tracking-wider text-zinc-400 border-b border-zinc-800">
+                    <thead className="bg-zinc-900/95 text-xs uppercase tracking-wider text-zinc-400 border-b border-zinc-800">
                       <tr>
                         <th scope="col" className="px-5 py-3.5 font-semibold text-[#FFC107]">
                           {area.comparisonTable.headers[locale][0]}
@@ -356,15 +356,15 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                       {area.comparisonTable.rows.map((row, rIdx) => (
                         <tr
                           key={rIdx}
-                          className="hover:bg-zinc-900/50 transition-colors"
+                          className="hover:bg-zinc-900/60 transition-colors"
                         >
-                          <td className="px-5 py-4 font-medium text-white align-top whitespace-normal min-w-[140px]">
+                          <td className="px-5 py-4 font-medium text-white align-top whitespace-normal min-w-[140px] text-pretty">
                             {row.dimension[locale]}
                           </td>
-                          <td className="px-5 py-4 text-zinc-300 align-top leading-relaxed min-w-[200px]">
+                          <td className="px-5 py-4 text-zinc-300 align-top leading-relaxed min-w-[200px] text-pretty">
                             {row.optionA[locale]}
                           </td>
-                          <td className="px-5 py-4 text-zinc-300 align-top leading-relaxed min-w-[200px]">
+                          <td className="px-5 py-4 text-zinc-300 align-top leading-relaxed min-w-[200px] text-pretty">
                             {row.optionB[locale]}
                           </td>
                         </tr>
@@ -378,7 +378,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
               <section aria-labelledby="faqs-heading" className="space-y-4 pt-4">
                 <h2
                   id="faqs-heading"
-                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2"
+                  className="text-xl sm:text-2xl font-serif font-semibold text-white border-b border-zinc-800 pb-3 flex items-center gap-2 text-balance"
                 >
                   <span className="w-2 h-6 bg-[#FFC107] inline-block rounded-sm"></span>
                   {labels.faqHeading}
@@ -387,13 +387,13 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                   {area.faqs.map((faq, fIdx) => (
                     <article
                       key={fIdx}
-                      className="p-5 rounded-lg bg-zinc-900/90 border border-zinc-800"
+                      className="p-5 sm:p-6 rounded-xl bg-zinc-900/90 border border-zinc-800 outline outline-1 -outline-offset-1 outline-white/5 hover:border-zinc-700/80 transition-colors"
                     >
-                      <h3 className="text-base font-semibold text-[#FFC107] mb-2 flex items-start gap-2">
-                        <span className="text-zinc-500 font-mono text-sm">Q:</span>
+                      <h3 className="text-base font-semibold text-[#FFC107] mb-2 flex items-start gap-2 text-balance">
+                        <span className="text-zinc-500 font-mono text-sm shrink-0">Q:</span>
                         <span>{faq.question[locale]}</span>
                       </h3>
-                      <p className="text-sm text-zinc-300 pl-6 leading-relaxed">
+                      <p className="text-sm text-zinc-300 pl-6 leading-relaxed text-pretty">
                         {faq.answer[locale]}
                       </p>
                     </article>
@@ -404,12 +404,12 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
 
             {/* Right Column: Sticky Consultation Sidebar & Office Info */}
             <aside aria-label="Legal Counsel Contact" className="space-y-6">
-              <div className="sticky top-28 rounded-xl bg-zinc-900 border border-zinc-800 p-6 shadow-xl space-y-6">
+              <div className="sticky top-28 rounded-2xl bg-zinc-900 border border-zinc-800 outline outline-1 -outline-offset-1 outline-white/5 p-6 sm:p-7 shadow-2xl space-y-6">
                 <div>
-                  <h3 className="text-lg font-serif font-bold text-white mb-2">
+                  <h3 className="text-lg font-serif font-bold text-white mb-2 text-balance">
                     {labels.bookConsultation}
                   </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="text-xs text-zinc-400 leading-relaxed text-pretty">
                     Consult with experienced lawyers regarding your transaction, contract, or court matter in British Columbia.
                   </p>
                 </div>
@@ -417,25 +417,25 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                 <div className="space-y-3 pt-2">
                   <a
                     href={`/${locale}/forms?type=consultation`}
-                    className="w-full inline-flex items-center justify-center px-5 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-semibold text-sm hover:bg-[#e5ad06] transition-colors shadow-lg shadow-[#FFC107]/10"
+                    className="w-full inline-flex items-center justify-center min-h-[44px] px-5 py-3 rounded-lg bg-[#FFC107] text-zinc-950 font-bold text-sm shadow-md shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-lg active:scale-[0.97] transition-[background-color,box-shadow,transform] duration-150 ease-out"
                   >
                     {labels.bookConsultation}
                   </a>
                   <a
                     href={`tel:${siteConfig.telephone}`}
-                    className="w-full inline-flex items-center justify-center px-5 py-3 rounded-md border border-zinc-700 bg-zinc-800/80 text-white font-medium text-sm hover:border-[#FFC107] transition-colors"
+                    className="w-full inline-flex items-center justify-center min-h-[44px] px-5 py-3 rounded-lg border border-zinc-700 bg-zinc-800/80 text-white font-medium text-sm hover:border-[#FFC107] hover:bg-zinc-800 active:scale-[0.97] transition-[border-color,background-color,transform] duration-150 ease-out font-mono tabular-nums"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2 text-[#FFC107]"
+                      className="h-4 w-4 mr-2 text-[#FFC107] shrink-0"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      strokeWidth={2}
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                       />
                     </svg>
@@ -445,7 +445,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
 
                 <div className="border-t border-zinc-800 pt-5 space-y-4 text-xs text-zinc-300">
                   <div>
-                    <span className="font-semibold text-white block mb-1">
+                    <span className="font-semibold text-white block mb-1 text-balance">
                       {labels.primaryOffice}
                     </span>
                     <p className="text-zinc-400">
@@ -455,7 +455,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                     </p>
                   </div>
                   <div>
-                    <span className="font-semibold text-white block mb-1">
+                    <span className="font-semibold text-white block mb-1 text-balance">
                       {labels.secondaryOffice}
                     </span>
                     <p className="text-zinc-400">
@@ -467,7 +467,7 @@ export default async function PracticeAreaSlugPage({ params }: PracticeAreaPageP
                 </div>
 
                 <div className="border-t border-zinc-800 pt-4">
-                  <p className="text-[11px] text-zinc-500 leading-normal">
+                  <p className="text-[11px] text-zinc-500 leading-normal text-pretty">
                     {labels.lawSocietyDisclaimer}
                   </p>
                 </div>

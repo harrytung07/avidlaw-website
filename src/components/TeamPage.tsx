@@ -27,41 +27,51 @@ const TeamMemberCard = ({
 }) => (
   <div
     key={member.id}
-    className="group relative bg-white rounded-2xl overflow-hidden shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-xl transition-all duration-300 mx-auto max-w-[280px] w-full flex flex-col"
+    role="button"
+    tabIndex={0}
+    onClick={() => onMemberClick(member)}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onMemberClick(member);
+      }
+    }}
+    className="group relative bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-xl border border-zinc-200 hover:border-[#FFC107] hover:-translate-y-0.5 active:scale-[0.98] transition-[border-color,box-shadow,transform] duration-200 ease-out mx-auto max-w-[280px] w-full flex flex-col cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]"
   >
-    <div className="aspect-square overflow-hidden bg-zinc-100 relative">
+    <div className="aspect-square overflow-hidden bg-zinc-100 relative outline outline-1 -outline-offset-1 outline-black/5">
       <Image
         src={member.image}
         alt={t(member.nameKey)}
         width={280}
         height={280}
-        className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
     <div className="p-4 text-center flex-grow flex flex-col justify-center bg-white">
-      <h3 className="font-serif font-bold text-zinc-900 text-lg group-hover:text-[#0B1B48] transition-colors">
+      <h3 className="font-serif font-bold text-zinc-900 text-lg group-hover:text-[#0B1B48] transition-colors text-balance">
         {t(member.nameKey)}
       </h3>
-      <p className="text-xs font-semibold uppercase tracking-wider text-[#0B1B48] mt-1">
+      <p className="text-xs font-semibold uppercase tracking-wider text-[#0B1B48] mt-1 text-balance">
         {t(member.titleKey)}
       </p>
     </div>
     <div className="absolute inset-0 bg-[#0B1B48]/75 backdrop-blur-[2px] flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-4">
-      <button
-        onClick={() => onMemberClick(member)}
-        className="group relative inline-flex items-center gap-2 rounded-lg bg-[#FFC107] px-5 py-2.5 font-bold text-[#0B1B48] shadow-lg transition-all duration-300 hover:bg-[#ffcb38] hover:scale-105 focus:outline-none text-sm"
+      <span
+        className="group/btn relative inline-flex items-center gap-2 rounded-lg bg-[#FFC107] pl-5 pr-4 py-2.5 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-sm"
       >
         <span>{t('team.viewProfile')}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+          className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1 shrink-0"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden="true"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
-      </button>
+      </span>
     </div>
   </div>
 );
@@ -177,11 +187,11 @@ export default function TeamPage() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
             Avid Law Corporation • Legal Team
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold uppercase text-white mb-6 tracking-wide text-balance">
             {t('team.sectionTitle')}
           </h1>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 max-w-3xl mx-auto leading-relaxed font-light text-pretty">
             {t('team.sectionDescription')}
           </p>
         </div>
@@ -194,7 +204,7 @@ export default function TeamPage() {
           {barristersAndSolicitors.length > 0 && (
             <div className="mb-20">
               <div className="text-center md:text-left mb-10">
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3 text-balance">
                   {categoryTitles.barristers}
                 </h2>
                 <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
@@ -211,7 +221,7 @@ export default function TeamPage() {
           {articlingStudents.length > 0 && (
             <div className="mb-20">
               <div className="text-center md:text-left mb-10">
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3 text-balance">
                   {categoryTitles.students}
                 </h2>
                 <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
@@ -228,7 +238,7 @@ export default function TeamPage() {
           {supportStaff.length > 0 && (
             <div>
               <div className="text-center md:text-left mb-10">
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-3 text-balance">
                   {categoryTitles.support}
                 </h2>
                 <div className="h-1 w-16 bg-[#FFC107] mx-auto md:mx-0 rounded-full"></div>
@@ -256,28 +266,30 @@ export default function TeamPage() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {t('team.needHelpQuestion')}
           </h2>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light text-pretty">
             {t('team.eveDescription')}
           </p>
           
           <div className="flex justify-center">
             <Link
               href={localePath('/forms?type=consultation')}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
             >
               <span>{t('hero.bookButton')}</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 shrink-0" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
           </div>
@@ -292,19 +304,19 @@ export default function TeamPage() {
       </footer>
 
       {/* Detail Modal */}
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {selectedMember && (
           <motion.div
             key={selectedMember.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8"
           >
             {/* Static Backdrop inside the single animated wrapper */}
             <div
-              className="fixed inset-0 bg-[#0B1B48]/80 backdrop-blur-sm"
+              className="fixed inset-0 bg-[#0B1B48]/80 backdrop-blur-sm cursor-pointer"
               onClick={handleOutsideClick}
             />
 
@@ -314,20 +326,20 @@ export default function TeamPage() {
               animate={{ y: 0, scale: 1 }}
               exit={{ y: 12, scale: 0.97 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative z-10 w-full max-w-3xl bg-white border border-zinc-200 text-zinc-900 rounded-2xl shadow-2xl p-6 sm:p-10 md:p-12 overflow-hidden"
+              className="relative z-10 w-full max-w-3xl bg-white border border-zinc-200 text-zinc-900 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={handleOutsideClick}
-                className="absolute right-4 top-4 z-10 bg-zinc-100 hover:bg-zinc-200 p-2.5 rounded-full text-zinc-600 hover:text-zinc-900 transition-colors"
+                className="absolute right-4 top-4 z-10 min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 hover:text-zinc-900 active:scale-[0.96] transition-[background-color,color,transform] duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]"
                 aria-label="Close modal"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 shrink-0" strokeWidth={2} />
               </button>
 
               <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-center">
                 <div className="md:col-span-5 flex justify-center">
-                  <div className="relative w-[240px] sm:w-[260px] aspect-square overflow-hidden rounded-2xl shadow-md border border-zinc-200 bg-zinc-100">
+                  <div className="relative w-[240px] sm:w-[260px] aspect-square overflow-hidden rounded-xl shadow-sm border border-zinc-200/80 outline outline-1 -outline-offset-1 outline-black/10 bg-zinc-100">
                     <Image
                       src={selectedMember.image}
                       alt={t(selectedMember.nameKey)}
@@ -339,17 +351,17 @@ export default function TeamPage() {
                 </div>
 
                 <div className="md:col-span-7 flex flex-col text-left">
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-2">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-2 text-balance">
                     {t(selectedMember.nameKey)}
                   </h2>
                   <div className="mb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-3 py-1 rounded-full inline-block">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#0B1B48] bg-[#FFC107]/20 px-3 py-1 rounded-full inline-block text-balance">
                       {t(selectedMember.titleKey)}
                     </span>
                   </div>
                   <div className="h-1 w-16 bg-[#FFC107] mb-6 rounded-full"></div>
                   <div className="text-zinc-700 leading-relaxed text-sm sm:text-base space-y-4 max-h-[300px] overflow-y-auto pr-2">
-                    <p>{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
+                    <p className="text-pretty">{selectedMember.descriptionKey ? t(selectedMember.descriptionKey) : ""}</p>
                   </div>
                 </div>
               </div>

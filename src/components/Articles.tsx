@@ -101,11 +101,11 @@ export default function Articles({ initialArticles }: ArticlesProps) {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/30 text-[#FFC107] text-xs font-semibold uppercase tracking-wider mb-6">
             Avid Law Legal Knowledge Base
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {getLocalizedContent(uiContent.heroTitle)}
           </h1>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-200/90 leading-relaxed font-light text-pretty max-w-3xl mx-auto">
             {getLocalizedContent(uiContent.heroDescription)}
           </p>
         </div>
@@ -121,10 +121,10 @@ export default function Articles({ initialArticles }: ArticlesProps) {
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                    className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold min-h-[40px] flex items-center active:scale-[0.96] transition-[background-color,color,border-color,box-shadow,transform] duration-150 ease-out ${
                       selectedCategory === category
-                        ? 'bg-[#0B1B48] text-[#FFC107] shadow-md'
-                        : 'bg-white text-zinc-700 border border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 shadow-sm'
+                        ? 'bg-[#0B1B48] text-[#FFC107] shadow-sm'
+                        : 'bg-white text-zinc-700 border border-zinc-200 hover:bg-zinc-100 hover:text-zinc-900 shadow-xs'
                     }`}
                   >
                     {category}
@@ -145,20 +145,20 @@ export default function Articles({ initialArticles }: ArticlesProps) {
               {filteredArticles.map((article) => (
                 <div 
                   key={article.id} 
-                  className="bg-white rounded-2xl overflow-hidden shadow-md border border-zinc-200 hover:border-[#FFC107] hover:shadow-xl transition-all duration-300 flex flex-col group"
+                  className="bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-xl border border-zinc-200 hover:border-[#FFC107] hover:-translate-y-0.5 transition-[border-color,box-shadow,transform] duration-200 ease-out flex flex-col group"
                 >
                   {/* Image container */}
-                  <div className="relative w-full h-[220px] bg-zinc-100 overflow-hidden">
+                  <div className="relative w-full h-[220px] bg-zinc-100 overflow-hidden outline outline-1 -outline-offset-1 outline-black/10">
                     <Image
                       src={article.image}
                       alt={getLocalizedContent(article.title)}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-[#0B1B48]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
                       <Link
                         href={localePath(`/articles/${article.id}`)}
-                        className="bg-[#FFC107] text-[#0B1B48] font-bold py-2.5 px-5 rounded-lg shadow-lg transform transition-all duration-300 hover:bg-[#ffcb38] hover:scale-105 text-xs uppercase tracking-wider"
+                        className="bg-[#FFC107] text-[#0B1B48] font-bold py-2.5 px-5 rounded-lg shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out text-xs uppercase tracking-wider"
                       >
                         {getLocalizedContent(uiContent.readArticleBtn)}
                       </Link>
@@ -170,11 +170,11 @@ export default function Articles({ initialArticles }: ArticlesProps) {
                       <span className="bg-[#0B1B48]/10 text-[#0B1B48] text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
                         {getLocalizedContent(article.category)}
                       </span>
-                      <span className="text-zinc-400 text-xs font-medium">{article.date}</span>
+                      <span className="text-zinc-400 text-xs font-medium font-mono tabular-nums">{article.date}</span>
                     </div>
 
                     {/* Crawlable Title Link */}
-                    <h3 className="font-serif font-bold text-lg text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-3 line-clamp-2">
+                    <h3 className="font-serif font-bold text-lg text-zinc-900 group-hover:text-[#0B1B48] transition-colors mb-3 line-clamp-2 text-balance">
                       <Link
                         href={localePath(`/articles/${article.id}`)}
                         className="hover:text-[#0B1B48] transition-colors"
@@ -183,13 +183,13 @@ export default function Articles({ initialArticles }: ArticlesProps) {
                       </Link>
                     </h3>
 
-                    <p className="text-zinc-600 mb-6 text-sm line-clamp-3 flex-grow leading-relaxed">
+                    <p className="text-zinc-600 mb-6 text-sm line-clamp-3 flex-grow leading-relaxed text-pretty">
                       {getLocalizedContent(article.preview)}
                     </p>
 
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-zinc-100">
                       <div className="flex items-center">
-                        <Image src="/chatbot1.png" alt="Author" width={32} height={32} className="rounded-full mr-2.5 bg-zinc-100" />
+                        <Image src="/chatbot1.png" alt="Author" width={32} height={32} className="rounded-full mr-2.5 bg-zinc-100 shrink-0" />
                         <div>
                           <p className="font-semibold text-xs text-zinc-900">{article.author}</p>
                           <p className="text-[11px] text-zinc-500">{getLocalizedContent(article.role)}</p>
@@ -198,10 +198,10 @@ export default function Articles({ initialArticles }: ArticlesProps) {
 
                       <Link
                         href={localePath(`/articles/${article.id}`)}
-                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#FFC107] inline-flex items-center gap-1 transition-colors"
+                        className="text-xs font-bold text-[#0B1B48] group-hover:text-[#b88600] inline-flex items-center gap-1 active:scale-[0.97] transition-[color,transform] duration-150 ease-out"
                       >
                         <span>{getLocalizedContent(uiContent.readArticleBtn)}</span>
-                        <span>→</span>
+                        <span className="transition-transform duration-200 group-hover:translate-x-1 shrink-0" aria-hidden="true">→</span>
                       </Link>
                     </div>
                   </div>
@@ -220,28 +220,30 @@ export default function Articles({ initialArticles }: ArticlesProps) {
         </div>
         
         <div className="relative z-10 container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 text-balance">
             {getLocalizedContent(uiContent.ctaTitle)}
           </h2>
           <div className="h-1 w-24 bg-[#FFC107] mx-auto mb-8 rounded-full"></div>
-          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed mb-10 max-w-2xl mx-auto font-light text-pretty">
             {getLocalizedContent(uiContent.ctaDescription)}
           </p>
           
           <div className="flex justify-center">
             <Link
               href={localePath("/forms?type=consultation")} 
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FFC107] px-8 py-4 font-bold text-[#0B1B48] transition-all duration-300 hover:bg-[#ffcb38] hover:shadow-xl focus:outline-none shadow-lg text-base"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#FFC107] pl-8 pr-7 py-4 font-bold text-[#0B1B48] shadow-lg shadow-[#FFC107]/20 hover:bg-[#ffcb38] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.96] transition-[background-color,box-shadow,transform] duration-150 ease-out focus:outline-none text-base"
             >
               <span>{getLocalizedContent(uiContent.contactBtn)}</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" 
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 shrink-0" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
           </div>

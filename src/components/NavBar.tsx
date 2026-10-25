@@ -113,7 +113,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 opacity-0 animate-fadeIn ${
+        className={`fixed left-0 right-0 z-50 transition-[top,padding,background-color,box-shadow] duration-300 ease-out opacity-0 animate-fadeIn ${
           visible ? "top-0" : "-top-28"
         } ${
           scrolled
@@ -134,7 +134,7 @@ export default function NavBar() {
               width={190}
               height={64}
               priority
-              className={`w-auto brightness-150 transition-all duration-300 ${
+              className={`w-auto brightness-150 transition-[height] duration-300 ease-out ${
                 scrolled ? "h-11 sm:h-12" : "h-12 sm:h-14 md:h-16"
               }`}
             />
@@ -185,7 +185,7 @@ export default function NavBar() {
               
               {/* Dropdown Menu (Removed /forms per sunsetting) */}
               <div 
-                className={`absolute top-full left-0 w-48 py-2 bg-black/95 backdrop-blur-md border border-zinc-800 rounded-lg shadow-2xl transition-all duration-200 ${
+                className={`absolute top-full left-0 w-48 p-1.5 bg-black/95 backdrop-blur-md border border-zinc-800 rounded-lg shadow-2xl transition-[opacity,transform] duration-200 ease-out ${
                   resourcesOpen 
                     ? 'opacity-100 translate-y-0 pointer-events-auto' 
                     : 'opacity-0 -translate-y-2 pointer-events-none'
@@ -193,19 +193,19 @@ export default function NavBar() {
               >
                 <Link
                   href={localePath("/news")}
-                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
                 >
                   {t("nav.news")}
                 </Link>
                 <Link
                   href={localePath("/articles")}
-                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
                 >
                   {t("nav.articles")}
                 </Link>
                 <Link
                   href={localePath("/forms")}
-                  className="block px-4 py-2.5 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
+                  className="block px-3.5 py-2 rounded-md text-sm font-medium text-gray-200 hover:text-white hover:bg-[#FFC107]/20 transition-colors"
                 >
                   {t("nav.forms")}
                 </Link>
@@ -227,31 +227,31 @@ export default function NavBar() {
             {/* Direct Booking Button - Links to Consultation Intake Form */}
             <Link
               href={localePath("/forms?type=consultation")}
-              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] transition-all font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md"
+              className="border-2 border-[#FFC107] bg-[#FFC107] text-gray-950 hover:bg-[#ffcb38] hover:border-[#ffcb38] active:scale-[0.96] transition-[background-color,border-color,transform,box-shadow] duration-150 ease-out font-semibold px-6 py-2.5 rounded uppercase text-sm tracking-wide shadow-md"
             >
               {t("nav.bookButton")}
             </Link>
           </nav>
 
-          {/* Hamburger menu button */}
+          {/* Hamburger menu button with 44x44px minimum hit area */}
           <div className="flex items-center space-x-4 md:hidden z-20">
             <button
               onClick={toggleMenu}
-              className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1.5 focus:outline-none active:scale-[0.96] transition-transform duration-150 ease-out"
               aria-label="Toggle menu"
             >
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                className={`w-6 h-0.5 bg-white transition-[transform,opacity] duration-300 ease-out ${
                   menuOpen ? "rotate-45 translate-y-2" : ""
                 }`}
               ></span>
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                className={`w-6 h-0.5 bg-white transition-[transform,opacity] duration-300 ease-out ${
                   menuOpen ? "opacity-0" : ""
                 }`}
               ></span>
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                className={`w-6 h-0.5 bg-white transition-[transform,opacity] duration-300 ease-out ${
                   menuOpen ? "-rotate-45 -translate-y-2" : ""
                 }`}
               ></span>
@@ -277,7 +277,7 @@ export default function NavBar() {
               <LanguageSwitcher />
               <button
                 onClick={toggleMenu}
-                className="text-white hover:text-[#FFC107] focus:outline-none p-2"
+                className="text-white hover:text-[#FFC107] focus:outline-none p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg active:scale-[0.96] transition-[color,transform] duration-150"
                 aria-label="Close menu"
               >
                 <svg
@@ -357,7 +357,7 @@ export default function NavBar() {
               <Link
                 href={localePath("/forms?type=consultation")}
                 onClick={toggleMenu}
-                className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md"
+                className="block w-full text-center px-6 py-3 rounded-md bg-[#FFC107] text-zinc-950 font-bold text-base uppercase tracking-wide shadow-md hover:bg-[#ffcb38] active:scale-[0.96] transition-[background-color,transform] duration-150 ease-out"
               >
                 {t("nav.bookButton")}
               </Link>

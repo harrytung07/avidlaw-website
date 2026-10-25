@@ -377,12 +377,12 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
     return (
       <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-xl border border-zinc-200 text-center max-w-2xl mx-auto my-8">
         <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-10 h-10" />
+          <CheckCircle2 className="w-10 h-10" strokeWidth={2} aria-hidden="true" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-4">
+        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1B48] mb-4 text-balance">
           {t.successTitle}
         </h2>
-        <p className="text-zinc-600 leading-relaxed mb-8 text-sm sm:text-base">
+        <p className="text-zinc-600 leading-relaxed mb-8 text-sm sm:text-base text-pretty">
           {t.successMsg}
         </p>
 
@@ -399,7 +399,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             <span className="font-semibold text-zinc-500">
               {lang === "en" ? "Contact:" : "联系方式："}
             </span>
-            <span>
+            <span className="font-mono tabular-nums">
               {entityType === "individual" ? `${phone} | ${email}` : `${companyPhone} | ${corporateEmail}`}
             </span>
           </div>
@@ -414,13 +414,13 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleReset}
-            className="px-6 py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 font-medium text-sm transition-colors cursor-pointer"
+            className="px-6 py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 font-medium text-sm active:scale-[0.97] transition-[background-color,border-color,transform] duration-150 ease-out cursor-pointer"
           >
             {t.submitAnother}
           </button>
           <a
             href={`/${lang === "en" ? "en" : "zh-Hans"}`}
-            className="px-6 py-3 rounded-lg bg-[#0B1B48] text-white hover:bg-[#132763] font-medium text-sm transition-colors inline-block"
+            className="px-6 py-3 rounded-lg bg-[#0B1B48] text-white hover:bg-[#132763] font-medium text-sm active:scale-[0.97] transition-[background-color,transform] duration-150 ease-out inline-block"
           >
             {lang === "en" ? "Return to Homepage" : "返回网站首页"}
           </a>
@@ -434,8 +434,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
       {/* Top Banner & Language Switcher */}
       <div className="bg-[#0B1B48] p-6 sm:p-8 text-white relative">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-[#FFC107] uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-[#FFC107] uppercase tracking-wider border border-white/10">
+            <ShieldCheck className="w-3.5 h-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
             <span>Avid Law • Client Intake</span>
           </div>
 
@@ -444,9 +444,9 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             <button
               type="button"
               onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 lang === "en"
-                  ? "bg-[#FFC107] text-zinc-950 shadow"
+                  ? "bg-[#FFC107] text-zinc-950 shadow-xs"
                   : "text-white/80 hover:text-white"
               }`}
             >
@@ -455,9 +455,9 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
             <button
               type="button"
               onClick={() => setLang("zh")}
-              className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md text-xs font-semibold active:scale-[0.96] transition-[background-color,color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                 lang === "zh"
-                  ? "bg-[#FFC107] text-zinc-950 shadow"
+                  ? "bg-[#FFC107] text-zinc-950 shadow-xs"
                   : "text-white/80 hover:text-white"
               }`}
             >
@@ -466,10 +466,10 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           </div>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2 text-balance">
           {t.formTitle}
         </h1>
-        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
+        <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed max-w-2xl text-pretty font-light">
           {t.formSubtitle}
         </p>
       </div>
@@ -489,10 +489,10 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
 
         {errorMsg && (
           <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" strokeWidth={2} aria-hidden="true" />
             <div>
               <p className="font-semibold">{lang === "en" ? "Action Required" : "请完善以下信息"}</p>
-              <p>{errorMsg}</p>
+              <p className="text-pretty">{errorMsg}</p>
             </div>
           </div>
         )}
@@ -500,8 +500,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         {/* SECTION 1: Entity & Contact Info */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 1
               </span>
               {t.sec1Title}
@@ -516,25 +516,25 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               <button
                 type="button"
                 onClick={() => setEntityType("individual")}
-                className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 p-3 sm:p-3.5 rounded-xl border text-sm font-semibold active:scale-[0.98] transition-[background-color,border-color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   entityType === "individual"
                     ? "border-[#0B1B48] bg-[#0B1B48]/5 text-[#0B1B48] ring-2 ring-[#0B1B48]"
                     : "border-zinc-300 hover:border-zinc-400 text-zinc-600 bg-white"
                 }`}
               >
-                <User className="w-4 h-4" />
+                <User className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{t.individual}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setEntityType("company")}
-                className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 p-3 sm:p-3.5 rounded-xl border text-sm font-semibold active:scale-[0.98] transition-[background-color,border-color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   entityType === "company"
                     ? "border-[#0B1B48] bg-[#0B1B48]/5 text-[#0B1B48] ring-2 ring-[#0B1B48]"
                     : "border-zinc-300 hover:border-zinc-400 text-zinc-600 bg-white"
                 }`}
               >
-                <Building2 className="w-4 h-4" />
+                <Building2 className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{t.company}</span>
               </button>
             </div>
@@ -730,8 +730,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         {/* SECTION 2: Consultation Preferences */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 2
               </span>
               {t.sec2Title}
@@ -746,7 +746,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               <select
                 value={consultationLang}
                 onChange={(e) => setConsultationLang(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="Mandarin 普通话">Mandarin 普通话</option>
                 <option value="Cantonese 粤语">Cantonese 粤语</option>
@@ -762,7 +762,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               <select
                 value={consultationMethod}
                 onChange={(e) => setConsultationMethod(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm bg-white cursor-pointer transition-[border-color,box-shadow] duration-150 ease-out"
               >
                 <option value="In-Person (Richmond Office) 面谈（列治文办公室）">
                   {t.methodInPerson}
@@ -784,7 +784,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                 value={consultationAvailability}
                 onChange={(e) => setConsultationAvailability(e.target.value)}
                 placeholder={t.availPlaceholder}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
@@ -798,7 +798,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                 value={inquiryDescription}
                 onChange={(e) => setInquiryDescription(e.target.value)}
                 placeholder={t.inquiryPlaceholder}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-all resize-y"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 text-zinc-900 focus:ring-2 focus:ring-[#0B1B48] focus:border-[#0B1B48] outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out resize-y"
               />
             </div>
           </div>
@@ -807,8 +807,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         {/* SECTION 3: Conflict of Interest */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 3
               </span>
               {t.sec3Title}
@@ -823,10 +823,10 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               <button
                 type="button"
                 onClick={() => setHasOpposingParty("no")}
-                className={`p-3 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
+                className={`p-3 rounded-xl border text-sm font-semibold active:scale-[0.98] transition-[background-color,border-color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   hasOpposingParty === "no"
                     ? "border-[#0B1B48] bg-[#0B1B48]/5 text-[#0B1B48] ring-2 ring-[#0B1B48]"
-                    : "border-zinc-300 text-zinc-600 bg-white"
+                    : "border-zinc-300 text-zinc-600 bg-white hover:border-zinc-400"
                 }`}
               >
                 {t.no}
@@ -834,10 +834,10 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               <button
                 type="button"
                 onClick={() => setHasOpposingParty("yes")}
-                className={`p-3 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
+                className={`p-3 rounded-xl border text-sm font-semibold active:scale-[0.98] transition-[background-color,border-color,box-shadow,transform] duration-150 ease-out cursor-pointer ${
                   hasOpposingParty === "yes"
                     ? "border-amber-600 bg-amber-50 text-amber-900 ring-2 ring-amber-600"
-                    : "border-zinc-300 text-zinc-600 bg-white"
+                    : "border-zinc-300 text-zinc-600 bg-white hover:border-zinc-400"
                 }`}
               >
                 {t.yes}
@@ -857,7 +857,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                   value={opposingPartyName}
                   onChange={(e) => setOpposingPartyName(e.target.value)}
                   placeholder="Full legal name of opposing person or business"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out"
                 />
               </div>
 
@@ -869,7 +869,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                   type="date"
                   value={opposingPartyDob}
                   onChange={(e) => setOpposingPartyDob(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-amber-300 bg-white text-zinc-900 focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-[border-color,box-shadow] duration-150 ease-out font-mono tabular-nums"
                 />
               </div>
             </div>
@@ -879,8 +879,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
         {/* SECTION 4: Attachments & Signature */}
         <div className="space-y-6">
           <div className="border-b border-zinc-200 pb-3 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs">
+            <h2 className="text-lg font-bold text-[#0B1B48] flex items-center gap-2 text-balance">
+              <span className="w-6 h-6 rounded-full bg-[#0B1B48] text-[#FFC107] inline-flex items-center justify-center text-xs font-mono tabular-nums shrink-0">
                 4
               </span>
               {t.sec4Title}
@@ -893,8 +893,8 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
               {t.filesLabel}
             </label>
             <div className="border border-zinc-300 rounded-xl p-4 bg-zinc-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] rounded-lg text-xs font-semibold text-zinc-800 transition-colors shadow-sm">
-                <Upload className="w-4 h-4 text-[#0B1B48]" />
+              <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-zinc-300 hover:border-[#0B1B48] active:scale-[0.96] rounded-lg text-xs font-semibold text-zinc-800 transition-[background-color,border-color,transform] duration-150 ease-out shadow-xs">
+                <Upload className="w-4 h-4 text-[#0B1B48] shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{lang === "en" ? "Select Files" : "选择文件"}</span>
                 <input
                   type="file"
@@ -905,7 +905,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
                 />
               </label>
 
-              <div className="text-xs text-zinc-500 text-center sm:text-right">
+              <div className="text-xs text-zinc-500 text-center sm:text-right text-pretty">
                 {files.length === 0
                   ? lang === "en"
                     ? "No files selected (Optional)"
@@ -929,7 +929,7 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           </div>
 
           {/* Law Society Disclaimer */}
-          <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200 text-xs text-zinc-600 leading-relaxed">
+          <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200 text-xs text-zinc-600 leading-relaxed text-pretty">
             <p className="font-semibold text-zinc-800 mb-1">
               ⚖️ {lang === "en" ? "Legal Notice" : "法律说明"}
             </p>
@@ -942,11 +942,11 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 px-6 rounded-xl bg-[#0B1B48] text-[#FFC107] font-bold text-base hover:bg-[#132763] transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+            className="w-full py-4 px-6 rounded-xl bg-[#0B1B48] text-[#FFC107] font-bold text-base shadow-lg shadow-[#0B1B48]/20 hover:bg-[#132763] hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] transition-[background-color,box-shadow,transform] duration-150 ease-out flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin shrink-0" strokeWidth={2} aria-hidden="true" />
                 <span>{t.submittingBtn}</span>
               </>
             ) : (
