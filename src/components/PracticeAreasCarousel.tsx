@@ -6,7 +6,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from '@/context/TranslationContext';
 import { useModal } from '@/context/ModalContext';
 
@@ -193,7 +193,11 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
   const detailedGuideText = locale === 'zh-Hans' ? '阅读重点法定指南' : locale === 'zh-Hant' ? '閱讀重點法定指南' : 'Read In-Depth Statutory Guide';
 
   return (
-    <div className="relative">
+    <div 
+      className="relative select-none"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Modal for showing subareas */}
       <AnimatePresence initial={false}>
         {showModal && selectedArea && (
@@ -278,106 +282,92 @@ export default function PracticeAreasCarousel({ onMouseEnter, onMouseLeave }: Pr
         )}
       </AnimatePresence>
 
-      <div 
-        className="embla select-none" 
-        ref={emblaRef} 
-        onMouseEnter={handleMouseEnter} 
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="embla__container">
-          {practiceAreas.map((area) => {
-            const areaSlug = areaSlugMap[area.titleKey];
-            return (
-              <div className="embla__slide p-4 select-none" key={area.id}>
-                <div 
-                  className="relative h-[350px] rounded-md overflow-hidden group cursor-pointer shadow-lg select-none"
-                  onClick={() => handleAreaClick(area.titleKey)}
-                >
-                  <Image 
-                    src={area.image}
-                    alt={t(area.titleKey)}
-                    fill
-                    draggable="false"
-                    className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
-                    <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
-                    <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-[width] duration-300 ease-out group-hover:w-24"></div>
+      {/* Carousel viewport & overlaid navigation controls */}
+      <div className="relative">
+        <div 
+          className="embla select-none" 
+          ref={emblaRef}
+        >
+          <div className="embla__container">
+            {practiceAreas.map((area) => {
+              const areaSlug = areaSlugMap[area.titleKey];
+              return (
+                <div className="embla__slide p-4 select-none" key={area.id}>
+                  <div 
+                    className="relative h-[350px] rounded-md overflow-hidden group cursor-pointer shadow-lg select-none"
+                    onClick={() => handleAreaClick(area.titleKey)}
+                  >
+                    <Image 
+                      src={area.image}
+                      alt={t(area.titleKey)}
+                      fill
+                      draggable="false"
+                      className="object-cover object-center z-0 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black to-transparent pointer-events-none">
+                      <h3 className="text-white uppercase font-bold text-lg select-none">{t(area.titleKey)}</h3>
+                      <div className="w-12 h-[2px] bg-[#FFC107] mt-2 transition-[width] duration-300 ease-out group-hover:w-24"></div>
 
-                    {/* Crawlable link for search engine discovery and non-JS clients */}
-                    <div className="mt-3 pointer-events-auto">
-                      <Link
-                        href={localePath(areaSlug ? `/practice-areas/${areaSlug}` : '/practice-areas')}
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center text-xs text-[#FFC107] hover:underline font-semibold"
-                      >
-                        <span>{detailedGuideText}</span>
-                        <span className="ml-1 font-bold">→</span>
-                      </Link>
+                      {/* Crawlable link for search engine discovery and non-JS clients */}
+                      <div className="mt-3 pointer-events-auto">
+                        <Link
+                          href={localePath(areaSlug ? `/practice-areas/${areaSlug}` : '/practice-areas')}
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center text-xs text-[#FFC107] hover:underline font-semibold"
+                        >
+                          <span>{detailedGuideText}</span>
+                          <span className="ml-1 font-bold">→</span>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+        
+        {/* Navigation buttons */}
+        <button 
+          type="button"
+          className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-white/60 text-[#0B1B48] shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:bg-[#FFC107] hover:border-[#FFC107] hover:text-[#0B1B48] hover:shadow-[0_6px_20px_rgba(255,193,7,0.35)] hover:scale-105 active:scale-[0.92] active:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-white cursor-pointer select-none touch-manipulation transition-[background-color,border-color,box-shadow,color,transform] duration-200 ease-out group"
+          onClick={() => emblaApi?.scrollPrev()}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft 
+            className="w-5 h-5 sm:w-6 sm:h-6 -translate-x-0.5 group-hover:-translate-x-1 transition-transform duration-200 ease-out shrink-0" 
+            strokeWidth={2.5}
+            aria-hidden="true" 
+          />
+        </button>
+        
+        <button 
+          type="button"
+          className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-white/60 text-[#0B1B48] shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:bg-[#FFC107] hover:border-[#FFC107] hover:text-[#0B1B48] hover:shadow-[0_6px_20px_rgba(255,193,7,0.35)] hover:scale-105 active:scale-[0.92] active:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 focus-visible:ring-offset-white cursor-pointer select-none touch-manipulation transition-[background-color,border-color,box-shadow,color,transform] duration-200 ease-out group"
+          onClick={() => emblaApi?.scrollNext()}
+          aria-label="Next slide"
+        >
+          <ChevronRight 
+            className="w-5 h-5 sm:w-6 sm:h-6 translate-x-0.5 group-hover:translate-x-1 transition-transform duration-200 ease-out shrink-0" 
+            strokeWidth={2.5}
+            aria-hidden="true" 
+          />
+        </button>
       </div>
-      
-      {/* Navigation buttons */}
-      <button 
-        className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] active:scale-[0.96] transition-[background-color,border-color,transform] duration-200 ease-out group"
-        onClick={() => emblaApi?.scrollPrev()}
-        aria-label="Previous slide"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="text-white group-hover:text-black transition-colors duration-200"
-        >
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-      </button>
-      
-      <button 
-        className="absolute top-1/2 right-4 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/10 rounded-full hover:bg-[#FFC107]/80 hover:border-[#FFC107] active:scale-[0.96] transition-[background-color,border-color,transform] duration-200 ease-out group"
-        onClick={() => emblaApi?.scrollNext()}
-        aria-label="Next slide"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="text-white group-hover:text-black transition-colors duration-200"
-        >
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </button>
-      
+
       {/* Navigation dots with expanded 40px hit area */}
       <div className="flex justify-center items-center mt-6 space-x-1">
         {practiceAreas.map((_, index) => (
           <button
             key={index}
-            className="relative p-2 flex items-center justify-center focus:outline-none"
+            type="button"
+            className="relative p-2 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 rounded-full cursor-pointer touch-manipulation"
             onClick={() => emblaApi?.scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}
           >
             <span
               className={`block h-2 rounded-full transition-[width,background-color] duration-300 ease-out ${
-                index === selectedIndex ? 'bg-[#FFC107] w-6' : 'bg-gray-400 w-2 hover:bg-gray-300'
+                index === selectedIndex ? 'bg-[#FFC107] w-6' : 'bg-zinc-400 w-2 hover:bg-zinc-600'
               }`}
             />
           </button>
