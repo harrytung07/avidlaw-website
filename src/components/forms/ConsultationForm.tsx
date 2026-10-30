@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import SignaturePad from "@/components/SignaturePad";
-import { CheckCircle2, AlertCircle, Upload, Loader2, Building2, User, ShieldCheck } from "lucide-react";
+import { CheckCircle2, AlertCircle, Upload, Loader2, Building2, User, ShieldCheck, CircleDollarSign } from "lucide-react";
 
 interface ConsultationFormProps {
   initialLang?: "en" | "zh";
@@ -481,28 +481,30 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
       </div>
 
       {/* Form Content */}
-      <form onSubmit={handleSubmit} className="p-6 sm:p-10 space-y-10">
+      <form onSubmit={handleSubmit} className="px-6 pb-6 pt-5 sm:px-10 sm:pb-10 sm:pt-7 space-y-8 sm:space-y-10">
         {/* Honeypot field (hidden) */}
         <input
           type="text"
           name="_gotcha"
           value={honeypot}
           onChange={(e) => setHoneypot(e.target.value)}
+          hidden
+          aria-hidden="true"
           className="hidden"
           tabIndex={-1}
           autoComplete="off"
         />
 
         {/* Consultation Fee Notice Banner */}
-        <div className="p-4 sm:p-5 rounded-xl bg-[#0B1B48]/[0.04] border border-[#0B1B48]/15 border-l-4 border-l-[#FFC107] flex items-start gap-3.5 shadow-xs">
-          <div className="w-6 h-6 rounded-full bg-[#FFC107]/25 text-[#0B1B48] flex items-center justify-center shrink-0 mt-0.5 font-serif font-bold text-xs">
-            $
+        <div className="pl-3.5 pr-4 py-3.5 sm:pl-4 sm:pr-5 sm:py-4 rounded-xl bg-gradient-to-r from-[#0B1B48]/[0.045] via-[#0B1B48]/[0.025] to-transparent border-l-[3px] border-l-[#FFC107] shadow-[0_0_0_1px_rgba(11,27,72,0.08),0_1px_2px_-1px_rgba(11,27,72,0.06),0_2px_4px_0_rgba(11,27,72,0.04)] flex items-start gap-3 sm:gap-3.5">
+          <div className="w-8 h-8 rounded-lg bg-[#FFC107]/20 text-[#0B1B48] ring-1 ring-inset ring-[#FFC107]/45 flex items-center justify-center shrink-0 mt-0.5">
+            <CircleDollarSign className="w-4 h-4 shrink-0" strokeWidth={2} aria-hidden="true" />
           </div>
-          <div className="text-xs sm:text-sm leading-relaxed">
+          <div className="text-xs sm:text-sm leading-relaxed tabular-nums text-pretty">
             <span className="font-bold text-[#0B1B48] mr-1.5">
               {t.feeNoticeTitle}:
             </span>
-            <span className="text-zinc-700 font-medium text-pretty">
+            <span className="text-zinc-700 font-medium">
               {t.feeNoticeText}
             </span>
           </div>
