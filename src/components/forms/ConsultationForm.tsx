@@ -59,6 +59,12 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
       lang === "en"
         ? "Please complete this intake form so our legal team can perform mandatory Law Society conflict checks and schedule your initial consultation."
         : "请填写此预约登记表，以便我们进行卑诗省律师公会要求的利益冲突检索，并为您安排专属律师咨询。",
+    feeNoticeTitle:
+      lang === "en" ? "Consultation Fee Policy" : "咨询收费标准说明",
+    feeNoticeText:
+      lang === "en"
+        ? "The initial consultation is $300 CAD (tax included) for the first 30 minutes; any time thereafter will be billed based on the respective lawyer's hourly rate."
+        : "首次法律咨询前 30 分钟（半小时）收费为 $300 加元（含税）；超出半小时后的时间，将根据接案律师的小时费率标准计费。",
     langToggleEn: "English Form",
     langToggleZh: "中文表格",
     sec1Title:
@@ -486,6 +492,21 @@ export default function ConsultationForm({ initialLang = "en" }: ConsultationFor
           tabIndex={-1}
           autoComplete="off"
         />
+
+        {/* Consultation Fee Notice Banner */}
+        <div className="p-4 sm:p-5 rounded-xl bg-[#0B1B48]/[0.04] border border-[#0B1B48]/15 border-l-4 border-l-[#FFC107] flex items-start gap-3.5 shadow-xs">
+          <div className="w-6 h-6 rounded-full bg-[#FFC107]/25 text-[#0B1B48] flex items-center justify-center shrink-0 mt-0.5 font-serif font-bold text-xs">
+            $
+          </div>
+          <div className="text-xs sm:text-sm leading-relaxed">
+            <span className="font-bold text-[#0B1B48] mr-1.5">
+              {t.feeNoticeTitle}:
+            </span>
+            <span className="text-zinc-700 font-medium text-pretty">
+              {t.feeNoticeText}
+            </span>
+          </div>
+        </div>
 
         {errorMsg && (
           <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">

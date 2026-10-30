@@ -116,6 +116,12 @@ export default function DivorceQuestionnaireForm({
       lang === "en"
         ? "Confidential intake questionnaire under the British Columbia Family Law Act and federal Divorce Act. All information provided is strictly privileged."
         : "依据卑诗省《家庭法》（Family Law Act）与加拿大《离婚法》（Divorce Act）制定的保密调查问卷。您提供的一切信息受律师执业特权严格保护。",
+    feeNoticeTitle:
+      lang === "en" ? "Consultation Fee Policy" : "咨询收费标准说明",
+    feeNoticeText:
+      lang === "en"
+        ? "The initial consultation is $300 CAD (tax included) for the first 30 minutes; any time thereafter will be billed based on the respective lawyer's hourly rate."
+        : "首次法律咨询前 30 分钟（半小时）收费为 $300 加元（含税）；超出半小时后的时间，将根据接案律师的小时费率标准计费。",
     langToggleEn: "English Questionnaire",
     langToggleZh: "中文问卷",
 
@@ -489,6 +495,21 @@ export default function DivorceQuestionnaireForm({
           tabIndex={-1}
           autoComplete="off"
         />
+
+        {/* Consultation Fee Notice Banner */}
+        <div className="p-4 sm:p-5 rounded-xl bg-[#0B1B48]/[0.04] border border-[#0B1B48]/15 border-l-4 border-l-[#FFC107] flex items-start gap-3.5 shadow-xs">
+          <div className="w-6 h-6 rounded-full bg-[#FFC107]/25 text-[#0B1B48] flex items-center justify-center shrink-0 mt-0.5 font-serif font-bold text-xs">
+            $
+          </div>
+          <div className="text-xs sm:text-sm leading-relaxed">
+            <span className="font-bold text-[#0B1B48] mr-1.5">
+              {t.feeNoticeTitle}:
+            </span>
+            <span className="text-zinc-700 font-medium text-pretty">
+              {t.feeNoticeText}
+            </span>
+          </div>
+        </div>
 
         {errorMsg && (
           <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
